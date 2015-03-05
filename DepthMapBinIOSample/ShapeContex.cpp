@@ -11,11 +11,13 @@ Histogram3D * getShapeContext3D(Instant instant){
   }
   //pointCloud->normalize();
   Point3D center=pointCloud->getCenteroid();
+    cout << "|| "<< center << "||\n";
+
   //cout << center;
   //pointCloud->show();
  // cout << pointCloud->points.size() << "&\n";
   addPoints(center, pointCloud->points, histogram);
-    //histogram->show();
+  histogram->show();
 
   histogram->normalize();
   delete pointCloud;
@@ -30,6 +32,7 @@ PointCloud * getPointCloud(CDepthMap * depthMap){
 }
 
 void addPoints(Point3D  centre,vector<Point3D> points,Histogram3D * histogram){
+  cout << "|| "<< centre << "||\n";
   for(int i=0;i<points.size();i++){
     Point3D rawpoint=points.at(i);
     Point3D point= rawpoint - centre;
@@ -38,7 +41,6 @@ void addPoints(Point3D  centre,vector<Point3D> points,Histogram3D * histogram){
 	double x=point.val[0];
 	double y=point.val[1];
 	double beta=atan2(point.val[2],sqrt(x*x+y*y)) + M_PI;
-
 	histogram->addToHistogram(ksi,theta,beta);
   }
 }

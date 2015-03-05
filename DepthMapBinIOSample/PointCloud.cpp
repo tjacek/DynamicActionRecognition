@@ -5,7 +5,7 @@ PointCloud::PointCloud(){}
 
 void PointCloud::addDepthMap(CDepthMap * depthMap){
   int height=depthMap->GetNRows();
-  int width=depthMap->GetNRows();
+  int width=depthMap->GetNCols();
   for(int i=0;i<height;i++){
 	for(int j=0;j<width;j++){
 	  double z= depthMap->GetItem(i,j);
@@ -56,7 +56,8 @@ Point3D PointCloud::getCenteroid(){
   }
   for(int j=0;j<3;j++){
 	centroid.val[j]/=size;
-  }  
+  } 
+  return centroid;
 }
 
 

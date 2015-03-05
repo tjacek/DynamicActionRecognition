@@ -1,6 +1,5 @@
 #pragma once
 
-//a depthmap is a matrix of depth values. A depth value is invalid if it is equal to 0 (i.e. the sensor has no data on this pixel).
 class CDepthMap
 {
 public:
