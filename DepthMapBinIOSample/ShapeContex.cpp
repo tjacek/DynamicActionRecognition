@@ -20,7 +20,7 @@ Histogram3D * getShapeContext3D(Instant instant){
 	Point3D current=points.at(i);
     addPoints(current, pointCloud->points, histogram);
   }
-  //histogram->show();
+  histogram->show();
 
   histogram->normalize();
   delete pointCloud;
@@ -45,19 +45,19 @@ void addPoints(Point3D  centre,vector<Point3D> points,Histogram3D * histogram){
 	double x=point.val[0];
 	double y=point.val[1];
 	//cout << "%" << point.val[2] << " " << sqrt(x*x+y*y) <<"\n";
-	double beta=atan2(point.val[2],sqrt(x*x+y*y)) + M_PI;
+	double beta=atan2(point.val[2],sqrt(x*x+y*y)) + (M_PI /2);
 	histogram->addToHistogram(ksi,theta,beta);
   }
 }
 
 Histogram3D::Histogram3D(double r){
   rBins=3;
-  thetaBins=4;
+  thetaBins=8;
   betaBins=4;
   //cout << "R:" << r<< "\n";
   maxValues.val[0]=log(r)+0.1;
   maxValues.val[1]=2*M_PI + 0.1;
-  maxValues.val[2]=2*M_PI + 0.1;
+  maxValues.val[2]=M_PI + 0.1;
   bins=new double **[rBins];
   for(int i=0;i<rBins;i++){
 	bins[i]=new double *[thetaBins];

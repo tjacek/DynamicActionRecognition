@@ -31,7 +31,7 @@ vector<Point3D> PointCloud::getExtremePoints(){
   Point3D gemetryCenter=1000* (cloudDim/(2* r()));
  //cout << gemetryCenter << " " << cloudDim <<"\n";
   points.push_back(gemetryCenter);
-  for(int i=0;i<8;i++){
+  /*for(int i=0;i<8;i++){
 	Point3D newPoint(0,0,0);
 	if((i%2) ==0){
 	  newPoint.val[0]=gemetryCenter.val[0];
@@ -45,7 +45,7 @@ vector<Point3D> PointCloud::getExtremePoints(){
 	  newPoint.val[2]=gemetryCenter.val[2];
 	}
 	points.push_back(newPoint);
-  }
+  }*/
   return points;
 }
 
