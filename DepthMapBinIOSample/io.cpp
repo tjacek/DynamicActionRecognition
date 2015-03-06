@@ -1,11 +1,35 @@
+#pragma once
 #include "StdAfx.h"
 #include "io.h"
+
+Categories readFulldataset(string dir){
+  Categories categories;
+  ImageList dirList=getImageList(dir);
+  int category=0;
+  for(int i=0;i<dirList->size();i++){
+    string dirName=dirList->at(i);
+    //cout << "\n "<< dirName <<"\n";
+	ImageList images=getImageList(dirName);
+	for(int i=0;i<images->size();i++){
+	  categories.insert( std::pair<string,int>(images->at(i),category));    
+	}
+	//showFiles(images );
+	category++;
+  }
+  return categories;
+}
 
 ImageList getImageList(string dirName){
   ImageList imageList=new vector<string>();
   getFilesList(stringToTCHAR(dirName),imageList);
   appendFullPath(imageList,dirName);
   return imageList;
+}
+
+void showFiles(ImageList imageList ){
+  for(int i=0;i<imageList->size();i++){
+    cout << imageList->at(i) <<"\n";
+  }
 }
 
 Categories readCategories(string name){
@@ -123,6 +147,12 @@ int getFilesList(TCHAR * directory,ImageList  files)
       WCHAR * filename=ffd.cFileName;
       if (ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
       {
+		string * str =WCHARToString(filename);
+		char a=str->c_str()[0];
+		char b='.';
+		if(a!=b){
+		files->push_back(*str);
+		}
         // _tprintf(TEXT("T  %s   <DIR>\n"), filename);
       }
       else

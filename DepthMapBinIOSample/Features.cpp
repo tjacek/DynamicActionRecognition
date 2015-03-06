@@ -3,7 +3,7 @@
 #include "ShapeContext3D.h"
 
 int FeatureExtractorImpl::numberOfFeatures(){
-  return 192;
+  return 3*4*4*3;
 }
 
 string FeatureExtractorImpl:: featureName(int i){

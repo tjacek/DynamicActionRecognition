@@ -1,6 +1,28 @@
 #include "StdAfx.h"
 #include "Dataset.h"
 
+#include "DepthMap.h"
+
+void buildFullDataset(Categories categories){
+  Dataset dataset;
+  Labels labels;
+  map<string,int>::iterator it;
+  for(it=categories.begin();it!=categories.end();it++){
+    pair<string,int> p_i=*it;
+	cout << p_i.first<<"\n";
+	char * c=(char*)p_i.first.c_str();
+	Action action=readAction(c);
+	dataset.addExample(action);
+	labels.push_back(p_i.second);
+  }
+  dataset.toArff(labels);
+  ofstream myfile;
+  myfile.open ("shapeContext3DFull.arff");
+  myfile << dataset.toArff(labels);
+  myfile.close();
+}
+
+
 void buildDataset(vector<Action> actions,Labels labels){
   Dataset dataset;
   dataset.addActions(actions);
@@ -19,10 +41,12 @@ void Dataset::addActions(vector<Action> actions){
   for(int i=0;i<actions.size();i++){
 	  addExample(actions.at(i));
   }
+
 }
 
 void Dataset::addExample(Action depthMap){
 	desc.push_back(extractor->getFeatures(depthMap));
+	freeAction(depthMap);
 }
 
 vector<double> Dataset::getSample(int i){
@@ -91,5 +115,18 @@ vector<string> getClassNames(){
   classNames.push_back("H");
   classNames.push_back("I");
   classNames.push_back("J");
+    classNames.push_back("K");
+  classNames.push_back("L");
+  classNames.push_back("M");
+  classNames.push_back("N");
+  classNames.push_back("O");
+  classNames.push_back("P");
+  classNames.push_back("Q");
+  classNames.push_back("R");
+  classNames.push_back("S");
+  classNames.push_back("T");
+    classNames.push_back("U");
+	  classNames.push_back("V");
+
   return classNames;
 }

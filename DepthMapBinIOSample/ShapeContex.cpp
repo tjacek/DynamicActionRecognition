@@ -3,21 +3,21 @@
 
 Histogram3D * getShapeContext3D(Instant instant){
   PointCloud * pointCloud=getPointCloud(instant.at(0));
-  Histogram3D * histogram=new Histogram3D(pointCloud->r());
+  Histogram3D * histogram=new Histogram3D(1000.0);
  
   for(int i=1;i<instant.size();i++){
 	CDepthMap* depthMap=instant.at(i);
 	pointCloud->addDepthMap(depthMap);
   }
-  //pointCloud->normalize();
+  pointCloud->normalize();
   Point3D center=pointCloud->getCenteroid();
-    cout << "|| "<< center << "||\n";
+  //  cout << "|| "<< center << "||\n";
 
   //cout << center;
   //pointCloud->show();
  // cout << pointCloud->points.size() << "&\n";
   addPoints(center, pointCloud->points, histogram);
-  histogram->show();
+  //histogram->show();
 
   histogram->normalize();
   delete pointCloud;
@@ -27,6 +27,7 @@ Histogram3D * getShapeContext3D(Instant instant){
 PointCloud * getPointCloud(CDepthMap * depthMap){
   PointCloud * pointCloud=new PointCloud();
   pointCloud->addDepthMap( depthMap);
+ // pointCloud->getCloudDim();
   //pointCloud->normalize();
   return pointCloud;
 }
@@ -40,22 +41,26 @@ void addPoints(Point3D  centre,vector<Point3D> points,Histogram3D * histogram){
 	double theta=atan2(point.val[1],point.val[0]) + M_PI;
 	double x=point.val[0];
 	double y=point.val[1];
+	//cout << "%" << point.val[2] << " " << sqrt(x*x+y*y) <<"\n";
 	double beta=atan2(point.val[2],sqrt(x*x+y*y)) + M_PI;
 	histogram->addToHistogram(ksi,theta,beta);
   }
 }
 
 Histogram3D::Histogram3D(double r){
-  this->size=4;
+  rBins=3;
+  thetaBins=4;
+  betaBins=4;
+  cout << "R:" << r<< "\n";
   maxValues.val[0]=log(r)+0.1;
   maxValues.val[1]=2*M_PI + 0.1;
   maxValues.val[2]=2*M_PI + 0.1;
-  bins=new double **[size];
-  for(int i=0;i<size;i++){
-	bins[i]=new double *[size];
-	for(int j=0;j<size;j++){
-      bins[i][j]=new double[size];
-      for(int k=0;k<size;k++){
+  bins=new double **[rBins];
+  for(int i=0;i<rBins;i++){
+	bins[i]=new double *[thetaBins];
+	for(int j=0;j<thetaBins;j++){
+      bins[i][j]=new double[betaBins];
+      for(int k=0;k<betaBins;k++){
         bins[i][j][k]=0; 
 	  }
 	}
@@ -63,25 +68,28 @@ Histogram3D::Histogram3D(double r){
 }
 
 void Histogram3D::addToHistogram(double ksi,double theta,double psi){
- // cout << "@ " << ksi <<" "<< theta <<" "<< psi <<"\n";
-  int i=getIndex(ksi,size,maxValues.val[0]);
-  int j=getIndex(theta,size,maxValues.val[1]);
-  int k=getIndex(psi,size,maxValues.val[2]);
+  //cout << "@ " << ksi <<" "<< theta <<" "<< psi <<"\n";
+  //cout << maxValues << "\n";
+  int i=getIndex(ksi,rBins,maxValues.val[0]);
+  int j=getIndex(theta,thetaBins,maxValues.val[1]);
+  int k=getIndex(psi,betaBins,maxValues.val[2]);
+ // cout << "i " << i <<" j "<< j <<" k "<< k <<"\n";
+
   bins[i][j][k]+=1.0;
 }
 
 void Histogram3D::normalize(){
   double normalizeConst=0.0;
-  for(int i=0;i<size;i++){
-	for(int j=0;j<size;j++){
-      for(int k=0;k<size;k++){
+  for(int i=0;i<rBins;i++){
+	for(int j=0;j<thetaBins;j++){
+      for(int k=0;k<betaBins;k++){
         normalizeConst+=bins[i][j][k];
 	  }
 	}
   }
-  for(int i=0;i<size;i++){
-	for(int j=0;j<size;j++){
-      for(int k=0;k<size;k++){
+  for(int i=0;i<rBins;i++){
+	for(int j=0;j<thetaBins;j++){
+      for(int k=0;k<betaBins;k++){
         bins[i][j][k]/=normalizeConst;
 	  }
 	}
@@ -90,9 +98,9 @@ void Histogram3D::normalize(){
 
 vector<double>* Histogram3D::toVector(){
   vector<double>* vect= new vector<double>();
-  for(int i=0;i<size;i++){
-	for(int j=0;j<size;j++){
-	  for(int k=0;k<size;k++){
+  for(int i=0;i<rBins;i++){
+	for(int j=0;j<thetaBins;j++){
+	  for(int k=0;k<betaBins;k++){
 		vect->push_back(bins[i][j][k]); 
 	  }
 	}
@@ -101,9 +109,9 @@ vector<double>* Histogram3D::toVector(){
 }
 
 void Histogram3D::show(){
-  for(int i=0;i<size;i++){
-	for(int j=0;j<size;j++){
-	  for(int k=0;k<size;k++){
+  for(int i=0;i<rBins;i++){
+	for(int j=0;j<thetaBins;j++){
+	  for(int k=0;k<betaBins;k++){
 		cout << bins[i][j][k] << " "; 
 	  }
 	  cout << "\n";
@@ -118,10 +126,13 @@ int getIndex(double value,double size,double max){
   }
   double step=max/ ((double)size);
   int index=floor(value/step);
+  if(index<=0){
+    return 0;
+  }
   if(index<size){
     return index;
   }else{
-	cout << "Out of bins " << max << " " << value <<"\n";
+	//cout << "Out of bins " << max << " " << value <<"\n";
 	return size-1;
   }
 }

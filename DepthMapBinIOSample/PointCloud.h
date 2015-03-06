@@ -13,6 +13,7 @@ class PointCloud{
 
 	PointCloud();
 	void addDepthMap(CDepthMap * depthMap);
+	Point3D getCloudDim();
 	void normalize();
 	Point3D getCenter();
 	Point3D getCenteroid();

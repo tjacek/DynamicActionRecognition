@@ -1,9 +1,9 @@
 #pragma once
 #include "stdafx.h"
 #include "DepthMap.h"
-
+#include "io.h"
 typedef vector<double> FeatureVector;
-typedef vector<int> Labels;
+
 
 class FeatureExtractor{
   public:
@@ -35,4 +35,5 @@ class Dataset{
 };
 
 extern void buildDataset(vector<Action> actions,Labels labels);
+extern void buildFullDataset(Categories categories);
 extern vector<string> getClassNames();

@@ -17,18 +17,22 @@ void PointCloud::addDepthMap(CDepthMap * depthMap){
   }
 }
 
-void PointCloud::normalize(){
+Point3D PointCloud::getCloudDim(){
   pair<Point3D, Point3D> extremes=computeExtremes();
-  Point3D min=extremes.first;
-  Point3D max=extremes.second;
+  min=extremes.first;
+  max=extremes.second;
+  cloudDim=max-min;
+  return cloudDim;
+}
+
+void PointCloud::normalize(){
+  getCloudDim();
   for(int i=0;i<points.size();i++){
     Point3D * current=&points.at(i);
      for(int j=0;j<3;j++){
 	  current->val[j]-=min.val[j];
 	 }
   }
- 
-  cloudDim=max-min;
   double r=L2(cloudDim);
   for(int i=0;i<points.size();i++){
     Point3D * current=&points.at(i);

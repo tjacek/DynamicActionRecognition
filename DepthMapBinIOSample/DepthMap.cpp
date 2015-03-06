@@ -2,6 +2,13 @@
 #include <math.h>
 #include "DepthMap.h"
 
+void freeAction(Action action){
+  for(int i=0;i<action.size();i++){
+	CDepthMap * dmap=  action.at(i);
+	delete dmap;
+  }
+}
+
 vector<Instant> getInstants(Action action){
   vector<Instant> instants;
   int numberOfInstants=3;

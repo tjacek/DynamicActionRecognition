@@ -33,3 +33,4 @@ typedef std::vector<CDepthMap*> Action;
 typedef std::vector<CDepthMap*> Instant;
 
 extern vector<Instant> getInstants(Action action);
+extern void freeAction(Action action);

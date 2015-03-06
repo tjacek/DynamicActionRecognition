@@ -4,8 +4,9 @@
 class Histogram3D{
   public:
     double *** bins;
-    int size;
-    
+    int rBins;
+    int thetaBins;
+	int betaBins;
 	Point3D maxValues;
   
     Histogram3D(double r);

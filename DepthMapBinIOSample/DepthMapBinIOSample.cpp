@@ -68,17 +68,20 @@ void test2(){
   feature.getFeatures(action);
 }
 
-//This is a sample program to load a depth video file (*.bin). Author: Zicheng Liu
-//A depth video file consists of a sequence of depth maps. Each frame corresponds to one depth map.
-//A depth map is a matrix of depth values (see CDepthMap in depthmap.h).
-//I purposely did not create a data structure to hold all the frames of the depth video because it would result
-//in large memory footprint.
+void test3(){
+  char depthFileName[] = "C:/Users/user/Desktop/kwolek/LargeDataset";
+  Categories categories=readFulldataset( depthFileName);
+  buildFullDataset(categories);
+  /*ImageList imageList=getImageList(depthFileName);
+  showFiles( imageList );*/
+}
+
 int _tmain(int argc, _TCHAR* argv[])
 {
 	/*char depthFileName[] = "C:\\Users\\user\\Desktop\\kwolek\\LargeDataset\\a01_s01_e01_sdepth.bin";
 	Action action=readAction(depthFileName);
 	cout << action.size();*/
-	test();
+	test3();
 	system("pause");
 
 	return 0;
