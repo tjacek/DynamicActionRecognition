@@ -10,13 +10,16 @@ Histogram3D * getShapeContext3D(Instant instant){
 	pointCloud->addDepthMap(depthMap);
   }
   pointCloud->normalize();
-  Point3D center=pointCloud->getCenteroid();
+  //Point3D center=pointCloud->getCenteroid();
   //  cout << "|| "<< center << "||\n";
-
+  vector<Point3D> points=pointCloud->getExtremePoints();
   //cout << center;
   //pointCloud->show();
  // cout << pointCloud->points.size() << "&\n";
-  addPoints(center, pointCloud->points, histogram);
+  for(int i=0;i<points.size();i++){
+	Point3D current=points.at(i);
+    addPoints(current, pointCloud->points, histogram);
+  }
   //histogram->show();
 
   histogram->normalize();
@@ -33,7 +36,7 @@ PointCloud * getPointCloud(CDepthMap * depthMap){
 }
 
 void addPoints(Point3D  centre,vector<Point3D> points,Histogram3D * histogram){
-  cout << "|| "<< centre << "||\n";
+  //cout << "|| "<< centre << "||\n";
   for(int i=0;i<points.size();i++){
     Point3D rawpoint=points.at(i);
     Point3D point= rawpoint - centre;
@@ -51,7 +54,7 @@ Histogram3D::Histogram3D(double r){
   rBins=3;
   thetaBins=4;
   betaBins=4;
-  cout << "R:" << r<< "\n";
+  //cout << "R:" << r<< "\n";
   maxValues.val[0]=log(r)+0.1;
   maxValues.val[1]=2*M_PI + 0.1;
   maxValues.val[2]=2*M_PI + 0.1;

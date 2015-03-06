@@ -17,6 +17,7 @@ class PointCloud{
 	void normalize();
 	Point3D getCenter();
 	Point3D getCenteroid();
+	vector<Point3D> getExtremePoints();
 	double r();
 	void save(string name);
 	void show();
