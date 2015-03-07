@@ -11,7 +11,6 @@ void freeAction(Action action){
 
 vector<Instant> getInstants(Action action){
   vector<Instant> instants;
-  int numberOfInstants=3;
   int sizeOfInstants=action.size()/numberOfInstants;
   for(int i=0;i<numberOfInstants;i++){
      Instant instant;

@@ -4,7 +4,6 @@
 #include "io.h"
 typedef vector<double> FeatureVector;
 
-
 class FeatureExtractor{
   public:
 	virtual int numberOfFeatures()=0;

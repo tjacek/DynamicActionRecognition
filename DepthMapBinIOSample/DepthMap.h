@@ -32,5 +32,6 @@ protected:
 typedef std::vector<CDepthMap*> Action;
 typedef std::vector<CDepthMap*> Instant;
 
+#define numberOfInstants 2
 extern vector<Instant> getInstants(Action action);
 extern void freeAction(Action action);

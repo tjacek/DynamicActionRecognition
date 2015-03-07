@@ -72,8 +72,26 @@ void test3(){
   char depthFileName[] = "C:/Users/user/Desktop/kwolek/LargeDataset";
   Categories categories=readFulldataset( depthFileName);
   buildFullDataset(categories);
-  /*ImageList imageList=getImageList(depthFileName);
-  showFiles( imageList );*/
+}
+
+void test4(){
+  char depthFileName[] = "C:/Users/user/Desktop/kwolek/LargeDataset";
+  Categories categories=readFulldataset( depthFileName);
+  vector<string> names=getClassNames();
+  map<string,int>::iterator it;
+    string str[20];
+	string nm[20];
+
+  for(it=categories.begin();it!=categories.end();it++){
+     pair<string,int> p_i=*it;
+	 string cls=names.at(p_i.second);
+	 nm[p_i.second]=p_i.first;
+	 str[p_i.second]=cls;
+	// cout << p_i.first << " " << cls <<"\n";
+  }
+  for(int i=0;i<20;i++){
+	  cout << str[i] <<" " << nm[i] <<"\n";
+  }
 }
 
 int _tmain(int argc, _TCHAR* argv[])
