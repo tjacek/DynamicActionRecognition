@@ -2,6 +2,8 @@
 #include "stdafx.h"
 #include "DepthMap.h"
 #include "io.h"
+#include <ctime>
+
 typedef vector<double> FeatureVector;
 
 class FeatureExtractor{
@@ -9,6 +11,9 @@ class FeatureExtractor{
 	virtual int numberOfFeatures()=0;
 	virtual string featureName(int i)=0;
     virtual FeatureVector getFeatures(Action action)=0;
+	virtual void showTime();
+  protected:
+    vector<double> actionTime;
 };
 
 class FeatureExtractorImpl: public FeatureExtractor{
@@ -25,6 +30,7 @@ class Dataset{
 	void addActions(vector<Action> actions);
     void addExample(Action depthMap);
 	int numberOfFeatures();
+	int size();
 	vector<double> getSample(int i);
 	string toArff(Labels labels);
   private:
@@ -34,5 +40,6 @@ class Dataset{
 };
 
 extern void buildDataset(vector<Action> actions,Labels labels);
-extern void buildFullDataset(Categories categories);
+extern pair<Dataset,Labels> buildFullDataset(Categories categories);
 extern vector<string> getClassNames();
+extern void saveDataset(Dataset dataset,Labels labels);

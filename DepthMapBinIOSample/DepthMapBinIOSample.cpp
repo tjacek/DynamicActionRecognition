@@ -94,12 +94,16 @@ void test4(){
   }
 }
 
+void test5(){
+  char depthFileName[] = "C:/Users/user/Desktop/kwolek/LargeDataset";
+  Categories categories=readFulldataset( depthFileName);
+  pair<Dataset,Labels> pair=buildFullDataset(categories);
+  saveDataset(pair.first, pair.second);
+}
+
 int _tmain(int argc, _TCHAR* argv[])
 {
-	/*char depthFileName[] = "C:\\Users\\user\\Desktop\\kwolek\\LargeDataset\\a01_s01_e01_sdepth.bin";
-	Action action=readAction(depthFileName);
-	cout << action.size();*/
-	test3();
+	test5();
 	system("pause");
 
 	return 0;

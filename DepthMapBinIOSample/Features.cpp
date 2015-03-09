@@ -1,6 +1,12 @@
 #include "StdAfx.h"
 #include "Dataset.h"
 #include "ShapeContext3D.h"
+#include "utils.h"
+
+void FeatureExtractor::showTime(){
+  cout <<"\n mean: " << mean(actionTime)<< "\n"; 
+  cout <<"\n sd: " << standardDeviation(actionTime)<< "\n"; 
+}
 
 int FeatureExtractorImpl::numberOfFeatures(){
   return 3*8*4*numberOfInstants;
@@ -13,6 +19,8 @@ string FeatureExtractorImpl:: featureName(int i){
 
 FeatureVector FeatureExtractorImpl::getFeatures(Action action){
   FeatureVector fullVect;
+  clock_t begin = clock();
+
   vector<Instant> instants=getInstants( action);
   for(int i=0;i<instants.size();i++){
 	Instant instant=instants.at(i);
@@ -22,5 +30,8 @@ FeatureVector FeatureExtractorImpl::getFeatures(Action action){
 	fullVect.insert(fullVect.end(),part->begin(),part->end());
 	delete histogram;
   }
+  clock_t end = clock();
+   double elapsed_secs = ( double)(end - begin) / CLOCKS_PER_SEC;
+  actionTime.push_back(elapsed_secs);
   return fullVect;
 }

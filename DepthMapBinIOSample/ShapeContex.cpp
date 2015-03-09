@@ -20,7 +20,7 @@ Histogram3D * getShapeContext3D(Instant instant){
 	Point3D current=points.at(i);
     addPoints(current, pointCloud->points, histogram);
   }
-  histogram->show();
+  //histogram->show();
 
   histogram->normalize();
   delete pointCloud;

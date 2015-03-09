@@ -3,7 +3,7 @@
 
 #include "DepthMap.h"
 
-void buildFullDataset(Categories categories){
+pair<Dataset,Labels> buildFullDataset(Categories categories){
   Dataset dataset;
   Labels labels;
   map<string,int>::iterator it;
@@ -20,6 +20,10 @@ void buildFullDataset(Categories categories){
   myfile.open ("shapeContext3DFull.arff");
   myfile << dataset.toArff(labels);
   myfile.close();
+  pair<Dataset,Labels> pair;
+  pair.first=dataset;
+  pair.second=labels;
+  return pair;
 }
 
 
@@ -62,6 +66,7 @@ string Dataset::toArff(Labels labels){
   arff+=getAttributes();
   arff+="\n @DATA \n";
   arff+=getData(labels);
+  extractor->showTime();
   return arff;
 }
 
@@ -103,6 +108,10 @@ string Dataset::getData(Labels labels){
   return str;
 }
 
+int Dataset::size(){
+	return desc.size();
+}
+
 vector<string> getClassNames(){
   vector<string> classNames;
   classNames.push_back("A");
@@ -129,4 +138,60 @@ vector<string> getClassNames(){
 	  classNames.push_back("V");
 
   return classNames;
+}
+
+string doubleToString(double raw){
+  string tmp; 
+  sprintf((char*)tmp.c_str(), "%f", (float)raw);
+  string * str=new string(tmp.c_str());
+  return *str;
+}
+
+void saveToFile(string filename,string data){
+ ofstream myfile;
+  myfile.open(filename);
+  myfile << data;
+  myfile.close();
+}
+
+void saveDataset(Dataset dataset,Labels labels){
+ 
+  short size0= floor((2.0/3.0)*((double)dataset.size())  );
+  int size1= dataset.size()-size0;
+  int dim=dataset.numberOfFeatures();
+  string data1="" + intToString(size0*dim)+"\n";
+  string data2="" + intToString(size1*dim)+"\n";
+  string labels1=intToString(size0) +"\n" + intToString(20)+"\n";
+  string labels2=intToString(size1) +"\n" + intToString(20)+"\n";
+
+  for(int i=0;i<dataset.size();i++){
+	 FeatureVector instance=dataset.getSample(i);
+	 if((i %2)==0){
+	   for(int j=0;j<dataset.numberOfFeatures();j++){
+		 data1+=doubleToString(instance.at(j));
+		 if(j!=(instance.size()-1)){
+           data1+=",";
+		 }else{
+		   data1+="\n";  
+		 }
+	   }
+	   labels1+=intToString(labels.at(i))+"\n";
+	 }else{
+       for(int j=0;j<instance.size();j++){
+		 data2+=doubleToString(instance.at(j));
+		 if(j!=(instance.size()-1)){
+           data2+=",";
+		 }else{
+		   data2+="\n";  
+		 }
+	   }
+	   labels2+=intToString(labels.at(i))+"\n";
+	 }
+  }
+    saveToFile("TrainData.txt",data1);
+
+  saveToFile("TestData.txt", data2);
+  saveToFile("TrainLabels.txt",labels1);
+  saveToFile("TestLabels.txt", labels2);
+
 }
