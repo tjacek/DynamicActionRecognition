@@ -13,6 +13,7 @@ class PointCloud{
 
 	PointCloud();
 	void addDepthMap(CDepthMap * depthMap);
+	void addAction(vector<CDepthMap *> action);
 	Point3D getCloudDim();
 	void normalize();
 	Point3D getCenter();

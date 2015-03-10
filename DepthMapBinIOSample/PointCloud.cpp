@@ -68,6 +68,13 @@ void PointCloud::normalize(){
   cloudDim*=1000;
 }
 
+void PointCloud::addAction(vector<CDepthMap *> action){
+  for(int i=0;i<action.size();i++){
+	  addDepthMap(action.at(i));
+  }
+}
+
+
 double PointCloud::r(){
 	return L2(cloudDim);
 }
