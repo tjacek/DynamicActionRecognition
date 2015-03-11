@@ -27,5 +27,13 @@ private:
     pair<Point3D, Point3D> computeExtremes();
 };
 
+class DynamicPointCloud: public PointCloud{
+  map<int,vector<int>> timeFrames;
+  public:
+    void addTimeFrame(CDepthMap * depthMap);
+    vector<Point3D> getPoints(int t);
+	vector<Point3D> getFrame(int x,int y);
+};
+
 extern Point3D getPoint(double depthX,double depthY,double depthZ,double resolutionX,double resolutionY);
 extern double L2(Point3D point);

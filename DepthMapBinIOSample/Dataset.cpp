@@ -15,6 +15,7 @@ pair<Dataset,Labels> buildFullDataset(Categories categories){
 	dataset.addExample(action);
 	labels.push_back(p_i.second);
   }
+  dataset.normalize();
   dataset.toArff(labels);
   ofstream myfile;
   myfile.open ("shapeContext3DFull.arff");
@@ -24,6 +25,32 @@ pair<Dataset,Labels> buildFullDataset(Categories categories){
   pair.first=dataset;
   pair.second=labels;
   return pair;
+}
+
+void Dataset::normalize(){
+  for(int j=0;j<extractor->numberOfFeatures();j++){
+	normalizeAtribute(j);
+  }
+}
+
+void Dataset::normalizeAtribute(int i){
+  double maxValue=-1.0;
+  for(int j=0;j<desc.size();j++){
+	double value=desc.at(j).at(i);
+	if(maxValue<value){
+	  maxValue=value;
+	}
+  }
+
+  if(maxValue!=0){
+  for(int j=0;j<desc.size();j++){
+	double value=desc.at(j).at(i);
+	//cout << value <<"\n";
+	//cout << maxValue <<"\n";
+
+    desc.at(j).at(i)=value/maxValue;
+  }
+  }
 }
 
 
@@ -38,7 +65,7 @@ void buildDataset(vector<Action> actions,Labels labels){
 }
 
 Dataset::Dataset(){
-  extractor=new FeatureExtractorImpl();
+  extractor=new DynamicExtractor();
 }
 
 void Dataset::addActions(vector<Action> actions){

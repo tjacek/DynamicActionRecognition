@@ -23,6 +23,13 @@ class FeatureExtractorImpl: public FeatureExtractor{
     FeatureVector getFeatures(Action action);
 };
 
+class DynamicExtractor: public FeatureExtractor{
+  public:
+	int numberOfFeatures();
+    string featureName(int i);
+    FeatureVector getFeatures(Action action);
+};
+
 class Dataset{
   public:
     FeatureExtractor* extractor;
@@ -33,10 +40,12 @@ class Dataset{
 	int size();
 	vector<double> getSample(int i);
 	string toArff(Labels labels);
+	void normalize();
   private:
 	vector<FeatureVector> desc;
 	string getAttributes();
 	string getData(Labels labels);
+	void normalizeAtribute(int i);
 };
 
 extern void buildDataset(vector<Action> actions,Labels labels);

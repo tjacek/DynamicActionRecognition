@@ -163,3 +163,43 @@ double L2(Point3D point){
   double z=point.val[2];
   return sqrt(x*x+y*y+z*z);
 }
+
+void DynamicPointCloud::addTimeFrame(CDepthMap * depthMap){
+  int t=this->timeFrames.size();
+  vector<int> frame;
+  int height=depthMap->GetNRows();
+  int width=depthMap->GetNCols();
+  for(int i=0;i<height;i++){
+	for(int j=0;j<width;j++){
+	  double z= depthMap->GetItem(i,j);
+	  if(z!= emptyPoint ){
+		Point3D point=getPoint(i,j,z,height,width);
+	    
+		points.push_back(point);
+		int index=points.size();
+		frame.push_back(index);
+	  }
+    } 
+  }
+  timeFrames.insert(std::pair<int,vector<int>>(t,frame));
+}
+
+ vector<Point3D> DynamicPointCloud::getPoints(int t){
+   vector<Point3D> framePoints;  
+   vector<int> framePointers=timeFrames.at(t);
+   for(int i=0;i<framePointers.size();i++){
+	 int index=framePointers.at(i);
+	 Point3D point=points.at(i);
+	 framePoints.push_back(point);
+   }
+   return framePoints;
+ }
+
+vector<Point3D> DynamicPointCloud::getFrame(int x,int y){
+  vector<Point3D> framePoints;
+  for(int i=x;i<=y;i++){
+    vector<Point3D> points=getPoints(i);
+	framePoints.insert(framePoints.end(),points.begin(),points.end());
+  }
+  return framePoints;
+}

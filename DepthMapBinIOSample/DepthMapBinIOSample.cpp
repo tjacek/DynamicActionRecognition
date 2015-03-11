@@ -118,7 +118,7 @@ void test6(){
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	test6();
+	test3();
 	system("pause");
 
 	return 0;

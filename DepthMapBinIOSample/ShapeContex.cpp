@@ -1,6 +1,71 @@
 #include "StdAfx.h"
 #include "ShapeContext3D.h"
 
+pair<Histogram3D *,Histogram3D *> getDynamicShapeContext3D(Action action,int t){
+  DynamicPointCloud * pointCloud=new DynamicPointCloud();
+  int size=floor(action.size()/t);
+  for(int i=0;i<size;i++){
+	  CDepthMap *depthMap=action.at(i*t);
+	  pointCloud->addTimeFrame(depthMap);
+	 // cout << pointCloud->points.size() <<"\n";
+  }
+  pointCloud->normalize();
+  vector<Point3D> points=pointCloud->getExtremePoints();
+  //points.push_back(pointCloud->getCenteroid());
+  vector<Histogram3D*> histograms;
+  for(int i=2;i<action.size();i++){
+	vector<Point3D> frame=pointCloud->getFrame(i-2,i);
+	Histogram3D * histogram=new Histogram3D(1000.0);
+    for(int j=0;j<points.size();j++){
+	  Point3D current=points.at(j);
+     //cout << current << "%%%%%%\n";
+      addPoints(current, frame, histogram);
+    }
+	histogram->normalize();
+	histograms.push_back(histogram);
+  }
+  cout <<"**********************\n";
+  delete pointCloud;
+  return dynamicHistogram( histograms);
+}
+
+pair<Histogram3D *,Histogram3D *> dynamicHistogram(vector<Histogram3D*> histograms){
+  double n=histograms.size();
+  Histogram3D * mean=new Histogram3D(1000);
+  Histogram3D * std=new Histogram3D(1000);
+  int rbins=histograms.at(0)->rBins;
+  int thetabins=histograms.at(0)->thetaBins;
+  int betabins=histograms.at(0)->betaBins;
+  for(int i=0;i<rbins;i++){
+    for(int j=0;j<thetabins;j++){
+      for(int k=0;k<betabins;k++){
+		mean->bins[i][j][k]=0;
+		for(int t=0;t<histograms.size();t++){
+          mean->bins[i][j][k]+=histograms.at(t)->bins[i][j][k];
+		}
+		mean->bins[i][j][k]/=n;
+	    double e=mean->bins[i][j][k];
+		std->bins[i][j][k]=0;
+		for(int t=0;t<histograms.size();t++){
+          double delta=histograms.at(t)->bins[i][j][k]-e;
+	      std->bins[i][j][k]+=delta*delta;
+		}
+		std->bins[i][j][k]=sqrt(std->bins[i][j][k]/(n-1.0));
+      }
+    }
+  }
+  pair<Histogram3D *,Histogram3D *> pair;
+  mean->normalize();
+
+  mean->show();
+  cout<< "||||||||||||||||\n";
+  std->normalize();
+  std->show();
+  pair.first=mean;
+  pair.second=std;
+  return pair;
+}
+
 Histogram3D * getShapeContext3D(Instant instant){
   PointCloud * pointCloud=getPointCloud(instant.at(0));
   Histogram3D * histogram=new Histogram3D(1000.0);
@@ -13,9 +78,6 @@ Histogram3D * getShapeContext3D(Instant instant){
   //Point3D center=pointCloud->getCenteroid();
   //  cout << "|| "<< center << "||\n";
   vector<Point3D> points=pointCloud->getExtremePoints();
-  //cout << center;
-  //pointCloud->show();
- // cout << pointCloud->points.size() << "&\n";
   for(int i=0;i<points.size();i++){
 	Point3D current=points.at(i);
     addPoints(current, pointCloud->points, histogram);
@@ -51,9 +113,9 @@ void addPoints(Point3D  centre,vector<Point3D> points,Histogram3D * histogram){
 }
 
 Histogram3D::Histogram3D(double r){
-  rBins=3;
-  thetaBins=8;
-  betaBins=4;
+  rBins=3.0;
+  thetaBins=8.0;
+  betaBins=4.0;
   //cout << "R:" << r<< "\n";
   maxValues.val[0]=log(r)+0.1;
   maxValues.val[1]=2*M_PI + 0.1;
@@ -71,8 +133,8 @@ Histogram3D::Histogram3D(double r){
 }
 
 void Histogram3D::addToHistogram(double ksi,double theta,double psi){
-  //cout << "@ " << ksi <<" "<< theta <<" "<< psi <<"\n";
-  //cout << maxValues << "\n";
+ // cout << "@ " << ksi <<" "<< theta <<" "<< psi <<"\n";
+ // cout << maxValues << "\n";
   int i=getIndex(ksi,rBins,maxValues.val[0]);
   int j=getIndex(theta,thetaBins,maxValues.val[1]);
   int k=getIndex(psi,betaBins,maxValues.val[2]);
@@ -124,7 +186,10 @@ void Histogram3D::show(){
 }
 
 int getIndex(double value,double size,double max){
-  if(value<0.0){
+  if(size==0){
+	  return 0;
+  }
+  if(size<=0.0){
 	  return 0;
   }
   double step=max/ ((double)size);
@@ -135,7 +200,7 @@ int getIndex(double value,double size,double max){
   if(index<size){
     return index;
   }else{
-	//cout << "Out of bins " << max << " " << value <<"\n";
+//	cout << "Out of bins " << max << " " << value <<"\n";
 	return size-1;
   }
 }

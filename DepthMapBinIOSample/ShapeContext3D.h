@@ -21,3 +21,6 @@ extern void addPoints(Point3D centre,vector<Point3D> points,Histogram3D * histog
 extern PointCloud * getPointCloud(CDepthMap * depthMap);
 
 extern int getIndex(double value,double size,double max);
+
+pair<Histogram3D *,Histogram3D *> getDynamicShapeContext3D(Action action,int t);
+pair<Histogram3D *,Histogram3D *> dynamicHistogram(vector<Histogram3D*> histograms);
