@@ -12,10 +12,13 @@ class Histogram3D{
 	Point3D maxValues;
   
     Histogram3D(double r);
+	Histogram3D(int rBins,int thetaBins,int betaBins,double r);
     void addToHistogram(double ksi,double theta,double psi);
     void normalize();
     void show();
     vector<double>* toVector();
+  private:
+    void init(double r);
 };
 
 extern Histogram3D *  getShapeContext3D(Instant instant);

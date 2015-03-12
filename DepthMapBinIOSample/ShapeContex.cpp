@@ -7,7 +7,6 @@ pair<Histogram3D *,Histogram3D *> getDynamicShapeContext3D(Action action,int t){
   for(int i=0;i<size;i++){
 	  CDepthMap *depthMap=action.at(i*t);
 	  pointCloud->addTimeFrame(depthMap);
-	 // cout << pointCloud->points.size() <<"\n";
   }
   pointCloud->normalize();
   vector<Point3D> points;//=pointCloud->getExtremePoints();
@@ -18,13 +17,11 @@ pair<Histogram3D *,Histogram3D *> getDynamicShapeContext3D(Action action,int t){
 	Histogram3D * histogram=new Histogram3D(1000.0);
     for(int j=0;j<points.size();j++){
 	  Point3D current=points.at(j);
-     //cout << current << "%%%%%%\n";
       addPoints(current, frame, histogram);
     }
 	histogram->normalize();
 	histograms.push_back(histogram);
   }
-  cout <<"**********************\n";
   delete pointCloud;
   return dynamicHistogram( histograms);
 }
@@ -68,7 +65,7 @@ pair<Histogram3D *,Histogram3D *> dynamicHistogram(vector<Histogram3D*> histogra
 
 Histogram3D * getShapeContext3D(Instant instant){
   PointCloud * pointCloud=getPointCloud(instant.at(0));
-  Histogram3D * histogram=new Histogram3D(1000.0);
+  Histogram3D * histogram=new Histogram3D(3,8,16,1000.0);
  
   for(int i=1;i<instant.size();i++){
 	CDepthMap* depthMap=instant.at(i);
@@ -112,11 +109,21 @@ void addPoints(Point3D  centre,vector<Point3D> points,Histogram3D * histogram){
   }
 }
 
+Histogram3D::Histogram3D(int rBins,int thetaBins,int betaBins,double r){
+  this->rBins=rBins;
+  this->thetaBins=thetaBins;
+  this->betaBins=betaBins;
+  init(r);
+}
+
 Histogram3D::Histogram3D(double r){
   rBins=3.0;
   thetaBins=8.0;
   betaBins=4.0;
-  //cout << "R:" << r<< "\n";
+  init(r);
+}
+
+void Histogram3D::init(double r){
   maxValues.val[0]=log(r)+0.1;
   maxValues.val[1]=2*M_PI + 0.1;
   maxValues.val[2]=M_PI + 0.1;

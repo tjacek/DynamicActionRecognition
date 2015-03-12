@@ -15,7 +15,8 @@ pair<Dataset,Labels> buildFullDataset(Categories categories){
 	dataset.addExample(action);
 	labels.push_back(p_i.second);
   }
-  dataset.dimReduction(50);
+  dataset.normalize();
+ // dataset.dimReduction(100);
   //dataset.normalize();
   dataset.toArff(labels);
   ofstream myfile;
@@ -67,7 +68,7 @@ void buildDataset(vector<Action> actions,Labels labels){
 
 Dataset::Dataset(){
   dimReducted=false;
-  extractor=new DynamicExtractor();
+  extractor=new FeatureExtractorImpl();
   desc=new vector<vector<double>>();
 }
 

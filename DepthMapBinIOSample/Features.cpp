@@ -9,7 +9,7 @@ void FeatureExtractor::showTime(){
 }
 
 int FeatureExtractorImpl::numberOfFeatures(){
-  return 3*8*4*numberOfInstants;
+  return 3*8*4*3 * 4;
 }
 
 string FeatureExtractorImpl:: featureName(int i){
