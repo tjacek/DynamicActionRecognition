@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "Dataset.h"
-
+#include "pca.h"
 #include "DepthMap.h"
 
 pair<Dataset,Labels> buildFullDataset(Categories categories){
@@ -15,7 +15,8 @@ pair<Dataset,Labels> buildFullDataset(Categories categories){
 	dataset.addExample(action);
 	labels.push_back(p_i.second);
   }
-  dataset.normalize();
+  dataset.dimReduction(50);
+  //dataset.normalize();
   dataset.toArff(labels);
   ofstream myfile;
   myfile.open ("shapeContext3DFull.arff");
@@ -28,27 +29,27 @@ pair<Dataset,Labels> buildFullDataset(Categories categories){
 }
 
 void Dataset::normalize(){
-  for(int j=0;j<extractor->numberOfFeatures();j++){
+  for(int j=0;j<numberOfFeatures();j++){
 	normalizeAtribute(j);
   }
 }
 
 void Dataset::normalizeAtribute(int i){
   double maxValue=-1.0;
-  for(int j=0;j<desc.size();j++){
-	double value=desc.at(j).at(i);
+  for(int j=0;j<desc->size();j++){
+	double value=desc->at(j).at(i);
 	if(maxValue<value){
 	  maxValue=value;
 	}
   }
 
   if(maxValue!=0){
-  for(int j=0;j<desc.size();j++){
-	double value=desc.at(j).at(i);
+  for(int j=0;j<desc->size();j++){
+	double value=desc->at(j).at(i);
 	//cout << value <<"\n";
 	//cout << maxValue <<"\n";
 
-    desc.at(j).at(i)=value/maxValue;
+    desc->at(j).at(i)=value/maxValue;
   }
   }
 }
@@ -65,7 +66,9 @@ void buildDataset(vector<Action> actions,Labels labels){
 }
 
 Dataset::Dataset(){
+  dimReducted=false;
   extractor=new DynamicExtractor();
+  desc=new vector<vector<double>>();
 }
 
 void Dataset::addActions(vector<Action> actions){
@@ -76,15 +79,35 @@ void Dataset::addActions(vector<Action> actions){
 }
 
 void Dataset::addExample(Action depthMap){
-	desc.push_back(extractor->getFeatures(depthMap));
+	desc->push_back(extractor->getFeatures(depthMap));
 	freeAction(depthMap);
 }
 
+void  Dataset::dimReduction(int k){
+  dimReducted=true;
+  reducedDim=k;
+  vector<vector<double>> * old=desc;
+  this->desc=new vector<vector<double>>();
+  int size=old->size();
+  MatrixXd pca_projc=pca(k,vectorsToMat(*old));
+  //cout << pca_projc <<"\n";
+  for(int i=0;i<size;i++){
+    vector<double> point=old->at(i);
+	//cout << point.size() <<"\n";
+	vector<double> newPoint= applyProjection(point,pca_projc);
+	//cout << newPoint.size() <<"\n";
+	desc->push_back(newPoint);
+  }
+}
+
 vector<double> Dataset::getSample(int i){
-  return desc.at(i);
+  return desc->at(i);
 }
 
 int Dataset::numberOfFeatures(){
+  if(dimReducted){
+    return reducedDim;
+  }
   return extractor->numberOfFeatures();
 }
 
@@ -100,7 +123,7 @@ string Dataset::toArff(Labels labels){
 string  Dataset::getAttributes(){
   string str="";
   vector<float>* fullFeatures = new vector<float>();
-  int size=extractor->numberOfFeatures();
+  int size=numberOfFeatures();
   for(int i=0;i<size;i++){
 	 string feature=extractor->featureName(i);
 	 str+="@ATTRIBUTE " + feature +" numeric\n";
@@ -118,9 +141,9 @@ string Dataset::getData(Labels labels){
   string str="";
   vector<FeatureVector>::iterator it;
   vector<string> classes= getClassNames();
-  for(int i=0;i<desc.size();i++){
+  for(int i=0;i<desc->size();i++){
     string line="";
-    vector<double> v=desc.at(i);
+    vector<double> v=desc->at(i);
 	for(int j=0;j<v.size();j++){
       double raw=v.at(j);
       string tmp; 
@@ -136,7 +159,7 @@ string Dataset::getData(Labels labels){
 }
 
 int Dataset::size(){
-	return desc.size();
+	return desc->size();
 }
 
 vector<string> getClassNames(){

@@ -10,8 +10,8 @@ pair<Histogram3D *,Histogram3D *> getDynamicShapeContext3D(Action action,int t){
 	 // cout << pointCloud->points.size() <<"\n";
   }
   pointCloud->normalize();
-  vector<Point3D> points=pointCloud->getExtremePoints();
-  //points.push_back(pointCloud->getCenteroid());
+  vector<Point3D> points;//=pointCloud->getExtremePoints();
+  points.push_back(pointCloud->getCenteroid());
   vector<Histogram3D*> histograms;
   for(int i=2;i<action.size();i++){
 	vector<Point3D> frame=pointCloud->getFrame(i-2,i);

@@ -4,6 +4,7 @@
 #include "dataset.h"
 
 #include <windows.h>
+#pragma once
 #include <tchar.h> 
 #include <strsafe.h>
 

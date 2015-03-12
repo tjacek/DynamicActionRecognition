@@ -27,6 +27,7 @@ class DynamicExtractor: public FeatureExtractor{
   public:
 	int numberOfFeatures();
     string featureName(int i);
+	
     FeatureVector getFeatures(Action action);
 };
 
@@ -40,9 +41,12 @@ class Dataset{
 	int size();
 	vector<double> getSample(int i);
 	string toArff(Labels labels);
+	void dimReduction(int k);
 	void normalize();
   private:
-	vector<FeatureVector> desc;
+    bool dimReducted;
+	int reducedDim;
+	vector<FeatureVector> * desc;
 	string getAttributes();
 	string getData(Labels labels);
 	void normalizeAtribute(int i);

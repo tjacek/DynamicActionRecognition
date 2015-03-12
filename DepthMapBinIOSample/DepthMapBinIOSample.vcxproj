@@ -79,7 +79,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>C:\opencv2410\build\x64\vc10\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\opencv2410\build\x64\vc10\lib;D:\pcl\PCL 1.6.0\3rdParty\Eigen\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -87,7 +87,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <TargetMachine>MachineX86</TargetMachine>
-      <AdditionalLibraryDirectories>C:\opencv2410\build\x64\vc10\lib;C:\opencv2410\build\x64\vc10\bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\opencv2410\build\x64\vc10\lib;C:\opencv2410\build\x64\vc10\bin;D:\pcl\PCL 1.6.0\3rdParty\Eigen\bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>opencv_core2410d.lib;opencv_imgproc2410d.lib;opencv_highgui2410d.lib;opencv_ml2410d.lib;opencv_video2410.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
@@ -101,6 +101,7 @@
     <ClCompile Include="DepthMapBinIOSample.cpp" />
     <ClCompile Include="Features.cpp" />
     <ClCompile Include="io.cpp" />
+    <ClCompile Include="pca.cpp" />
     <ClCompile Include="PointCloud.cpp" />
     <ClCompile Include="ShapeContex.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -114,6 +115,7 @@
     <ClInclude Include="DepthMap.h" />
     <ClInclude Include="DepthMapBinFileIO.h" />
     <ClInclude Include="io.h" />
+    <ClInclude Include="pca.h" />
     <ClInclude Include="PointCloud.h" />
     <ClInclude Include="ShapeContext3D.h" />
     <ClInclude Include="stdafx.h" />

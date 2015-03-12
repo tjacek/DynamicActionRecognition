@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef _DEPTH_MAP_BIN_FILE_IO_H
 #define _DEPTH_MAP_BIN_FILE_IO_H
 
