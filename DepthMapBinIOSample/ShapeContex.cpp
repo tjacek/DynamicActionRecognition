@@ -63,9 +63,9 @@ pair<Histogram3D *,Histogram3D *> dynamicHistogram(vector<Histogram3D*> histogra
   return pair;
 }
 
-Histogram3D * getShapeContext3D(Instant instant){
+Histogram3D * getShapeContext3D( DatasetParametrs params,Instant instant){
   PointCloud * pointCloud=getPointCloud(instant.at(0));
-  Histogram3D * histogram=new Histogram3D(3,8,16,1000.0);
+  Histogram3D * histogram=new Histogram3D(params.rBins,params.thetaBins,params.betaBins,1000.0);
  
   for(int i=1;i<instant.size();i++){
 	CDepthMap* depthMap=instant.at(i);

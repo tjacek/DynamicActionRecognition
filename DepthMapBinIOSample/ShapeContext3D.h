@@ -2,6 +2,7 @@
 
 #include "stdafx.h"
 #include "PointCloud.h"
+#include "Dataset.h"
 
 class Histogram3D{
   public:
@@ -21,7 +22,7 @@ class Histogram3D{
     void init(double r);
 };
 
-extern Histogram3D *  getShapeContext3D(Instant instant);
+extern Histogram3D *  getShapeContext3D( DatasetParametrs params,Instant instant);
 extern void addPoints(Point3D centre,vector<Point3D> points,Histogram3D * histogram);
 extern PointCloud * getPointCloud(CDepthMap * depthMap);
 

@@ -8,8 +8,13 @@ void FeatureExtractor::showTime(){
   cout <<"\n sd: " << standardDeviation(actionTime)<< "\n"; 
 }
 
+FeatureExtractorImpl::FeatureExtractorImpl(  DatasetParametrs params){
+  numberOfDims=params.rBins*params.betaBins*params.thetaBins*3;
+  this->params=params;
+}
+
 int FeatureExtractorImpl::numberOfFeatures(){
-  return 3*8*4*3 * 4;
+  return numberOfDims;
 }
 
 string FeatureExtractorImpl:: featureName(int i){
@@ -24,7 +29,7 @@ FeatureVector FeatureExtractorImpl::getFeatures(Action action){
   vector<Instant> instants=getInstants( action);
   for(int i=0;i<instants.size();i++){
 	Instant instant=instants.at(i);
-	Histogram3D * histogram=getShapeContext3D(instant);
+	Histogram3D * histogram=getShapeContext3D( params,instant);
 	//histogram->show();
 	FeatureVector * part=histogram->toVector();
 	fullVect.insert(fullVect.end(),part->begin(),part->end());

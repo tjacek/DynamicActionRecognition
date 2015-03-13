@@ -6,6 +6,17 @@
 
 typedef vector<double> FeatureVector;
 
+class DatasetParametrs{
+  public:
+    int rBins;
+    int thetaBins;
+	int betaBins;
+	int reductedDim;
+	string output;
+
+	DatasetParametrs();
+};
+
 class FeatureExtractor{
   public:
 	virtual int numberOfFeatures()=0;
@@ -18,9 +29,13 @@ class FeatureExtractor{
 
 class FeatureExtractorImpl: public FeatureExtractor{
   public:
+	FeatureExtractorImpl(  DatasetParametrs params);
 	int numberOfFeatures();
     string featureName(int i);
     FeatureVector getFeatures(Action action);
+ private:
+   int numberOfDims;
+   DatasetParametrs params;
 };
 
 class DynamicExtractor: public FeatureExtractor{
@@ -34,7 +49,7 @@ class DynamicExtractor: public FeatureExtractor{
 class Dataset{
   public:
     FeatureExtractor* extractor;
-	Dataset();
+	Dataset(DatasetParametrs params);
 	void addActions(vector<Action> actions);
     void addExample(Action depthMap);
 	int numberOfFeatures();
@@ -53,6 +68,6 @@ class Dataset{
 };
 
 extern void buildDataset(vector<Action> actions,Labels labels);
-extern pair<Dataset,Labels> buildFullDataset(Categories categories);
+extern void buildFullDataset(DatasetParametrs params,Categories categories);
 extern vector<string> getClassNames();
 extern void saveDataset(Dataset dataset,Labels labels);

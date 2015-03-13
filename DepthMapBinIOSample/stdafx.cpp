@@ -11,3 +11,17 @@ string intToString(int i){
   string * str=new string(tmp.c_str());
   return *str;
 }
+
+string doubleToString(double raw){
+  string tmp; 
+  sprintf((char*)tmp.c_str(), "%f", (float)raw);
+  string * str=new string(tmp.c_str());
+  return *str;
+}
+
+void saveToFile(string filename,string data){
+ ofstream myfile;
+  myfile.open(filename);
+  myfile << data;
+  myfile.close();
+}

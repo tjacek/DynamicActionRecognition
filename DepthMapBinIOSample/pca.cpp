@@ -49,7 +49,8 @@ MatrixXd vectorsToMat(vector<vector<double>>  vectors){
      for(int j=0;j<width;j++){
 		 matrix(i,j) =vector.at(j);
     } 
-  }  
+  }
+ // cout << matrix;
   return matrix.transpose();
 }
 

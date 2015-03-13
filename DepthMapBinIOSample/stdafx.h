@@ -30,3 +30,5 @@ using namespace std;
 #define emptyPoint 0
 
 extern string intToString(int i);
+extern void saveToFile(string filename,string data);
+extern string doubleToString(double raw);

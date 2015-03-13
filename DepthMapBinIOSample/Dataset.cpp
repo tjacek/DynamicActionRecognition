@@ -3,8 +3,8 @@
 #include "pca.h"
 #include "DepthMap.h"
 
-pair<Dataset,Labels> buildFullDataset(Categories categories){
-  Dataset dataset;
+void buildFullDataset(DatasetParametrs params,Categories categories){
+  Dataset dataset(params);
   Labels labels;
   map<string,int>::iterator it;
   for(it=categories.begin();it!=categories.end();it++){
@@ -16,23 +16,27 @@ pair<Dataset,Labels> buildFullDataset(Categories categories){
 	labels.push_back(p_i.second);
   }
   dataset.normalize();
- // dataset.dimReduction(100);
-  //dataset.normalize();
-  dataset.toArff(labels);
-  ofstream myfile;
-  myfile.open ("shapeContext3DFull.arff");
-  myfile << dataset.toArff(labels);
-  myfile.close();
-  pair<Dataset,Labels> pair;
-  pair.first=dataset;
-  pair.second=labels;
-  return pair;
+  if(params.reductedDim>0){
+    dataset.dimReduction(params.reductedDim);
+  }
+  saveToFile(params.output,dataset.toArff(labels));
 }
 
 void Dataset::normalize(){
   for(int j=0;j<numberOfFeatures();j++){
 	normalizeAtribute(j);
   }
+}
+
+void buildDataset(vector<Action> actions,Labels labels){
+  DatasetParametrs params;
+  Dataset dataset(params);
+  dataset.addActions(actions);
+  dataset.toArff(labels);
+  ofstream myfile;
+  myfile.open ("shapeContext3D.arff");
+  myfile << dataset.toArff(labels);
+  myfile.close();
 }
 
 void Dataset::normalizeAtribute(int i){
@@ -55,20 +59,9 @@ void Dataset::normalizeAtribute(int i){
   }
 }
 
-
-void buildDataset(vector<Action> actions,Labels labels){
-  Dataset dataset;
-  dataset.addActions(actions);
-  dataset.toArff(labels);
-  ofstream myfile;
-  myfile.open ("shapeContext3D.arff");
-  myfile << dataset.toArff(labels);
-  myfile.close();
-}
-
-Dataset::Dataset(){
+Dataset::Dataset(DatasetParametrs params){
   dimReducted=false;
-  extractor=new FeatureExtractorImpl();
+  extractor=new FeatureExtractorImpl(params);
   desc=new vector<vector<double>>();
 }
 
@@ -76,7 +69,6 @@ void Dataset::addActions(vector<Action> actions){
   for(int i=0;i<actions.size();i++){
 	  addExample(actions.at(i));
   }
-
 }
 
 void Dataset::addExample(Action depthMap){
@@ -163,6 +155,14 @@ int Dataset::size(){
 	return desc->size();
 }
 
+DatasetParametrs::DatasetParametrs(){
+  rBins=3;
+  thetaBins=12;
+  betaBins=8;
+  reductedDim=100;
+  output="dataset.arff";
+}
+
 vector<string> getClassNames(){
   vector<string> classNames;
   classNames.push_back("A");
@@ -189,20 +189,6 @@ vector<string> getClassNames(){
 	  classNames.push_back("V");
 
   return classNames;
-}
-
-string doubleToString(double raw){
-  string tmp; 
-  sprintf((char*)tmp.c_str(), "%f", (float)raw);
-  string * str=new string(tmp.c_str());
-  return *str;
-}
-
-void saveToFile(string filename,string data){
- ofstream myfile;
-  myfile.open(filename);
-  myfile << data;
-  myfile.close();
 }
 
 void saveDataset(Dataset dataset,Labels labels){

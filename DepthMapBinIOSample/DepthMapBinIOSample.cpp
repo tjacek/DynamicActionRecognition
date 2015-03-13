@@ -65,14 +65,14 @@ void test(){
 void test2(){
   char depthFileName[] = "C:\\Users\\user\\Desktop\\kwolek\\LargeDataset\\a01_s01_e01_sdepth.bin";
   Action action=readAction(depthFileName);
-  FeatureExtractorImpl feature;
-  feature.getFeatures(action);
+ // FeatureExtractorImpl feature;
+  //feature.getFeatures(action);
 }
 
-void test3(){
+void test3(DatasetParametrs params){
   char depthFileName[] = "C:/Users/user/Desktop/kwolek/LargeDataset";
   Categories categories=readFulldataset( depthFileName);
-  buildFullDataset(categories);
+  buildFullDataset(params,categories);
 }
 
 void test4(){
@@ -98,8 +98,8 @@ void test4(){
 void test5(){
   char depthFileName[] = "C:/Users/user/Desktop/kwolek/LargeDataset";
   Categories categories=readFulldataset( depthFileName);
-  pair<Dataset,Labels> pair=buildFullDataset(categories);
-  saveDataset(pair.first, pair.second);
+  //pair<Dataset,Labels> pair=buildFullDataset(categories);
+  //saveDataset(pair.first, pair.second);
 }
 
 void test6(){
@@ -116,10 +116,24 @@ void test6(){
  cloud.save("pointCloudA17.xyz");
 }
 
-int _tmain(int argc, _TCHAR* argv[])
-{
-	test3();
-	system("pause");
+int main(int argc, char * argv[])
+{   cout << argc <<"\n";
+	if(argc==6){
+	  DatasetParametrs params;
+	  params.rBins=atoi(argv[1]) ;
+	  params.thetaBins=atoi(argv[2]) ;
+	  params.betaBins=atoi(argv[3]) ;
+	  params.reductedDim=atoi(argv[4]);
+	  params.output=argv[5];
+	  test3( params);
+    }
+	if(argc==5){
+      cout << "To few args"<< argv[0] << " " <<argv[1]<<"\n";
+	  //test3();
+	}
+	//while(true){
+	//}
+	//system("pause");
 
 	return 0;
 }
