@@ -69,8 +69,7 @@ void test2(){
   //feature.getFeatures(action);
 }
 
-void test3(DatasetParametrs params){
-  char depthFileName[] = "C:/Users/user/Desktop/kwolek/LargeDataset";
+void test3(DatasetParametrs params, char depthFileName[]){
   Categories categories=readFulldataset( depthFileName);
   buildFullDataset(params,categories);
 }
@@ -125,15 +124,17 @@ int main(int argc, char * argv[])
 	  params.betaBins=atoi(argv[3]) ;
 	  params.reductedDim=atoi(argv[4]);
 	  params.output=argv[5];
-	  test3( params);
+	  //test3( params);
     }
-	if(argc==5){
-      cout << "To few args"<< argv[0] << " " <<argv[1]<<"\n";
-	  //test3();
+	if(argc==1){
+       DatasetParametrs params;
+	   char depthFileName[] = "C:/Users/user/Desktop/kwolek/LargeDataset/test";
+	   params.output="C:/Users/user/Desktop/kwolek/LargeDataset/test.arff";
+	   test3( params,depthFileName);
 	}
 	//while(true){
 	//}
-	//system("pause");
+	system("pause");
 
 	return 0;
 }

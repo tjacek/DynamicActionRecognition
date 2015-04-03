@@ -6,43 +6,52 @@ void test_pca(){
   MatrixXd dataPoints = vectorsToMat(points);
   //cout <<dataPoints;
   MatrixXd projection=pca(2,dataPoints);
-  cout <<  applyProjection(points.at(0),projection).size();
+ // cout <<  applyProjection(points.at(0),projection).size();
 }
 
 vector<vector<double>> nonzeroVectors(vector<vector<double>>  vectors){
-	cout <<"OKk "<< vectors.at(0).size() <<"\n";
+	//cout <<"Before "<< vectors.at(0).size() <<"\n";
   vector<vector<double>> nonzero;
   int height=vectors.size();
   int width=vectors.at(0).size();
   for(int i=0;i<height;i++){
-	  vector<double> instance;
-	  nonzero.push_back(instance);
+	vector<double> instance;
+	/*for(int j=0;j<width; j++){
+		instance.push_back(0);
+	}*/
+	nonzero.push_back(instance);
   }
+  //cout << "Nonzero: " << vectors.size() << "\n";
   for(int i=0;i<width;i++){
     bool isZero=true;
     for(int j=0;j<height;j++){
-	  vector<double> vector=vectors.at(j);
-	  if(vector.at(i)!=0.0){
-        isZero=false;
-		  nonzero.push_back(vector);
+	  vector<double> instance=vectors.at(j);
+	  if(instance.at(i)!=0.0){
+		isZero=false;
+	  }
+	  if( instance.at(i)!=instance.at(i) ){
+			cout << "NAN";
 	  }
      }
 	if(!isZero){
 	 for(int j=0;j<height;j++){
-	   vector<double> vector=vectors.at(j);
-	   nonzero.at(j).push_back(vector.at(i));
+	   //vector<double> oldVector=vectors.at(j);
+	   //vector<double> newVector =nonzero.at(j);
+	   nonzero.at(j).push_back(vectors.at(j).at(i));
 	 }
 	}
   }
-  cout <<"OK "<< nonzero.at(0).size() <<"\n";
+  //cout <<"After: "<< nonzero.at(0).size() <<"\n";
   return nonzero;
 }
 
 MatrixXd vectorsToMat(vector<vector<double>>  vectors){
+	cout << "\n before: " << vectors.size()<<"\n";
   vector<vector<double>> nonzero=nonzeroVectors(vectors);
   //cout <<"OK "<< nonzero.size() <<"\n";
   int height=nonzero.size();
   int width=nonzero.at(0).size();
+  cout << "after: " << height <<" " << width << "\n";
   MatrixXd matrix = MatrixXd::Zero(height,width);
   for(int i=0;i<height;i++){
 	 vector<double> vector= nonzero.at(i);
@@ -50,7 +59,7 @@ MatrixXd vectorsToMat(vector<vector<double>>  vectors){
 		 matrix(i,j) =vector.at(j);
     } 
   }
- // cout << matrix;
+  cout << matrix.size();
   return matrix.transpose();
 }
 
@@ -71,14 +80,14 @@ EigenVectors pca(int newDim,MatrixXd dataPoints){
   Covariance = (1 / (double) size)  * dataPoints* dataPoints.transpose();
   Eigen::EigenSolver<MatrixXd> m_solve(Covariance);
  
-  //cout << Covariance;
+  cout <<"\n cov"<< Covariance.cols() <<"\n";
 
-  MatrixXd eigenVectors = MatrixXd::Zero(dim,dim); 
-  eigenVectors = m_solve.eigenvectors().real();
+  //MatrixXd eigenVectors = MatrixXd::Zero(dim,dim); 
+  MatrixXd eigenVectors = m_solve.eigenvectors().real();
 
   VectorXd eigenvalues = VectorXd::Zero(dim);
   eigenvalues = m_solve.eigenvalues().real();
-
+  cout <<"\n"<< eigenvalues(0);
   PermutationIndices pi;
   for (int i = 0 ; i < dim; i++){
 
@@ -87,7 +96,11 @@ EigenVectors pca(int newDim,MatrixXd dataPoints){
   }
   sort(pi.begin(), pi.end());
 
-  return getProjectionMatrix(newDim, eigenVectors, pi);
+  if(newDim < dim){
+    return getProjectionMatrix(newDim, eigenVectors, pi);
+  }else{
+    return getProjectionMatrix(dim, eigenVectors, pi);
+  }
 }
 
 MatrixXd getProjectionMatrix(int k,EigenVectors eigenVectors,PermutationIndices pi){

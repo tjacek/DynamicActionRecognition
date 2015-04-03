@@ -15,10 +15,9 @@ void buildFullDataset(DatasetParametrs params,Categories categories){
 	dataset.addExample(action);
 	labels.push_back(p_i.second);
   }
-  dataset.normalize();
-  if(params.reductedDim>0){
-    dataset.dimReduction(params.reductedDim);
-  }
+//  dataset.normalize();
+ 
+  cout << "\n"<< params.output <<"\n";
   saveToFile(params.output,dataset.toArff(labels));
 }
 
@@ -98,9 +97,9 @@ vector<double> Dataset::getSample(int i){
 }
 
 int Dataset::numberOfFeatures(){
-  if(dimReducted){
+  /*if(dimReducted){
     return reducedDim;
-  }
+  }*/
   return extractor->numberOfFeatures();
 }
 
