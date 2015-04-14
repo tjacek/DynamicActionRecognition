@@ -14,9 +14,7 @@ void buildFullDataset(DatasetParametrs params,Categories categories){
 	Action action=readAction(c);
 	dataset.addExample(action);
 	labels.push_back(p_i.second);
-  }
-//  dataset.normalize();
- 
+  } 
   cout << "\n"<< params.output <<"\n";
   saveToFile(params.output,dataset.toArff(labels));
 }

@@ -52,46 +52,9 @@ vector<Action> readAllActions(ImageList images){
   return actions;
 }
 
-void test(){
- string dirName ="C:/Users/user/Desktop/kwolek/LargeDataset"; 
- string labelsFile ="C:/Users/user/Desktop/kwolek/labels2.txt";
- Categories cat=readCategories(labelsFile);
- ImageList imageList = getImageList( dirName);
- Labels labels= getLabels(imageList, cat );
- vector<Action> actions= readAllActions(imageList);
- buildDataset(actions,labels);
-}
-
-void test2(){
-  char depthFileName[] = "C:\\Users\\user\\Desktop\\kwolek\\LargeDataset\\a01_s01_e01_sdepth.bin";
-  Action action=readAction(depthFileName);
- // FeatureExtractorImpl feature;
-  //feature.getFeatures(action);
-}
-
 void test3(DatasetParametrs params, char depthFileName[]){
   Categories categories=readFulldataset( depthFileName);
   buildFullDataset(params,categories);
-}
-
-void test4(){
-  char depthFileName[] = "C:/Users/user/Desktop/kwolek/LargeDataset";
-  Categories categories=readFulldataset( depthFileName);
-  vector<string> names=getClassNames();
-  map<string,int>::iterator it;
-    string str[20];
-	string nm[20];
-
-  for(it=categories.begin();it!=categories.end();it++){
-     pair<string,int> p_i=*it;
-	 string cls=names.at(p_i.second);
-	 nm[p_i.second]=p_i.first;
-	 str[p_i.second]=cls;
-	// cout << p_i.first << " " << cls <<"\n";
-  }
-  for(int i=0;i<20;i++){
-	  cout << str[i] <<" " << nm[i] <<"\n";
-  }
 }
 
 void test5(){
@@ -128,8 +91,8 @@ int main(int argc, char * argv[])
     }
 	if(argc==1){
        DatasetParametrs params;
-	   char depthFileName[] = "C:/Users/user/Desktop/kwolek/LargeDataset/test";
-	   params.output="C:/Users/user/Desktop/kwolek/LargeDataset/test.arff";
+	   char depthFileName[] = "C:/Users/user/Desktop/kwolek/LargeDataset/train";
+	   params.output="C:/Users/user/Desktop/kwolek/LargeDataset/train.arff";
 	   test3( params,depthFileName);
 	}
 	//while(true){

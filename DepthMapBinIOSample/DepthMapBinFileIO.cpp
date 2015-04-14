@@ -7,8 +7,6 @@ int ReadDepthMapBinFileHeader(FILE * fp, int &retNumFrames, int &retNCols, int &
 {
 	if(fp == NULL)
 		return 0;
-
-
 	fread(&retNumFrames, 4, 1, fp); //read 4 bytes 
 	fread(&retNCols, 4, 1, fp);
 	fread(&retNRows, 4, 1, fp);
