@@ -57,27 +57,6 @@ void test3(DatasetParametrs params, char depthFileName[]){
   buildFullDataset(params,categories);
 }
 
-void test5(){
-  char depthFileName[] = "C:/Users/user/Desktop/kwolek/LargeDataset";
-  Categories categories=readFulldataset( depthFileName);
-  //pair<Dataset,Labels> pair=buildFullDataset(categories);
-  //saveDataset(pair.first, pair.second);
-}
-
-void test6(){
- char depthFileName[] = "C:/Users/user/Desktop/kwolek/LargeDataset/a3/a03_s01_e01_sdepth.bin";
- char depthFileName2[] = "C:/Users/user/Desktop/kwolek/LargeDataset/a4/a04_s01_e01_sdepth.bin";
- char depthFileName3[] = "C:/Users/user/Desktop/kwolek/LargeDataset/a7/a07_s01_e01_sdepth.bin";
- char depthFileName4[] = "C:/Users/user/Desktop/kwolek/LargeDataset/a6/a06_s01_e01_sdepth.bin";
-  char depthFileName5[] = "C:/Users/user/Desktop/kwolek/LargeDataset/a17/a17_s01_e01_sdepth.bin";
-
- Action action= readAction(depthFileName5);
- PointCloud cloud;
- cloud.addAction(action);
- cloud.normalize();
- cloud.save("pointCloudA17.xyz");
-}
-
 int main(int argc, char * argv[])
 {   cout << argc <<"\n";
 	if(argc==6){
