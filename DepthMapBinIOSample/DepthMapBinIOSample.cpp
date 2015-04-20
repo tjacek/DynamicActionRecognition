@@ -52,9 +52,19 @@ vector<Action> readAllActions(ImageList images){
   return actions;
 }
 
-void test3(DatasetParametrs params, char depthFileName[]){
+void createArffDataset(DatasetParametrs params, char depthFileName[]){
   Categories categories=readFulldataset( depthFileName);
   buildFullDataset(params,categories);
+}
+
+double getDepth(int x,int y,int t,Action action){
+  CDepthMap* cdepth= action.at(t);
+  return cdepth->GetItem(x,y);
+}
+
+void readSingleAction(char depthFileName[]){
+  Action action=readAction( depthFileName);
+
 }
 
 int main(int argc, char * argv[])
@@ -74,8 +84,7 @@ int main(int argc, char * argv[])
 	   params.output="C:/Users/user/Desktop/kwolek/LargeDataset/train.arff";
 	   test3( params,depthFileName);
 	}
-	//while(true){
-	//}
+	
 	system("pause");
 
 	return 0;
