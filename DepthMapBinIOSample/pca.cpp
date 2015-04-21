@@ -1,27 +1,20 @@
 #include "StdAfx.h"
 #include "pca.h"
 
-void test_pca(){
+/*void test_pca(){
   vector<vector<double>> points=generateData(100);
   MatrixXd dataPoints = vectorsToMat(points);
-  //cout <<dataPoints;
   MatrixXd projection=pca(2,dataPoints);
- // cout <<  applyProjection(points.at(0),projection).size();
 }
 
 vector<vector<double>> nonzeroVectors(vector<vector<double>>  vectors){
-	//cout <<"Before "<< vectors.at(0).size() <<"\n";
   vector<vector<double>> nonzero;
   int height=vectors.size();
   int width=vectors.at(0).size();
   for(int i=0;i<height;i++){
 	vector<double> instance;
-	/*for(int j=0;j<width; j++){
-		instance.push_back(0);
-	}*/
 	nonzero.push_back(instance);
   }
-  //cout << "Nonzero: " << vectors.size() << "\n";
   for(int i=0;i<width;i++){
     bool isZero=true;
     for(int j=0;j<height;j++){
@@ -35,13 +28,11 @@ vector<vector<double>> nonzeroVectors(vector<vector<double>>  vectors){
      }
 	if(!isZero){
 	 for(int j=0;j<height;j++){
-	   //vector<double> oldVector=vectors.at(j);
-	   //vector<double> newVector =nonzero.at(j);
+	  
 	   nonzero.at(j).push_back(vectors.at(j).at(i));
 	 }
 	}
   }
-  //cout <<"After: "<< nonzero.at(0).size() <<"\n";
   return nonzero;
 }
 
@@ -64,7 +55,6 @@ MatrixXd vectorsToMat(vector<vector<double>>  vectors){
 }
 
 EigenVectors pca(int newDim,MatrixXd dataPoints){
-  //cout << dataPoints;
   int dim = dataPoints.rows(); 
   int size = dataPoints.cols();
   
@@ -75,14 +65,12 @@ EigenVectors pca(int newDim,MatrixXd dataPoints){
 	   meanVector  = VectorXd::Constant(size,mean); 
 	   dataPoints.row(i) -= meanVector;
   }
-  //  cout << dataPoints;
   MatrixXd Covariance = MatrixXd::Zero(dim, dim);
   Covariance = (1 / (double) size)  * dataPoints* dataPoints.transpose();
   Eigen::EigenSolver<MatrixXd> m_solve(Covariance);
  
   cout <<"\n cov"<< Covariance.cols() <<"\n";
 
-  //MatrixXd eigenVectors = MatrixXd::Zero(dim,dim); 
   MatrixXd eigenVectors = m_solve.eigenvectors().real();
 
   VectorXd eigenvalues = VectorXd::Zero(dim);
@@ -92,7 +80,6 @@ EigenVectors pca(int newDim,MatrixXd dataPoints){
   for (int i = 0 ; i < dim; i++){
 
 	  pi.push_back(std::make_pair(eigenvalues(i), i));
-	  //cout << eigenvalues(i) <<"\n";
   }
   sort(pi.begin(), pi.end());
 
@@ -129,21 +116,6 @@ vector<double> applyProjection(vector<double> point, MatrixXd projection){
 
 vector<vector<double>> generateData(int n){
   vector<vector<double>> vectors;
-  /*   std::default_random_engine re;
-  std::uniform_real_distribution<double> unif(0,100.0);
-  std::uniform_real_distribution<double> noise(0,0.1);
-  for(int i=0;i<n;i++){
-	 vector<double> vector;
-	 double x=unif(re);
-	 double y=unif(re);
-	 double z=noise(re);
-	 double t=noise(re);
-	 vector.push_back(x);
-     vector.push_back(y);
-     vector.push_back(z);
-     vector.push_back(t);
-	 
-     vectors.push_back(vector);
-  }*/
+
   return vectors;
-}
+}*/

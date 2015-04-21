@@ -79,14 +79,14 @@ void  Dataset::dimReduction(int k){
   vector<vector<double>> * old=desc;
   this->desc=new vector<vector<double>>();
   int size=old->size();
-  MatrixXd pca_projc=pca(k,vectorsToMat(*old));
+//  MatrixXd pca_projc=pca(k,vectorsToMat(*old));
   //cout << pca_projc <<"\n";
   for(int i=0;i<size;i++){
     vector<double> point=old->at(i);
 	//cout << point.size() <<"\n";
-	vector<double> newPoint= applyProjection(point,pca_projc);
+	//vector<double> newPoint= applyProjection(point,pca_projc);
 	//cout << newPoint.size() <<"\n";
-	desc->push_back(newPoint);
+	//desc->push_back(newPoint);
   }
 }
 

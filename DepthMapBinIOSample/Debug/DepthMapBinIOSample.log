@@ -1,0 +1,47 @@
+﻿Build started 2015-04-21 18:21:51.
+     1>Project "C:\Users\user\Desktop\kwolek\DynamicActionRecognition\DepthMapBinIOSample\DepthMapBinIOSample.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\DepthMapBinIOSample.pch" /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Dataset.cpp
+         Dataset.cpp
+     1>c:\users\user\desktop\kwolek\dynamicactionrecognition\depthmapbiniosample\dataset.cpp(41): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\user\desktop\kwolek\dynamicactionrecognition\depthmapbiniosample\dataset.cpp(49): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\user\desktop\kwolek\dynamicactionrecognition\depthmapbiniosample\dataset.cpp(66): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\user\desktop\kwolek\dynamicactionrecognition\depthmapbiniosample\dataset.cpp(123): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\user\desktop\kwolek\dynamicactionrecognition\depthmapbiniosample\dataset.cpp(134): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\user\desktop\kwolek\dynamicactionrecognition\depthmapbiniosample\dataset.cpp(137): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\user\desktop\kwolek\dynamicactionrecognition\depthmapbiniosample\dataset.cpp(140): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\stdio.h(357) : see declaration of 'sprintf'
+     1>c:\users\user\desktop\kwolek\dynamicactionrecognition\depthmapbiniosample\dataset.cpp(193): warning C4244: 'initializing' : conversion from 'double' to 'short', possible loss of data
+     1>c:\users\user\desktop\kwolek\dynamicactionrecognition\depthmapbiniosample\dataset.cpp(214): warning C4018: '<' : signed/unsigned mismatch
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\user\Desktop\kwolek\DynamicActionRecognition\Debug\DepthMapBinIOSample.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\user\Desktop\kwolek\DynamicActionRecognition\Debug\DepthMapBinIOSample.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\user\Desktop\kwolek\DynamicActionRecognition\Debug\DepthMapBinIOSample.lib" /MACHINE:X86 /SAFESEH Debug\Dataset.obj
+         Debug\DepthMap.obj
+         Debug\DepthMapBinFileIO.obj
+         Debug\DepthMapBinIOSample.obj
+         Debug\Features.obj
+         Debug\io.obj
+         Debug\pca.obj
+         Debug\PointCloud.obj
+         Debug\ShapeContex.obj
+         Debug\stdafx.obj
+         Debug\utils.obj
+     1>Dataset.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
+     1>DepthMapBinIOSample.obj : error LNK2019: unresolved external symbol "public: __thiscall cv::Exception::Exception(int,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,int)" (??0Exception@cv@@QAE@HABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@00H@Z) referenced in function "public: unsigned char & __thiscall cv::Mat::at<unsigned char>(int,int)" (??$at@E@Mat@cv@@QAEAAEHH@Z)
+     1>PointCloud.obj : error LNK2001: unresolved external symbol "public: __thiscall cv::Exception::Exception(int,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,int)" (??0Exception@cv@@QAE@HABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@00H@Z)
+     1>DepthMapBinIOSample.obj : error LNK2019: unresolved external symbol "public: virtual __thiscall cv::Exception::~Exception(void)" (??1Exception@cv@@UAE@XZ) referenced in function "public: unsigned char & __thiscall cv::Mat::at<unsigned char>(int,int)" (??$at@E@Mat@cv@@QAEAAEHH@Z)
+     1>PointCloud.obj : error LNK2001: unresolved external symbol "public: virtual __thiscall cv::Exception::~Exception(void)" (??1Exception@cv@@UAE@XZ)
+     1>DepthMapBinIOSample.obj : error LNK2019: unresolved external symbol "void __cdecl cv::error(class cv::Exception const &)" (?error@cv@@YAXABVException@1@@Z) referenced in function "public: unsigned char & __thiscall cv::Mat::at<unsigned char>(int,int)" (??$at@E@Mat@cv@@QAEAAEHH@Z)
+     1>PointCloud.obj : error LNK2001: unresolved external symbol "void __cdecl cv::error(class cv::Exception const &)" (?error@cv@@YAXABVException@1@@Z)
+     1>DepthMapBinIOSample.obj : error LNK2019: unresolved external symbol "void __cdecl cv::fastFree(void *)" (?fastFree@cv@@YAXPAX@Z) referenced in function "public: __thiscall cv::Mat::~Mat(void)" (??1Mat@cv@@QAE@XZ)
+     1>DepthMapBinIOSample.obj : error LNK2019: unresolved external symbol "public: __thiscall cv::_InputArray::_InputArray(class cv::Mat const &)" (??0_InputArray@cv@@QAE@ABVMat@1@@Z) referenced in function "void __cdecl showAction(char * const)" (?showAction@@YAXQAD@Z)
+     1>DepthMapBinIOSample.obj : error LNK2019: unresolved external symbol "public: void __thiscall cv::Mat::create(int,int const *,int)" (?create@Mat@cv@@QAEXHPBHH@Z) referenced in function "public: void __thiscall cv::Mat::create(int,int,int)" (?create@Mat@cv@@QAEXHHH@Z)
+     1>DepthMapBinIOSample.obj : error LNK2019: unresolved external symbol "public: void __thiscall cv::Mat::deallocate(void)" (?deallocate@Mat@cv@@QAEXXZ) referenced in function "public: void __thiscall cv::Mat::release(void)" (?release@Mat@cv@@QAEXXZ)
+     1>DepthMapBinIOSample.obj : error LNK2019: unresolved external symbol "public: void __thiscall cv::Mat::copySize(class cv::Mat const &)" (?copySize@Mat@cv@@QAEXABV12@@Z) referenced in function "public: __thiscall cv::Mat::Mat(class cv::Mat const &)" (??0Mat@cv@@QAE@ABV01@@Z)
+     1>DepthMapBinIOSample.obj : error LNK2019: unresolved external symbol "int __cdecl cv::_interlockedExchangeAdd(int *,int)" (?_interlockedExchangeAdd@cv@@YAHPAHH@Z) referenced in function "public: __thiscall cv::Mat::Mat(class cv::Mat const &)" (??0Mat@cv@@QAE@ABV01@@Z)
+     1>DepthMapBinIOSample.obj : error LNK2019: unresolved external symbol "void __cdecl cv::imshow(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,class cv::_InputArray const &)" (?imshow@cv@@YAXABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABV_InputArray@1@@Z) referenced in function "void __cdecl showAction(char * const)" (?showAction@@YAXQAD@Z)
+     1>C:\Users\user\Desktop\kwolek\DynamicActionRecognition\Debug\DepthMapBinIOSample.exe : fatal error LNK1120: 10 unresolved externals
+     1>Done Building Project "C:\Users\user\Desktop\kwolek\DynamicActionRecognition\DepthMapBinIOSample\DepthMapBinIOSample.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:01.97

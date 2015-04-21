@@ -1,6 +1,6 @@
 #pragma once
 #include "stdafx.h"
-#include <Eigen/Core>
+/*#include <Eigen/Core>
 #include <Eigen/Eigen>
 
 using  Eigen::MatrixXd;
@@ -15,4 +15,4 @@ extern MatrixXd getProjectionMatrix(int k,EigenVectors eigenVectors,PermutationI
 extern vector<double> applyProjection(vector<double> point, MatrixXd projection);
 extern MatrixXd vectorsToMat(vector<vector<double>>  vectors);
 extern void test_pca();
-extern vector<vector<double>> generateData(int n);
+extern vector<vector<double>> generateData(int n);*/
