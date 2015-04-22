@@ -19,6 +19,7 @@ Action readAction(char depthFileName[]){
 	int nrows = 0;
 	ReadDepthMapBinFileHeader(fp, nofs, ncols, nrows);
 
+	cout << nofs << " " << ncols << " " << nrows <<" " <<"\n";
 	//printf("number of frames=%i\n", nofs);
 
 	//read each frame
@@ -62,12 +63,17 @@ double getDepth(int x,int y,int t,Action action){
   return cdepth->GetItem(x,y);
 }
 
-cv::Mat * depthMap2Mat(CDepthMap* cdepth){
+cv::Mat * depthMap2Mat(CDepthMap* cdepth,bool ucharType){
   cv::Mat*  mat =new cv::Mat(cdepth->GetNRows(),cdepth->GetNCols(),CV_8UC1 );
   for(int i=0;i<cdepth->GetNRows(); i++){
     for(int j=0;j<cdepth->GetNCols(); j++){
-	  //float n= cdepth->GetItem(i,j)/65535.0;
-	  mat->at<uchar>(i,j)= (uchar) cdepth->GetItem(i,j);
+	 float n=0;
+	 if(ucharType){
+	   n=abs(cdepth->GetItem(i,j)); 
+	 }else{
+	   n=abs(cdepth->GetItem(i,j)/4.0);
+	 }
+	  mat->at<uchar>(i,j)= (uchar) n;//cdepth->GetItem(i,j);
     }
   }
   return mat;
@@ -78,20 +84,22 @@ void showAction(char depthFileName[]){
   cout << action.size();
   vector<cv::Mat*> frames;
   for(int i=0;i<action.size();i++){
-    cv::Mat * mat=depthMap2Mat(action.at(i));
+    cv::Mat * mat=depthMap2Mat(action.at(i),true);
 	frames.push_back(mat);
   }
   cv::namedWindow( "Display window", cv::WINDOW_AUTOSIZE );
   for(int i = 0;i<frames.size();i++){
      cv::imshow("Display window",*frames.at(i));
-       // Sleep(100);
+       //Sleep(300);
 	 cv::waitKey(0);
   }
 }
 
 int main(int argc, char * argv[])
 {   
-	showAction("C:/Users/user/Desktop/kwolek/LargeDataset/full/a1/a01_s01_e01_sdepth.bin");
+	char depthFileName[]="C:/Users/user/Desktop/kwolek/LargeDataset/full/a1/a01_s01_e01_sdepth.bin";
+	char testFileName[]="C:/Users/user/Desktop/kwolek/vibe/test.bin";
+	showAction(testFileName);
 	/*cout << argc <<"\n";
 	if(argc==6){
 	  DatasetParametrs params;
