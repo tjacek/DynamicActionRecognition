@@ -84,7 +84,7 @@ void showAction(char depthFileName[]){
   cout << action.size();
   vector<cv::Mat*> frames;
   for(int i=0;i<action.size();i++){
-    cv::Mat * mat=depthMap2Mat(action.at(i),true);
+    cv::Mat * mat=depthMap2Mat(action.at(i),false);
 	frames.push_back(mat);
   }
   cv::namedWindow( "Display window", cv::WINDOW_AUTOSIZE );
@@ -97,9 +97,9 @@ void showAction(char depthFileName[]){
 
 int main(int argc, char * argv[])
 {   
-	char depthFileName[]="C:/Users/user/Desktop/kwolek/LargeDataset/full/a1/a01_s01_e01_sdepth.bin";
+	char depthFileName[]="C:/Users/user/Desktop/kwolek/LargeDataset/full/a11/a11_s01_e01_sdepth.bin";
 	char testFileName[]="C:/Users/user/Desktop/kwolek/vibe/test.bin";
-	showAction(testFileName);
+	showAction(depthFileName);
 	/*cout << argc <<"\n";
 	if(argc==6){
 	  DatasetParametrs params;
