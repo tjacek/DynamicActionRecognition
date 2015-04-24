@@ -14,7 +14,17 @@ class ActionBackground{
 
 class Kernel{
   public:
-	virtual double K(int x,int y,int z);
+	virtual double eval(int x,int y,int z)=0;
 };
 
-extern double weightedSum(Action action,Kernel kernel);
+class ExpKernel:public Kernel{
+  public:
+    double sigmaX;
+	double sigmaY;
+	double sigmaZ;
+
+	ExpKernel( double sigmaX,double sigmaY,double sigmaZ);
+    double eval(int x,int y,int t);
+};
+
+extern double weightedSum(int x0,int y0,Action action,Kernel * kernel);
