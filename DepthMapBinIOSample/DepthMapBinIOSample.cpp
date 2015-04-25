@@ -6,6 +6,7 @@
 #include "io.h"
 #include "dataset.h"
 #include "pointCloud.h"
+#include "Difference.h"
 
 Action readAction(char depthFileName[]){
   	FILE * fp = fopen(depthFileName, "rb");
@@ -82,6 +83,7 @@ cv::Mat * depthMap2Mat(CDepthMap* cdepth,bool ucharType){
 void showAction(char depthFileName[]){
   Action action=readAction( depthFileName);
   cout << action.size();
+  differenceOfGaussian3D(&action);
   vector<cv::Mat*> frames;
   for(int i=0;i<action.size();i++){
     cv::Mat * mat=depthMap2Mat(action.at(i),false);
