@@ -7,14 +7,14 @@ class Kernel{
 	virtual double eval(int x,int y,int z)=0;
 };
 
-class ActionBackground{
+class ActionArray{
   public:
     int rows;
     int cols;
 	int frames;
 	double *** data;
-    void convol(Kernel * kernel,Action * action);
-    ActionBackground(Action * action);
+    void convol(Kernel * kernel,ActionArray * action);
+    ActionArray(Action * action);
 	
 };
 
@@ -28,5 +28,6 @@ class ExpKernel:public Kernel{
     double eval(int x,int y,int t);
 };
 
-extern double weightedSum(int x0,int y0,int t0,Action * action,Kernel * kernel);
+extern ActionArray* toActionArray(Action * action);
+extern double weightedSum(int x0,int y0,int t0,ActionArray * action,Kernel * kernel);
 extern void differenceOfGaussian3D(Action * action);

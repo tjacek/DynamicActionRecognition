@@ -1,9 +1,11 @@
-﻿Build started 2015-04-24 23:21:51.
+﻿Build started 2015-04-26 21:29:51.
      1>Project "C:\Users\user\Desktop\kwolek\DynamicActionRecognition\DepthMapBinIOSample\DepthMapBinIOSample.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\x86_amd64\CL.exe /c /Zi /nologo /W3 /WX- /Od /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"x64\Debug\DepthMapBinIOSample.pch" /Fo"x64\Debug\\" /Fd"x64\Debug\vc110.pdb" /Gd /TP /errorReport:prompt Difference.cpp
-         Difference.cpp
-     1>Difference.cpp(20): warning C4267: '=' : conversion from 'size_t' to 'int', possible loss of data
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\x86_amd64\CL.exe /c /Zi /nologo /W3 /WX- /Od /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"x64\Debug\DepthMapBinIOSample.pch" /Fo"x64\Debug\\" /Fd"x64\Debug\vc110.pdb" /Gd /TP /errorReport:prompt DepthMapBinIOSample.cpp
+         DepthMapBinIOSample.cpp
+     1>DepthMapBinIOSample.cpp(12): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\include\stdio.h(218) : see declaration of 'fopen'
+     1>DepthMapBinIOSample.cpp(75): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\user\Desktop\kwolek\DynamicActionRecognition\x64\Debug\DepthMapBinIOSample.exe" /INCREMENTAL /NOLOGO /LIBPATH:C:\opencv2410\build\x64\vc10\bin /LIBPATH:C:\opencv2410\build\x64\vc10\lib opencv_core2410d.lib opencv_imgproc2410d.lib opencv_highgui2410d.lib opencv_ml2410d.lib opencv_video2410.lib opencv_features2d2410d.lib opencv_calib3d2410d.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\user\Desktop\kwolek\DynamicActionRecognition\x64\Debug\DepthMapBinIOSample.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\user\Desktop\kwolek\DynamicActionRecognition\x64\Debug\DepthMapBinIOSample.lib" /MACHINE:X64 x64\Debug\Dataset.obj
          x64\Debug\DepthMap.obj
@@ -22,4 +24,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.60
+Time Elapsed 00:00:01.53
