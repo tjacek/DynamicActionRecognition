@@ -97,11 +97,19 @@ void showAction(char depthFileName[]){
   }
 }
 
+void savePointCloud(char depthFileName[]){
+  Action action=readAction( depthFileName);
+  differenceOfGaussian3D(&action);
+  DynamicPointCloud pointCloud;
+  pointCloud.addTimeAction(&action);
+  pointCloud.save("test.txt");
+}
+
 int main(int argc, char * argv[])
 {   
-	char depthFileName[]="C:/Users/user/Desktop/kwolek/LargeDataset/full/a11/a11_s01_e01_sdepth.bin";
+	char depthFileName[]="C:/Users/user/Desktop/kwolek/LargeDataset/full/a1/a01_s01_e01_sdepth.bin";
 	char testFileName[]="C:/Users/user/Desktop/kwolek/vibe/test.bin";
-	showAction(depthFileName);
+	savePointCloud(depthFileName);
 	/*cout << argc <<"\n";
 	if(argc==6){
 	  DatasetParametrs params;

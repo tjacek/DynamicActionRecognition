@@ -31,3 +31,4 @@ class ExpKernel:public Kernel{
 extern ActionArray* toActionArray(Action * action);
 extern double weightedSum(int x0,int y0,int t0,ActionArray * action,Kernel * kernel);
 extern void differenceOfGaussian3D(Action * action);
+extern void zero(CDepthMap * dmap);

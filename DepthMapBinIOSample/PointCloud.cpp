@@ -3,6 +3,14 @@
 
 PointCloud::PointCloud(){}
 
+Point3D timePoint(int x,int y,int t){
+  Point3D point;
+  point.val[0] = x;//normalizedX * depthZ * xzFactor;
+  point.val[1] = y;//normalizedY * depthZ * yzFactor;
+  point.val[2] = t;
+  return point;
+}
+
 void PointCloud::addDepthMap(CDepthMap * depthMap){
   int height=depthMap->GetNRows();
   int width=depthMap->GetNCols();
@@ -151,8 +159,8 @@ Point3D getPoint(double depthX,double depthY,double depthZ,double resolutionX,do
   double normalizedX = (depthX / resolutionX)- 0.5;
   double normalizedY = 0.5 - (depthY / resolutionY);
   Point3D point;
-  point.val[0] = normalizedX * depthZ * xzFactor;
-  point.val[1] = normalizedY * depthZ * yzFactor;
+  point.val[0] = depthX;//normalizedX * depthZ * xzFactor;
+  point.val[1] = depthY;//normalizedY * depthZ * yzFactor;
   point.val[2] = depthZ;
   return point;
 }
@@ -164,6 +172,12 @@ double L2(Point3D point){
   return sqrt(x*x+y*y+z*z);
 }
 
+void  DynamicPointCloud::addTimeAction(Action * action){
+  for(int i=0;i<action->size();i++){
+	  addTimeFrame(action->at(i));
+  }
+}
+
 void DynamicPointCloud::addTimeFrame(CDepthMap * depthMap){
   int t=this->timeFrames.size();
   vector<int> frame;
@@ -173,7 +187,7 @@ void DynamicPointCloud::addTimeFrame(CDepthMap * depthMap){
 	for(int j=0;j<width;j++){
 	  double z= depthMap->GetItem(i,j);
 	  if(z!= emptyPoint ){
-		Point3D point=getPoint(i,j,z,height,width);
+		Point3D point=  timePoint(i,j,t);//getPoint(i,j,z,height,width);
 	    
 		points.push_back(point);
 		int index=points.size();

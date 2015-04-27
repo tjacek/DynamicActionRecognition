@@ -33,6 +33,7 @@ class DynamicPointCloud: public PointCloud{
   map<int,vector<int>> timeFrames;
   public:
     void addTimeFrame(CDepthMap * depthMap);
+	void addTimeAction(Action * action);
     vector<Point3D> getPoints(int t);
 	vector<Point3D> getFrame(int x,int y);
 };

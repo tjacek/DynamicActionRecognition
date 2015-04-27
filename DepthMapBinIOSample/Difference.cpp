@@ -1,6 +1,8 @@
 #include "StdAfx.h"
 #include "Difference.h"
 
+
+
 void differenceOfGaussian3D(Action * action){
   ActionArray background(action);
   Kernel * exp=new ExpKernel(1.0,1.0,1.0);
@@ -11,11 +13,24 @@ void differenceOfGaussian3D(Action * action){
 	for(int j=0;j<dmap->GetNRows();j++){
 	  for(int k=0;k<dmap->GetNCols();k++){
 		float val=dmap->GetItem(j,k)- background.data[i][j][k];
-		//if()
-		dmap->SetItem(j,k,val);
+		if(val > 10.0){
+		  dmap->SetItem(j,k,val);
+		}else{
+          dmap->SetItem(j,k,0);
+		}
 	  }
 	}
    }
+  zero(action->at(0));
+  zero(action->at(action->size()-1));
+}
+
+void zero(CDepthMap * dmap){
+  for(int j=0;j<dmap->GetNRows();j++){
+	for(int k=0;k<dmap->GetNCols();k++){
+		dmap->SetItem(j,k,0);
+	}
+  }
 }
 
 ActionArray* toActionArray(Action * action){
