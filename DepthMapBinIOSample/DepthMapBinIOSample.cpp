@@ -83,10 +83,10 @@ cv::Mat * depthMap2Mat(CDepthMap* cdepth,bool ucharType){
 void showAction(char depthFileName[]){
   Action action=readAction( depthFileName);
   cout << action.size();
-  differenceOfGaussian3D(&action);
+  differenceOfGaussian3D(&action,false);
   vector<cv::Mat*> frames;
   for(int i=0;i<action.size();i++){
-    cv::Mat * mat=depthMap2Mat(action.at(i),false);
+    cv::Mat * mat=depthMap2Mat(action.at(i),true);
 	frames.push_back(mat);
   }
   cv::namedWindow( "Display window", cv::WINDOW_AUTOSIZE );
@@ -99,7 +99,7 @@ void showAction(char depthFileName[]){
 
 void savePointCloud(char depthFileName[]){
   Action action=readAction( depthFileName);
-  differenceOfGaussian3D(&action);
+  differenceOfGaussian3D(&action,true);
   DynamicPointCloud pointCloud;
   pointCloud.addTimeAction(&action);
   pointCloud.save("test.txt");
@@ -109,7 +109,8 @@ int main(int argc, char * argv[])
 {   
 	char depthFileName[]="C:/Users/user/Desktop/kwolek/LargeDataset/full/a1/a01_s01_e01_sdepth.bin";
 	char testFileName[]="C:/Users/user/Desktop/kwolek/vibe/test.bin";
-	savePointCloud(depthFileName);
+	//savePointCloud(depthFileName);
+	showAction(depthFileName);
 	/*cout << argc <<"\n";
 	if(argc==6){
 	  DatasetParametrs params;

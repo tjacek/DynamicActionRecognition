@@ -3,7 +3,7 @@
 
 
 
-void differenceOfGaussian3D(Action * action){
+void differenceOfGaussian3D(Action * action,bool filter){
   ActionArray background(action);
   Kernel * exp=new ExpKernel(1.0,1.0,1.0);
   ActionArray * orginal=toActionArray(action);
@@ -14,7 +14,9 @@ void differenceOfGaussian3D(Action * action){
 	  for(int k=0;k<dmap->GetNCols();k++){
 		float val=dmap->GetItem(j,k)- background.data[i][j][k];
 		if(val > 10.0){
-		  dmap->SetItem(j,k,val);
+          if(!filter){
+		    dmap->SetItem(j,k,val);
+		  }
 		}else{
           dmap->SetItem(j,k,0);
 		}
@@ -22,6 +24,8 @@ void differenceOfGaussian3D(Action * action){
 	}
    }
   zero(action->at(0));
+  zero(action->at(1));
+  zero(action->at(action->size()-2));
   zero(action->at(action->size()-1));
 }
 
@@ -64,10 +68,9 @@ void ActionArray::convol(Kernel * kernel,ActionArray * orginal){
   for(int i=0;i<frames;i++){
 	for(int j=0;j<rows;j++){
 	  for(int k=0;k<cols;k++){
-		//  cout << orginal->data[i][j][k] << " ";
-	    data[i][j][k]=weightedSum(i,j,k, orginal, kernel);
-		//cout << data[i][j][k];
-      }
+	    //data[i][j][k]=weightedSum(i,j,k, orginal, kernel);
+		data[i][j][k]=timeSum(i,j,k, orginal, kernel);
+	  }
     }
   }
 }
@@ -117,3 +120,24 @@ double weightedSum(int t0,int x0,int y0,ActionArray * action,Kernel * kernel){
   return sum;
 }
 
+
+double timeSum(int t0,int x0,int y0,ActionArray * action,Kernel * kernel){
+  if(t0<2){
+    return 0;
+  }
+  if(t0>=action->frames-2){
+    return 0;
+  }
+  if(action->data[t0][x0][y0]==0){
+    //cout << "\n" << t0 << " " << x0 << " " << y0;
+	return 0;
+  }
+  double sum=0.0;
+  double C=1.0/5.0;
+  for(int i=0;i<5;i++){
+     int t_i=t0+i-2;
+	 sum+=C*action->data[t_i][x0][y0];
+  }
+  //cout << sum <<" ";
+  return sum;
+}
