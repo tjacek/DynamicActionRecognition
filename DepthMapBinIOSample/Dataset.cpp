@@ -31,7 +31,7 @@ void buildDataset(vector<Action> actions,Labels labels){
   dataset.addActions(actions);
   dataset.toArff(labels);
   ofstream myfile;
-  myfile.open ("shapeContext3D.arff");
+  myfile.open ("dynamicShapeContext3D.arff");
   myfile << dataset.toArff(labels);
   myfile.close();
 }
@@ -58,7 +58,7 @@ void Dataset::normalizeAtribute(int i){
 
 Dataset::Dataset(DatasetParametrs params){
   dimReducted=false;
-  extractor=new FeatureExtractorImpl(params);
+  extractor=new DynamicExtractor(params);
   desc=new vector<vector<double>>();
 }
 

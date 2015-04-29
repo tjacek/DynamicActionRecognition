@@ -25,6 +25,7 @@ class FeatureExtractor{
 	virtual void showTime();
   protected:
     vector<double> actionTime;
+	void saveTime(clock_t begin);
 };
 
 class FeatureExtractorImpl: public FeatureExtractor{
@@ -40,10 +41,13 @@ class FeatureExtractorImpl: public FeatureExtractor{
 
 class DynamicExtractor: public FeatureExtractor{
   public:
+	DynamicExtractor(DatasetParametrs  params);
 	int numberOfFeatures();
     string featureName(int i);
-	
     FeatureVector getFeatures(Action action);
+  private:
+    int numberOfDims;
+    DatasetParametrs params;
 };
 
 class Dataset{

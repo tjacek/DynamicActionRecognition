@@ -7,6 +7,7 @@
 #include "dataset.h"
 #include "pointCloud.h"
 #include "Difference.h"
+#include "ShapeContext3D.h"
 
 Action readAction(char depthFileName[]){
   	FILE * fp = fopen(depthFileName, "rb");
@@ -104,13 +105,23 @@ void savePointCloud(char depthFileName[]){
   pointCloud.addTimeAction(&action);
   pointCloud.save("test.txt");
 }
+void showHistogram(char depthFileName[]){
+  Action action=readAction( depthFileName);
+  differenceOfGaussian3D(&action,true);
+  DynamicPointCloud pointCloud;
+  pointCloud.addTimeAction(&action);
+  DatasetParametrs params;
+  getSimpeShapeContext(params,  &pointCloud);
+}
 
 int main(int argc, char * argv[])
 {   
-	char depthFileName[]="C:/Users/user/Desktop/kwolek/LargeDataset/full/a1/a01_s01_e01_sdepth.bin";
-	char testFileName[]="C:/Users/user/Desktop/kwolek/vibe/test.bin";
+//	char depthFileName[]="C:/Users/user/Desktop/kwolek/LargeDataset/full/a1/a01_s01_e01_sdepth.bin";
+//	char testFileName[]="C:/Users/user/Desktop/kwolek/vibe/test.bin";
+
 	//savePointCloud(depthFileName);
-	showAction(depthFileName);
+	//showAction(depthFileName);
+	//showHistogram(depthFileName);
 	/*cout << argc <<"\n";
 	if(argc==6){
 	  DatasetParametrs params;
@@ -121,12 +132,12 @@ int main(int argc, char * argv[])
 	  params.output=argv[5];
 	  //test3( params);
     }
-	if(argc==1){
+	if(argc==1){*/
        DatasetParametrs params;
 	   char depthFileName[] = "C:/Users/user/Desktop/kwolek/LargeDataset/train";
 	   params.output="C:/Users/user/Desktop/kwolek/LargeDataset/train.arff";
-	   test3( params,depthFileName);
-	}*/
+	   createArffDataset( params,depthFileName);
+	/*}*/
 	
 	system("pause");
 

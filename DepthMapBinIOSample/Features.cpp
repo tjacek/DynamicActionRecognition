@@ -2,10 +2,17 @@
 #include "Dataset.h"
 #include "ShapeContext3D.h"
 #include "utils.h"
+#include "Difference.h"
 
 void FeatureExtractor::showTime(){
   cout <<"\n mean: " << mean(actionTime)<< "\n"; 
   cout <<"\n sd: " << standardDeviation(actionTime)<< "\n"; 
+}
+
+void FeatureExtractor::saveTime(clock_t begin){
+  clock_t end = clock();
+  double elapsed_secs = ( double)(end - begin) / CLOCKS_PER_SEC;
+  actionTime.push_back(elapsed_secs);
 }
 
 FeatureExtractorImpl::FeatureExtractorImpl(  DatasetParametrs params){
@@ -35,10 +42,13 @@ FeatureVector FeatureExtractorImpl::getFeatures(Action action){
 	fullVect.insert(fullVect.end(),part->begin(),part->end());
 	delete histogram;
   }
-  clock_t end = clock();
-   double elapsed_secs = ( double)(end - begin) / CLOCKS_PER_SEC;
-  actionTime.push_back(elapsed_secs);
+  saveTime(begin);
   return fullVect;
+}
+
+DynamicExtractor::DynamicExtractor(DatasetParametrs params){
+  numberOfDims=params.rBins*params.betaBins*params.thetaBins*3;
+  this->params=params;
 }
 
 int DynamicExtractor::numberOfFeatures(){
@@ -53,15 +63,15 @@ string DynamicExtractor:: featureName(int i){
 FeatureVector DynamicExtractor::getFeatures(Action action){
   FeatureVector fullVect;
   clock_t begin = clock();
-  pair<Histogram3D *,Histogram3D *> hist=getDynamicShapeContext3D(action,1);
-  FeatureVector * part1=hist.first->toVector();
-  FeatureVector * part2=hist.second->toVector();
-  fullVect.insert(fullVect.end(),part1->begin(),part1->end());
-  fullVect.insert(fullVect.end(),part2->begin(),part2->end());
-  delete hist.first;
-  delete hist.second;
-  clock_t end = clock();
-   double elapsed_secs = ( double)(end - begin) / CLOCKS_PER_SEC;
-  actionTime.push_back(elapsed_secs);
+  differenceOfGaussian3D(&action,true);
+  DynamicPointCloud pointCloud;
+  pointCloud.addTimeAction(&action);
+  
+  Histogram3D * histogram=getSimpeShapeContext(params,  &pointCloud);
+  FeatureVector * part=histogram->toVector();
+  fullVect.insert(fullVect.end(),part->begin(),part->end());
+  delete histogram;
+  
+  saveTime(begin);
   return fullVect;
 }
