@@ -21,6 +21,7 @@ class PointCloud{
 	Point3D getCenter();
 	Point3D getCenteroid();
 	vector<Point3D> getExtremePoints();
+	vector<Point3D> sample(int n);
 	double r();
 	void save(string name);
 	void show();
@@ -36,6 +37,7 @@ class DynamicPointCloud: public PointCloud{
 	void addTimeAction(Action * action);
     vector<Point3D> getPoints(int t);
 	vector<Point3D> getFrame(int x,int y);
+	~DynamicPointCloud();
 };
 
 extern Point3D getPoint(double depthX,double depthY,double depthZ,double resolutionX,double resolutionY);

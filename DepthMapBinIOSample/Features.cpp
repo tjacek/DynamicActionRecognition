@@ -52,7 +52,7 @@ DynamicExtractor::DynamicExtractor(DatasetParametrs params){
 }
 
 int DynamicExtractor::numberOfFeatures(){
-  return 3*8*4*2;
+  return numberOfDims;
 }
 
 string DynamicExtractor:: featureName(int i){
@@ -64,14 +64,11 @@ FeatureVector DynamicExtractor::getFeatures(Action action){
   FeatureVector fullVect;
   clock_t begin = clock();
   differenceOfGaussian3D(&action,true);
-  DynamicPointCloud pointCloud;
-  pointCloud.addTimeAction(&action);
   
-  Histogram3D * histogram=getSimpeShapeContext(params,  &pointCloud);
+  Histogram3D * histogram=getSimpeShapeContext(params, action);
   FeatureVector * part=histogram->toVector();
   fullVect.insert(fullVect.end(),part->begin(),part->end());
   delete histogram;
-  
   saveTime(begin);
   return fullVect;
 }

@@ -5,9 +5,9 @@
 
 void differenceOfGaussian3D(Action * action,bool filter){
   ActionArray background(action);
-  Kernel * exp=new ExpKernel(1.0,1.0,1.0);
+  //Kernel * exp=new ExpKernel(1.0,1.0,1.0);
   ActionArray * orginal=toActionArray(action);
-  background.convol(exp,orginal);
+  background.convol(NULL,orginal);
   for(int i=0;i<action->size();i++){
 	CDepthMap* dmap=action->at(i);
 	for(int j=0;j<dmap->GetNRows();j++){
@@ -23,6 +23,7 @@ void differenceOfGaussian3D(Action * action,bool filter){
 	  }
 	}
    }
+  delete orginal;
   zero(action->at(0));
   zero(action->at(1));
   zero(action->at(action->size()-2));
@@ -64,12 +65,21 @@ ActionArray::ActionArray(Action * action){
   }
 }
 
+ActionArray::~ActionArray(){
+  for(int i=0;i<frames;i++){
+	for(int j=0;j<rows;j++){
+	  delete data[i][j];
+    }
+    delete data[i];
+  }
+}
+
 void ActionArray::convol(Kernel * kernel,ActionArray * orginal){
   for(int i=0;i<frames;i++){
 	for(int j=0;j<rows;j++){
 	  for(int k=0;k<cols;k++){
 	    //data[i][j][k]=weightedSum(i,j,k, orginal, kernel);
-		data[i][j][k]=timeSum(i,j,k, orginal, kernel);
+		//data[i][j][k]=timeSum(i,j,k, orginal, kernel);
 	  }
     }
   }

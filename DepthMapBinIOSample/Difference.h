@@ -15,7 +15,7 @@ class ActionArray{
 	double *** data;
     void convol(Kernel * kernel,ActionArray * action);
     ActionArray(Action * action);
-	
+	~ ActionArray();
 };
 
 class ExpKernel:public Kernel{

@@ -107,11 +107,9 @@ void savePointCloud(char depthFileName[]){
 }
 void showHistogram(char depthFileName[]){
   Action action=readAction( depthFileName);
+  //Dy
   differenceOfGaussian3D(&action,true);
-  DynamicPointCloud pointCloud;
-  pointCloud.addTimeAction(&action);
-  DatasetParametrs params;
-  getSimpeShapeContext(params,  &pointCloud);
+  //getSimpeShapeContext(params,  action);
 }
 
 int main(int argc, char * argv[])
@@ -134,9 +132,9 @@ int main(int argc, char * argv[])
     }
 	if(argc==1){*/
        DatasetParametrs params;
-	   char depthFileName[] = "C:/Users/user/Desktop/kwolek/LargeDataset/train";
-	   params.output="C:/Users/user/Desktop/kwolek/LargeDataset/train.arff";
-	   createArffDataset( params,depthFileName);
+	   char depthFileName[] = "C:/Users/user/Desktop/kwolek/LargeDataset/full";
+	   params.output="C:/Users/user/Desktop/kwolek/LargeDataset/full.arff";
+	   createArffDataset( params,depthFileName); 
 	/*}*/
 	
 	system("pause");

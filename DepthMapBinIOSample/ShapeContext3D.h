@@ -27,4 +27,4 @@ extern void addPoints(Point3D centre,vector<Point3D> points,Histogram3D * histog
 extern PointCloud * getPointCloud(CDepthMap * depthMap);
 
 extern int getIndex(double value,double size,double max);
-extern Histogram3D * getSimpeShapeContext( DatasetParametrs params, DynamicPointCloud* pointCloud);
+extern Histogram3D * getSimpeShapeContext( DatasetParametrs params, Action action);

@@ -105,8 +105,18 @@ Point3D PointCloud::getCenteroid(){
 
 
 Point3D PointCloud::getCenter(){
-  center=cloudDim/2;
+  double r=L2(cloudDim);
+  center=cloudDim/(2.0*r);
   return center;
+}
+
+vector<Point3D> PointCloud::sample(int n){
+  vector<Point3D> selectedPoints;
+  for(int i=0;i<selectedPoints.size();i++){
+    int k = rand() % n;
+	selectedPoints.push_back(selectedPoints.at(i));
+  }
+  return selectedPoints;
 }
 
 void PointCloud::save(string name){
@@ -216,4 +226,11 @@ vector<Point3D> DynamicPointCloud::getFrame(int x,int y){
 	framePoints.insert(framePoints.end(),points.begin(),points.end());
   }
   return framePoints;
+}
+
+DynamicPointCloud::~DynamicPointCloud(){
+	for(int i=0;i<this->points.size();i++){
+		Point3D point=points.at(i);
+		point.~Point3D();
+  }
 }

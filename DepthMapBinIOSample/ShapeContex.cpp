@@ -1,19 +1,22 @@
 #include "StdAfx.h"
 #include "ShapeContext3D.h"
 
-Histogram3D * getSimpeShapeContext( DatasetParametrs params, DynamicPointCloud* pointCloud){
-  pointCloud->normalize();
+Histogram3D * getSimpeShapeContext( DatasetParametrs params, Action action){
+  DynamicPointCloud pointCloud;
+  pointCloud.addAction(action);
+  pointCloud.normalize();
 
-	vector<Point3D> points=pointCloud->getExtremePoints();
+  //vector<Point3D> points=pointCloud.getExtremePoints();
   Histogram3D * histogram=new Histogram3D(params.rBins,params.thetaBins,params.betaBins,1000.0);
-  for(int i=0;i<points.size();i++){
-	Point3D current=points.at(i);
-    addPoints(current, pointCloud->points, histogram);
-  }
+  //for(int i=0;i<points.size();i++){
+  pointCloud.getExtremePoints();
+  Point3D current=pointCloud.getCenter();
+  cout << "current " << current<<"\n"; 
+    addPoints(current, pointCloud.points, histogram);
+  //}
   histogram->normalize();
   histogram->show();
 
-  //delete pointCloud;
   return histogram;
 }
 
