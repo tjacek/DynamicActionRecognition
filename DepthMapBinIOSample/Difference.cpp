@@ -12,12 +12,8 @@ void differenceOfGaussian3D(Action * action,bool filter){
 	CDepthMap* dmap=action->at(i);
 	for(int j=0;j<dmap->GetNRows();j++){
 	  for(int k=0;k<dmap->GetNCols();k++){
-        float orginal=dmap->GetItem(j,k);
-		float val= orginal - background.data[i][j][k];
-		if(orginal!=0){
-		 // cout << val <<" " << dmap->GetItem(j,k) << " " << background.data[i][j][k]  <<"\n";
-		}
-		if(val > 30.0){
+		float val=dmap->GetItem(j,k)- background.data[i][j][k];
+		if(val > 10.0){
           if(!filter){
 		    dmap->SetItem(j,k,val);
 		  }
@@ -83,7 +79,7 @@ void ActionArray::convol(Kernel * kernel,ActionArray * orginal){
 	for(int j=0;j<rows;j++){
 	  for(int k=0;k<cols;k++){
 	    //data[i][j][k]=weightedSum(i,j,k, orginal, kernel);
-		data[i][j][k]=timeSum(i,j,k, orginal, kernel);
+		//data[i][j][k]=timeSum(i,j,k, orginal, kernel);
 	  }
     }
   }

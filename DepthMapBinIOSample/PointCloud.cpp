@@ -34,7 +34,6 @@ Point3D PointCloud::getCloudDim(){
 }
 
 vector<Point3D> PointCloud::getExtremePoints(){
-  getCloudDim();
   vector<Point3D> points;
   //points.push_back(center);
   Point3D gemetryCenter=1000* (cloudDim/( r()));

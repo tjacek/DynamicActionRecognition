@@ -28,7 +28,3 @@ extern PointCloud * getPointCloud(CDepthMap * depthMap);
 
 extern int getIndex(double value,double size,double max);
 extern Histogram3D * getSimpeShapeContext( DatasetParametrs params, Action action);
-
-void centerHistogram(Histogram3D * histogram,DynamicPointCloud * cloud);
-void extremeHistogram(Histogram3D * histogram,DynamicPointCloud * cloud);
-void sampleHistogram(Histogram3D * histogram,DynamicPointCloud * cloud);

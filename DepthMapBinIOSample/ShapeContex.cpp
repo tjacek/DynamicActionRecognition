@@ -8,33 +8,16 @@ Histogram3D * getSimpeShapeContext( DatasetParametrs params, Action action){
 
   //vector<Point3D> points=pointCloud.getExtremePoints();
   Histogram3D * histogram=new Histogram3D(params.rBins,params.thetaBins,params.betaBins,1000.0);
-  extremeHistogram( histogram, &pointCloud);
+  //for(int i=0;i<points.size();i++){
+  pointCloud.getExtremePoints();
+  Point3D current=pointCloud.getCenter();
+  cout << "current " << current<<"\n"; 
+    addPoints(current, pointCloud.points, histogram);
+  //}
   histogram->normalize();
   histogram->show();
 
   return histogram;
-}
-
-void centerHistogram(Histogram3D * histogram,DynamicPointCloud * cloud){
-  Point3D current=cloud->getCenter();
-  addPoints(current, cloud->points, histogram);
-}
-
-void extremeHistogram(Histogram3D * histogram,DynamicPointCloud * cloud){
-  vector<Point3D> points=cloud->getExtremePoints();
-  cout << cloud->points.size() << " \n";
-  for(int i=0;i<points.size();i++){
-    Point3D point=points.at(i);
-	addPoints(point, cloud->points, histogram);
-  }
-}
-
-void sampleHistogram(Histogram3D * histogram,DynamicPointCloud * cloud){
-  vector<Point3D> points= cloud->sample(1000);
-  for(int i=0;i<points.size();i++){
-    Point3D point=points.at(i);
-	addPoints(point, cloud->points, histogram);
-  }
 }
 
 Histogram3D * getShapeContext3D( DatasetParametrs params,Instant instant){
