@@ -5,4 +5,9 @@ DepthMapBinIOSample.v11.suo
 ipch
 Release
 Backup
+x64
+ipch
+Debug
+DepthMapBinIOSample/Debug
+DepthMapBinIOSample/x64
 _UpgradeReport_Files

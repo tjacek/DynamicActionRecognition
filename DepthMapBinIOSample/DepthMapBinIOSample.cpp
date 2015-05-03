@@ -87,7 +87,7 @@ void showAction(char depthFileName[]){
   differenceOfGaussian3D(&action,false);
   vector<cv::Mat*> frames;
   for(int i=0;i<action.size();i++){
-    cv::Mat * mat=depthMap2Mat(action.at(i),true);
+    cv::Mat * mat=depthMap2Mat(action.at(i),false);
 	frames.push_back(mat);
   }
   cv::namedWindow( "Display window", cv::WINDOW_AUTOSIZE );
@@ -114,7 +114,7 @@ void showHistogram(char depthFileName[]){
 
 int main(int argc, char * argv[])
 {   
-//	char depthFileName[]="C:/Users/user/Desktop/kwolek/LargeDataset/full/a1/a01_s01_e01_sdepth.bin";
+//	char depthFileName[]="C:/Users/TP/Desktop/doktoranckie/Dataset/a1/a01_s01_e01_sdepth.bin";
 //	char testFileName[]="C:/Users/user/Desktop/kwolek/vibe/test.bin";
 
 	//savePointCloud(depthFileName);
@@ -131,10 +131,11 @@ int main(int argc, char * argv[])
 	  //test3( params);
     }
 	if(argc==1){*/
-       DatasetParametrs params;
-	   char depthFileName[] = "C:/Users/user/Desktop/kwolek/LargeDataset/full";
-	   params.output="C:/Users/user/Desktop/kwolek/LargeDataset/full.arff";
-	   createArffDataset( params,depthFileName); 
+
+	   DatasetParametrs params;
+	   char depthFileName[] = "C:/Users/TP/Desktop/doktoranckie/Dataset";
+	   params.output="C:/Users/TP/Desktop/doktoranckie/full.arff";
+	   createArffDataset( params,depthFileName);
 	/*}*/
 	
 	system("pause");
