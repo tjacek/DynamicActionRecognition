@@ -75,7 +75,7 @@ void addPoints(Point3D  centre,vector<Point3D> points,Histogram3D * histogram){
   for(int i=0;i<points.size();i++){
     Point3D rawpoint=points.at(i);
     Point3D point= rawpoint - centre;
-	double ksi=log(L2(point));
+	double ksi=  L2(point); //log(L2(point));
 	double theta=atan2(point.val[1],point.val[0]) + M_PI;
 	double x=point.val[0];
 	double y=point.val[1];
@@ -100,7 +100,7 @@ Histogram3D::Histogram3D(double r){
 }
 
 void Histogram3D::init(double r){
-  maxValues.val[0]=log(r)+0.1;
+  maxValues.val[0]=(sqrt(3.00)/2.0)*1000.0; //log(r)+0.1;
   maxValues.val[1]=2*M_PI + 0.1;
   maxValues.val[2]=M_PI + 0.1;
   bins=new double **[rBins];

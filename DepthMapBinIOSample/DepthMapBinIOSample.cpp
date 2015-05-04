@@ -159,7 +159,7 @@ int main(int argc, char * argv[])
 
 	   DatasetParametrs params;
 	   char depthFileName[] = "C:/Users/TP/Desktop/doktoranckie/Dataset/Full";
-	   params.output="C:/Users/TP/Desktop/doktoranckie/new_centerHist.arff";
+	   params.output="C:/Users/TP/Desktop/doktoranckie/linearHist.arff";
 	   createArffDataset( params,depthFileName);
 	/*}*/
 	
