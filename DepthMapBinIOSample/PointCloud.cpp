@@ -17,8 +17,9 @@ void PointCloud::addDepthMap(CDepthMap * depthMap){
   for(int i=0;i<height;i++){
 	for(int j=0;j<width;j++){
 	  double z= depthMap->GetItem(i,j);
-	  if(z!= emptyPoint ){
-		Point3D point=getPoint(i,j,z,height,width);
+	  if(z!= emptyPoint && z>0){
+	    //cout << z <<"\n";
+		Point3D point=timePoint(i,j,z);
 	    points.push_back(point);
 	  }
     } 
@@ -70,11 +71,13 @@ void PointCloud::normalize(){
   for(int i=0;i<points.size();i++){
     Point3D * current=&points.at(i);
 	for(int j=0;j<3;j++){
-	  current->val[j]/=r;
+		current->val[j]/= cloudDim.val[j];//r;
 	  current->val[j]*=1000.0;
 	}
   }
-  cloudDim*=1000;
+  cloudDim.val[0]=1000;
+  cloudDim.val[1]=1000;
+  cloudDim.val[2]=1000;
 }
 
 void PointCloud::addAction(vector<CDepthMap *> action){
@@ -107,15 +110,18 @@ Point3D PointCloud::getCenteroid(){
 
 Point3D PointCloud::getCenter(){
   double r=L2(cloudDim);
-  center=cloudDim/(2.0*r);
+  center=cloudDim/(2.0);
   return center;
 }
 
 vector<Point3D> PointCloud::sample(int n){
+  if(n>points.size()){
+	return points;
+  }
   vector<Point3D> selectedPoints;
-  for(int i=0;i<selectedPoints.size();i++){
-    int k = rand() % n;
-	selectedPoints.push_back(selectedPoints.at(i));
+  for(int i=0;i<n;i++){
+	int k = rand() % points.size();
+	selectedPoints.push_back(points.at(i));
   }
   return selectedPoints;
 }

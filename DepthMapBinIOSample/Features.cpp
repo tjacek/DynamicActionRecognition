@@ -63,7 +63,7 @@ string DynamicExtractor:: featureName(int i){
 FeatureVector DynamicExtractor::getFeatures(Action action){
   FeatureVector fullVect;
   clock_t begin = clock();
-  differenceOfGaussian3D(&action,false);
+  //differenceOfGaussian3D(&action,false);
   
   Histogram3D * histogram=getSimpeShapeContext(params, action);
   FeatureVector * part=histogram->toVector();

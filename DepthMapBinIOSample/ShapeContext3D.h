@@ -3,6 +3,7 @@
 #include "stdafx.h"
 #include "PointCloud.h"
 #include "Dataset.h"
+#include "Difference.h"
 
 class Histogram3D{
   public:

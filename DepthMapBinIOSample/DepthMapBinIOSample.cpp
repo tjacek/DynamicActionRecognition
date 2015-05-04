@@ -112,8 +112,33 @@ void showHistogram(char depthFileName[]){
   //getSimpeShapeContext(params,  action);
 }
 
+void showClouds(){
+  string prefix="C:/Users/TP/Desktop/doktoranckie/Dataset/Full/";
+  string cats[]= 
+  {"a1/a01_s01_e01_sdepth.bin","a2/a02_s01_e01_sdepth.bin","a3/a03_s01_e01_sdepth.bin","a4/a04_s01_e01_sdepth.bin",
+   "a5/a05_s01_e01_sdepth.bin","a6/a06_s01_e01_sdepth.bin","a7/a07_s01_e01_sdepth.bin","a8/a08_s01_e01_sdepth.bin",
+   "a9/a09_s01_e01_sdepth.bin","a10/a10_s01_e01_sdepth.bin","a11/a11_s01_e01_sdepth.bin","a12/a12_s01_e01_sdepth.bin",
+   "a13/a13_s01_e01_sdepth.bin","a14/a14_s01_e01_sdepth.bin","a15/a15_s01_e01_sdepth.bin","a16/a16_s01_e01_sdepth.bin",
+   "a17/a17_s01_e01_sdepth.bin","a18/a18_s01_e01_sdepth.bin","a19/a19_s01_e01_sdepth.bin","a20/a20_s01_e01_sdepth.bin"};
+  for(int i=0;i<20;i++){
+    string category=cats[i];
+	cout << category  <<"\n";
+	string fullPath=prefix+category;
+	 char *cstr = (char*)fullPath.c_str();
+	Action action=readAction(cstr);
+    differenceOfGaussian3D(&action,false);
+	ActionSummarry summary( &action);
+
+    DynamicPointCloud pointCloud;
+	pointCloud.addDepthMap(&summary.variance);//.addTimeAction(&action);
+    pointCloud.save("cloud"+intToString(i)+".txt");
+  }
+
+}
+
 int main(int argc, char * argv[])
 {   
+	//showClouds();
 //	char depthFileName[]="C:/Users/TP/Desktop/doktoranckie/Dataset/a1/a01_s01_e01_sdepth.bin";
 //	char testFileName[]="C:/Users/user/Desktop/kwolek/vibe/test.bin";
 
@@ -133,8 +158,8 @@ int main(int argc, char * argv[])
 	if(argc==1){*/
 
 	   DatasetParametrs params;
-	   char depthFileName[] = "C:/Users/TP/Desktop/doktoranckie/Dataset";
-	   params.output="C:/Users/TP/Desktop/doktoranckie/full.arff";
+	   char depthFileName[] = "C:/Users/TP/Desktop/doktoranckie/Dataset/Full";
+	   params.output="C:/Users/TP/Desktop/doktoranckie/new_centerHist.arff";
 	   createArffDataset( params,depthFileName);
 	/*}*/
 	

@@ -34,6 +34,59 @@ void differenceOfGaussian3D(Action * action,bool filter){
   zero(action->at(action->size()-1));
 }
 
+ActionSummarry::~ActionSummarry(){
+	this->mean.~CDepthMap();
+	this->variance.~CDepthMap();
+}
+
+float getValue(int x,int y,int t,Action * action){
+  CDepthMap *map =action->at(t);
+  return map->GetItem(x,y);
+}
+
+ActionSummarry:: ActionSummarry(Action * action){
+  CDepthMap *map =action->at(0);
+  int rows=map->GetNRows();
+  int cols=map->GetNCols();
+  variance.SetSize(rows,cols);
+  mean.SetSize(rows,cols);
+  int n=action->size();
+  float n_f=n;
+  for(int i=0;i<rows;i++){
+    for(int j=0;j<cols;j++){
+      float sum=0.0;
+      for(int k=0;k<n;k++){
+	    sum+=getValue(i,j,k,action);
+      }
+	  sum/=n_f;
+	  //if(sum>10000){
+	//	 cout << sum <<"\n";
+	 // }
+	  if(sum>0){
+	    mean.SetItem(i,j,sum);
+	  }else{
+		mean.SetItem(i,j,0);
+	  }
+	}
+  }
+
+  for(int i=0;i<rows;i++){
+    for(int j=0;j<cols;j++){
+      float sd=0;
+      for(int k=0;k<n;k++){
+		  if(getValue(i,j,k,action)>0){
+			//  cout << mean.GetItem(i,j);
+		 // }
+		   double diff =mean.GetItem(i,j) - getValue(i,j,k,action); 
+		   sd+=diff*diff;
+		  }
+      }
+	  sd/=(n_f-1.0);
+	  variance.SetItem(i,j,sqrt(sd));
+	}
+  }
+}
+
 void zero(CDepthMap * dmap){
   for(int j=0;j<dmap->GetNRows();j++){
 	for(int k=0;k<dmap->GetNCols();k++){

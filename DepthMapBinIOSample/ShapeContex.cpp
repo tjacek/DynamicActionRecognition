@@ -2,13 +2,15 @@
 #include "ShapeContext3D.h"
 
 Histogram3D * getSimpeShapeContext( DatasetParametrs params, Action action){
-  DynamicPointCloud pointCloud;
-  pointCloud.addAction(action);
+   differenceOfGaussian3D(&action,false);
+   ActionSummarry summary( &action);
+   DynamicPointCloud pointCloud;
+	pointCloud.addDepthMap(&summary.variance);  pointCloud.addAction(action);
   pointCloud.normalize();
 
   //vector<Point3D> points=pointCloud.getExtremePoints();
   Histogram3D * histogram=new Histogram3D(params.rBins,params.thetaBins,params.betaBins,1000.0);
-  extremeHistogram( histogram, &pointCloud);
+  centerHistogram( histogram, &pointCloud);
   histogram->normalize();
   histogram->show();
 
@@ -30,7 +32,7 @@ void extremeHistogram(Histogram3D * histogram,DynamicPointCloud * cloud){
 }
 
 void sampleHistogram(Histogram3D * histogram,DynamicPointCloud * cloud){
-  vector<Point3D> points= cloud->sample(1000);
+  vector<Point3D> points= cloud->sample(100);
   for(int i=0;i<points.size();i++){
     Point3D point=points.at(i);
 	addPoints(point, cloud->points, histogram);

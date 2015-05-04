@@ -7,6 +7,15 @@ class Kernel{
 	virtual double eval(int x,int y,int z)=0;
 };
 
+class ActionSummarry{
+  public:
+    CDepthMap mean;
+    CDepthMap variance;
+    
+    ActionSummarry(Action * action);
+	~ActionSummarry();
+};
+
 class ActionArray{
   public:
     int rows;
