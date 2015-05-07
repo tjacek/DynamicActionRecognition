@@ -173,6 +173,7 @@
     </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ActionVariance.cpp" />
     <ClCompile Include="Dataset.cpp" />
     <ClCompile Include="DepthMap.cpp" />
     <ClCompile Include="DepthMapBinFileIO.cpp" />
@@ -192,6 +193,7 @@
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ActionVariance.h" />
     <ClInclude Include="Dataset.h" />
     <ClInclude Include="DepthMap.h" />
     <ClInclude Include="DepthMapBinFileIO.h" />

@@ -50,6 +50,17 @@ class DynamicExtractor: public FeatureExtractor{
     DatasetParametrs params;
 };
 
+class VarianceExtractor: public FeatureExtractor{
+  public:
+	VarianceExtractor(DatasetParametrs  params);
+	int numberOfFeatures();
+    string featureName(int i);
+    FeatureVector getFeatures(Action action);
+  private:
+    int numberOfDims;
+    DatasetParametrs params;
+};
+
 class Dataset{
   public:
     FeatureExtractor* extractor;

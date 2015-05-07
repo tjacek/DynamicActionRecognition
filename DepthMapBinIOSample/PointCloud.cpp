@@ -200,17 +200,23 @@ void DynamicPointCloud::addTimeFrame(CDepthMap * depthMap){
   vector<int> frame;
   int height=depthMap->GetNRows();
   int width=depthMap->GetNCols();
+  vector<Point3D> tmpPoints;
   for(int i=0;i<height;i++){
 	for(int j=0;j<width;j++){
 	  double z= depthMap->GetItem(i,j);
 	  if(z!= emptyPoint ){
 		Point3D point=  timePoint(i,j,t);//getPoint(i,j,z,height,width);
 	    
-		points.push_back(point);
+	    tmpPoints.push_back(point);
 		int index=points.size();
 		frame.push_back(index);
 	  }
     } 
+  }
+  if(tmpPoints.size()>600){
+	for(int i=0;i<tmpPoints.size();i++){
+	  points.push_back(tmpPoints.at(i));
+	}
   }
   timeFrames.insert(std::pair<int,vector<int>>(t,frame));
 }

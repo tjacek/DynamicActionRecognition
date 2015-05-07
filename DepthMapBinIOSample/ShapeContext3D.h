@@ -23,6 +23,7 @@ class Histogram3D{
     void init(double r);
 };
 
+extern Histogram3D * getActionShapeContext( DatasetParametrs params,PointCloud * pointCloud);
 extern Histogram3D *  getShapeContext3D( DatasetParametrs params,Instant instant);
 extern void addPoints(Point3D centre,vector<Point3D> points,Histogram3D * histogram);
 extern PointCloud * getPointCloud(CDepthMap * depthMap);
@@ -30,6 +31,6 @@ extern PointCloud * getPointCloud(CDepthMap * depthMap);
 extern int getIndex(double value,double size,double max);
 extern Histogram3D * getSimpeShapeContext( DatasetParametrs params, Action action);
 
-void centerHistogram(Histogram3D * histogram,DynamicPointCloud * cloud);
+void centerHistogram(Histogram3D * histogram,PointCloud * cloud);
 void extremeHistogram(Histogram3D * histogram,DynamicPointCloud * cloud);
 void sampleHistogram(Histogram3D * histogram,DynamicPointCloud * cloud);

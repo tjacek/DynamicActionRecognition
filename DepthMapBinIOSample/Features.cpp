@@ -3,6 +3,7 @@
 #include "ShapeContext3D.h"
 #include "utils.h"
 #include "Difference.h"
+#include "ActionVariance.h"
 
 void FeatureExtractor::showTime(){
   cout <<"\n mean: " << mean(actionTime)<< "\n"; 
@@ -69,6 +70,49 @@ FeatureVector DynamicExtractor::getFeatures(Action action){
   FeatureVector * part=histogram->toVector();
   fullVect.insert(fullVect.end(),part->begin(),part->end());
   delete histogram;
+  saveTime(begin);
+  return fullVect;
+}
+
+
+//**********
+
+VarianceExtractor::VarianceExtractor(DatasetParametrs params){
+  numberOfDims=params.rBins*params.betaBins*params.thetaBins*3;
+  this->params=params;
+}
+
+int VarianceExtractor::numberOfFeatures(){
+  return numberOfDims;
+}
+
+string VarianceExtractor:: featureName(int i){
+  string str="variance_shape_context" + intToString(i);
+  return str;
+}
+
+FeatureVector VarianceExtractor::getFeatures(Action action){
+  FeatureVector fullVect;
+  clock_t begin = clock();
+  
+  PointCloud * cloud=actionVar(&action,projectionXY);
+  Histogram3D * hist=getActionShapeContext(  params, cloud);
+  FeatureVector * part=hist->toVector();
+  fullVect.insert(fullVect.end(),part->begin(),part->end());
+  delete hist;
+
+  cloud=actionVar(&action,projectionZX);
+  hist=getActionShapeContext(  params, cloud);
+  part=hist->toVector();
+  fullVect.insert(fullVect.end(),part->begin(),part->end());
+  delete hist;
+
+  cloud=actionVar(&action,projectionZY);
+  hist=getActionShapeContext(  params, cloud);
+  part=hist->toVector();
+  fullVect.insert(fullVect.end(),part->begin(),part->end());
+  delete hist;
+
   saveTime(begin);
   return fullVect;
 }

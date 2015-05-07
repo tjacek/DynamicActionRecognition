@@ -58,7 +58,7 @@ void Dataset::normalizeAtribute(int i){
 
 Dataset::Dataset(DatasetParametrs params){
   dimReducted=false;
-  extractor=new DynamicExtractor(params);
+  extractor=new VarianceExtractor(params);
   desc=new vector<vector<double>>();
 }
 

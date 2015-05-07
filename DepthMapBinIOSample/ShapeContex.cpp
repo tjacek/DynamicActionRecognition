@@ -1,23 +1,46 @@
 #include "StdAfx.h"
 #include "ShapeContext3D.h"
 
-Histogram3D * getSimpeShapeContext( DatasetParametrs params, Action action){
-   differenceOfGaussian3D(&action,false);
-   ActionSummarry summary( &action);
-   DynamicPointCloud pointCloud;
-	pointCloud.addDepthMap(&summary.variance);  pointCloud.addAction(action);
-  pointCloud.normalize();
+DynamicPointCloud * summaryCloud(Action * action){
+ // differenceOfGaussian3D(action,false);
+ // ActionSummarry summary( action);
+  DynamicPointCloud * pointCloud=new DynamicPointCloud();
+  //pointCloud->addDepthMap(&summary.variance);  
+  pointCloud->addAction(*action);
+  pointCloud->normalize();
+  return pointCloud;
+}
 
-  //vector<Point3D> points=pointCloud.getExtremePoints();
+DynamicPointCloud * timeCloud(Action * action){
+//  differenceOfGaussian3D(action,false);
+  DynamicPointCloud * pointCloud=new DynamicPointCloud();
+  pointCloud->addTimeAction(action);
+  pointCloud->normalize();
+  return pointCloud;
+}
+
+Histogram3D * getActionShapeContext( DatasetParametrs params,PointCloud * pointCloud){ 
   Histogram3D * histogram=new Histogram3D(params.rBins,params.thetaBins,params.betaBins,1000.0);
-  centerHistogram( histogram, &pointCloud);
+  centerHistogram( histogram, pointCloud);
   histogram->normalize();
   histogram->show();
 
   return histogram;
 }
 
-void centerHistogram(Histogram3D * histogram,DynamicPointCloud * cloud){
+Histogram3D * getSimpeShapeContext( DatasetParametrs params, Action action){ 
+  DynamicPointCloud * pointCloud=summaryCloud(&action);	
+
+  //vector<Point3D> points=pointCloud.getExtremePoints();
+  Histogram3D * histogram=new Histogram3D(params.rBins,params.thetaBins,params.betaBins,1000.0);
+  centerHistogram( histogram, pointCloud);
+  histogram->normalize();
+  histogram->show();
+
+  return histogram;
+}
+
+void centerHistogram(Histogram3D * histogram,PointCloud * cloud){
   Point3D current=cloud->getCenter();
   addPoints(current, cloud->points, histogram);
 }

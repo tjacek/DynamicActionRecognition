@@ -25,8 +25,6 @@ class PointCloud{
 	double r();
 	void save(string name);
 	void show();
-
-private:
     pair<Point3D, Point3D> computeExtremes();
 };
 

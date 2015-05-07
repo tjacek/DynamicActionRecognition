@@ -8,6 +8,7 @@
 #include "pointCloud.h"
 #include "Difference.h"
 #include "ShapeContext3D.h"
+#include "ActionVariance.h"
 
 Action readAction(char depthFileName[]){
   	FILE * fp = fopen(depthFileName, "rb");
@@ -84,7 +85,7 @@ cv::Mat * depthMap2Mat(CDepthMap* cdepth,bool ucharType){
 void showAction(char depthFileName[]){
   Action action=readAction( depthFileName);
   cout << action.size();
-  differenceOfGaussian3D(&action,false);
+//  differenceOfGaussian3D(&action,false);
   vector<cv::Mat*> frames;
   for(int i=0;i<action.size();i++){
     cv::Mat * mat=depthMap2Mat(action.at(i),false);
@@ -100,7 +101,7 @@ void showAction(char depthFileName[]){
 
 void savePointCloud(char depthFileName[]){
   Action action=readAction( depthFileName);
-  differenceOfGaussian3D(&action,true);
+  //differenceOfGaussian3D(&action,true);
   DynamicPointCloud pointCloud;
   pointCloud.addTimeAction(&action);
   pointCloud.save("test.txt");
@@ -108,8 +109,15 @@ void savePointCloud(char depthFileName[]){
 void showHistogram(char depthFileName[]){
   Action action=readAction( depthFileName);
   //Dy
-  differenceOfGaussian3D(&action,true);
+//  differenceOfGaussian3D(&action,true);
   //getSimpeShapeContext(params,  action);
+}
+
+void showTransform(){
+  char depthFileName[]="C:/Users/TP/Desktop/doktoranckie/Dataset/Full/a7/a07_s01_e01_sdepth.bin";
+    Action action=readAction( depthFileName);
+   cv::Mat mat=projectionZY(action.at(0));
+   showImage(&mat,"ZX");
 }
 
 void showClouds(){
@@ -126,11 +134,12 @@ void showClouds(){
 	string fullPath=prefix+category;
 	 char *cstr = (char*)fullPath.c_str();
 	Action action=readAction(cstr);
-    differenceOfGaussian3D(&action,false);
-	ActionSummarry summary( &action);
+//    differenceOfGaussian3D(&action,false);
+	//ActionSummarry summary( &action);
 
     DynamicPointCloud pointCloud;
-	pointCloud.addDepthMap(&summary.variance);//.addTimeAction(&action);
+	pointCloud.addTimeAction(&action);//.addTimeAction(&action);
+	pointCloud.normalize();
     pointCloud.save("cloud"+intToString(i)+".txt");
   }
 
@@ -138,10 +147,12 @@ void showClouds(){
 
 int main(int argc, char * argv[])
 {   
+	//showTransform();
 	//showClouds();
-//	char depthFileName[]="C:/Users/TP/Desktop/doktoranckie/Dataset/a1/a01_s01_e01_sdepth.bin";
+	//char depthFileName[]="C:/Users/TP/Desktop/doktoranckie/Dataset/Full/a7/a07_s01_e01_sdepth.bin";
 //	char testFileName[]="C:/Users/user/Desktop/kwolek/vibe/test.bin";
 
+	//showAction(depthFileName);
 	//savePointCloud(depthFileName);
 	//showAction(depthFileName);
 	//showHistogram(depthFileName);
@@ -158,8 +169,10 @@ int main(int argc, char * argv[])
 	if(argc==1){*/
 
 	   DatasetParametrs params;
+	   //params.thetaBins=8;
+	   //params.betaBins=4;
 	   char depthFileName[] = "C:/Users/TP/Desktop/doktoranckie/Dataset/Full";
-	   params.output="C:/Users/TP/Desktop/doktoranckie/linearHist.arff";
+	   params.output="C:/Users/TP/Desktop/doktoranckie/varianceFull.arff";
 	   createArffDataset( params,depthFileName);
 	/*}*/
 	
