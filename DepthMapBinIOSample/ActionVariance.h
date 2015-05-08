@@ -23,13 +23,15 @@ class ActionSummary{
 	~ActionSummary();
 };
 
-PointCloud * actionVar(Action * action,cv::Mat (*projection)(CDepthMap * dimage));
-ActionArray *actionDifference(Action * action,cv::Mat (*projection)(CDepthMap * dimage));
-ActionArray * transformAction(Action * action, cv::Mat (*projection)(CDepthMap * dimage));
+typedef CDepthMap * (*Projection)(CDepthMap * dimage); 
+
+PointCloud * actionVar(Action * action,Projection projection);
+ActionArray *actionDifference(Action * action,Projection projection);
+ActionArray * transformAction(Action * action,Projection projection);
 double applyKernel(int x_0,int y_0,int t_0,int k,double * kernel,ActionArray * orginal);
 
-cv::Mat projectionZX(CDepthMap * mat);
-cv::Mat projectionZY(CDepthMap * mat);
-cv::Mat projectionXY(CDepthMap * mat);
+CDepthMap * projectionZX(CDepthMap * mat);
+CDepthMap * projectionZY(CDepthMap * mat);
+CDepthMap * projectionXY(CDepthMap * mat);
 
 void  showImage(cv::Mat * m,const char * name);

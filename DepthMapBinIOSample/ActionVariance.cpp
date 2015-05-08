@@ -1,80 +1,88 @@
 #include "StdAfx.h"
 #include "ActionVariance.h"
 
-PointCloud * actionVar(Action * action,cv::Mat (*projection)(CDepthMap * dimage)){
+PointCloud * actionVar(Action * action,Projection projection){
   PointCloud * cloud=new PointCloud();
   ActionArray * diff= actionDifference(action, projection);
   ActionSummary * summary=new ActionSummary(diff);
   cloud->addDepthMap(&summary->variance);  
   cloud->normalize();
+  delete diff;
+  delete summary;
   return cloud;
 }
 
-ActionArray * actionDifference(Action * action,cv::Mat (*projection)(CDepthMap * dimage)){
+ActionArray * actionDifference(Action * action,Projection projection){
   double *kernel=NULL;
   ActionArray * orginal= transformAction(action, projection);
   ActionArray * difference=new ActionArray(action);
   difference->convol(kernel,orginal);
+  delete orginal;
   return difference;
 }
 
-ActionArray * transformAction(Action * action, cv::Mat (*projection)(CDepthMap * dimage)){
+ActionArray * transformAction(Action * action, Projection projection){
   ActionArray * actionArray=new ActionArray(action);
   for(int t=0;t<action->size();t++){
-	cv::Mat mat=projection(action->at(t));
-	for(int i=0;i<mat.rows;i++){
-	  for(int j=0;j<mat.cols;j++){
-		double value=mat.at<uchar>(i,j);
-		actionArray->data[t][i][j]=value;
+	CDepthMap * mat=projection(action->at(t));
+	for(int i=0;i<mat->GetNRows();i++){
+		for(int j=0;j<mat->GetNCols();j++){
+           //cout << mat->GetNRows() <<" " << mat->GetNCols()<<"\n";
+		  //cout << actionArray->rows <<" " << actionArray->cols<<"\n";
+
+		  double value=mat->GetItem(i,j);
+		  actionArray->data[t][i][j]=value;
 	  }
 	}
+	delete mat;
   }
   return actionArray;
 }
 
-cv::Mat  projectionXY(CDepthMap * dimage){
-  cv::Mat  zx=cv::Mat::zeros(dimage->GetNRows(),dimage->GetNCols(), CV_8UC1);
-  for(int i=0;i<dimage->GetNRows();i++){
-	for(int j=0;j<dimage->GetNCols();j++){
-	  zx.at<uchar>(i,j)=dimage->GetItem(i,j);
-    } 
-  }
-  return zx;
+CDepthMap * projectionXY(CDepthMap * dimage){
+  return dimage;
 }
 
-cv::Mat  projectionZX(CDepthMap * dimage){
-  cv::Mat  zx=cv::Mat::zeros(dimage->GetNRows(),dimage->GetNCols(), CV_8UC1);
+CDepthMap *  projectionZX(CDepthMap * dimage){
+  CDepthMap *  zx=new CDepthMap();
+  zx->SetSize(  dimage->GetNCols(), dimage->GetNRows() );
   PointCloud pointCloud;
   pointCloud.addDepthMap(dimage);
   pair<Point3D, Point3D> extr=pointCloud.computeExtremes();
   double z_min=extr.first.val[2];
   double d_z=extr.second.val[2] - z_min;
   for(int i=0;i<pointCloud.points.size();i++){
-	 int z_i=pointCloud.points.at(i).val[2] - z_min+10;
+	 int z_i=pointCloud.points.at(i).val[2] - z_min;
 	 double y_i=pointCloud.points.at(i).val[1];
 	 int x_i=pointCloud.points.at(i).val[0];
-	 zx.at<uchar>(x_i,z_i)=y_i;
-	 zx.at<uchar>(x_i,z_i+1)=y_i;
-	 zx.at<uchar>(x_i,z_i-1)=y_i;
-
+	 if(0<x_i && x_i<dimage->GetNRows()){
+	  // zx.at<uchar>(x_i,z_i)=y_i;
+	   if(0<z_i && z_i<dimage->GetNCols()){
+		 zx->SetItem(x_i,z_i,y_i);
+	   }
+	   //zx.at<uchar>(x_i,z_i-1)=y_i;
+	 }
   }
   return zx;
 }
 
-cv::Mat projectionZY(CDepthMap * dimage){
-  cv::Mat  zx=cv::Mat::zeros(dimage->GetNRows(),dimage->GetNCols(), CV_8UC1);
+CDepthMap *projectionZY(CDepthMap * dimage){
+  CDepthMap *  zx=new CDepthMap();
+  zx->SetSize( dimage->GetNCols(), dimage->GetNRows() );
   PointCloud pointCloud;
   pointCloud.addDepthMap(dimage);
   pair<Point3D, Point3D> extr=pointCloud.computeExtremes();
   double z_min=extr.first.val[2];
   double d_z=extr.second.val[2] - z_min;
   for(int i=0;i<pointCloud.points.size();i++){
-	 int z_i=pointCloud.points.at(i).val[2] - z_min+10;
+	 int z_i=pointCloud.points.at(i).val[2] - z_min;
 	 int y_i=pointCloud.points.at(i).val[1];
 	 double x_i=pointCloud.points.at(i).val[0];
-	 zx.at<uchar>(z_i,y_i)=x_i;
-	 zx.at<uchar>(z_i+1,y_i)=x_i;
-	 zx.at<uchar>(z_i-1,y_i)=x_i;
+	 if(0<x_i && x_i<dimage->GetNRows()){
+	   if(0<z_i && z_i<dimage->GetNCols()){
+		 zx->SetItem(z_i,y_i,x_i);
+	   }
+	 }
 
   }
   return zx;

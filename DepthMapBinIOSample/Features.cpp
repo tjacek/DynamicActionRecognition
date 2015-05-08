@@ -95,22 +95,25 @@ FeatureVector VarianceExtractor::getFeatures(Action action){
   FeatureVector fullVect;
   clock_t begin = clock();
   
-  PointCloud * cloud=actionVar(&action,projectionXY);
+  PointCloud * cloud=actionVar(&action,projectionZX);
   Histogram3D * hist=getActionShapeContext(  params, cloud);
   FeatureVector * part=hist->toVector();
   fullVect.insert(fullVect.end(),part->begin(),part->end());
+  delete cloud;
   delete hist;
-
+  
   cloud=actionVar(&action,projectionZX);
   hist=getActionShapeContext(  params, cloud);
   part=hist->toVector();
   fullVect.insert(fullVect.end(),part->begin(),part->end());
+  delete cloud;
   delete hist;
-
+  
   cloud=actionVar(&action,projectionZY);
   hist=getActionShapeContext(  params, cloud);
   part=hist->toVector();
   fullVect.insert(fullVect.end(),part->begin(),part->end());
+  delete cloud;
   delete hist;
 
   saveTime(begin);

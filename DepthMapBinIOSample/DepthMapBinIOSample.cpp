@@ -116,8 +116,8 @@ void showHistogram(char depthFileName[]){
 void showTransform(){
   char depthFileName[]="C:/Users/TP/Desktop/doktoranckie/Dataset/Full/a7/a07_s01_e01_sdepth.bin";
     Action action=readAction( depthFileName);
-   cv::Mat mat=projectionZY(action.at(0));
-   showImage(&mat,"ZX");
+   //cv::Mat mat=projectionZY(action.at(0));
+   //showImage(&mat,"ZX");
 }
 
 void showClouds(){
