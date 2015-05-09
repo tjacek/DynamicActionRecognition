@@ -29,9 +29,11 @@ PointCloud * actionVar(Action * action,Projection projection);
 ActionArray *actionDifference(Action * action,Projection projection);
 ActionArray * transformAction(Action * action,Projection projection);
 double applyKernel(int x_0,int y_0,int t_0,int k,double * kernel,ActionArray * orginal);
+double applyKernel2(int x_0,int y_0,int t_0,int k,double * kernel,ActionArray * orginal);
 
 CDepthMap * projectionZX(CDepthMap * mat);
 CDepthMap * projectionZY(CDepthMap * mat);
 CDepthMap * projectionXY(CDepthMap * mat);
 
 void  showImage(cv::Mat * m,const char * name);
+void zero(CDepthMap * dmap);

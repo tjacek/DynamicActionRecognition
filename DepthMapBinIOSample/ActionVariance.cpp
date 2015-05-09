@@ -2,6 +2,10 @@
 #include "ActionVariance.h"
 
 PointCloud * actionVar(Action * action,Projection projection){
+  /*zero(action->at(0));
+  zero(action->at(1));
+  zero(action->at(action->size()-2));
+  zero(action->at(action->size()-1));*/
   PointCloud * cloud=new PointCloud();
   ActionArray * diff= actionDifference(action, projection);
   ActionSummary * summary=new ActionSummary(diff);
@@ -40,7 +44,14 @@ ActionArray * transformAction(Action * action, Projection projection){
 }
 
 CDepthMap * projectionXY(CDepthMap * dimage){
-  return dimage;
+  CDepthMap * nimage=new CDepthMap();
+  nimage->SetSize(dimage->GetNCols(),dimage->GetNRows());
+  for(int i=0;i<dimage->GetNRows();i++){
+	for(int j=0;j<dimage->GetNCols();j++){
+		nimage->SetItem(i,j, dimage->GetItem(i,j));
+    }
+  }
+  return nimage;
 }
 
 CDepthMap *  projectionZX(CDepthMap * dimage){
@@ -64,6 +75,14 @@ CDepthMap *  projectionZX(CDepthMap * dimage){
 	 }
   }
   return zx;
+}
+
+void zero(CDepthMap * dmap){
+  for(int j=0;j<dmap->GetNRows();j++){
+	for(int k=0;k<dmap->GetNCols();k++){
+		dmap->SetItem(j,k,0);
+	}
+  }
 }
 
 CDepthMap *projectionZY(CDepthMap * dimage){
@@ -121,29 +140,81 @@ void ActionArray::convol(double * kernel,ActionArray * orginal){
 	for(int j=0;j<rows;j++){
 	  for(int k=0;k<cols;k++){
 	    //data[i][j][k]=weightedSum(i,j,k, orginal, kernel);
-		data[i][j][k]=applyKernel(j,k,i,2, kernel, orginal);
+		data[i][j][k]=applyKernel2(j,k,i,2, kernel, orginal);
 	  }
     }
   }
 }
 
-double applyKernel(int x_0,int y_0,int t_0,int k,double * kernel,ActionArray * orginal){
+double applyKernel2(int x_0,int y_0,int t_0,int k,double * kernel,ActionArray * orginal){
+  if(t_0<1){
+    return 0;
+  }
+  if(t_0>=orginal->frames-2){
+    return 0;
+  }
+  if(x_0==0 || y_0==0){
+	  return 0;
+  }
+  if(x_0==orginal->rows-1 || y_0==orginal->cols-1){
+	  return 0;
+  }
+  if(orginal->data[t_0][x_0][y_0]==0){
+	return 0;
+  }
   double sum=0.0;
-  double C= 1/ (2.0 * ((double) k));
+  double C= 1.0/ 8.0;
+  sum+=orginal->data[t_0+1][x_0+1][y_0+1];
+  sum+=orginal->data[t_0+1][x_0+1][y_0];
+  sum+=orginal->data[t_0+1][x_0+1][y_0-1];
+  
+  sum+=orginal->data[t_0+1][x_0][y_0+1];
+  sum+=orginal->data[t_0+1][x_0][y_0];
+  sum+=orginal->data[t_0+1][x_0][y_0-1];
+
+  sum+=orginal->data[t_0+1][x_0-1][y_0-1];
+  sum+=orginal->data[t_0+1][x_0-1][y_0-1];
+  sum+=orginal->data[t_0+1][x_0-1][y_0-1];
+  sum*=C;
+  sum=orginal->data[t_0][x_0][y_0]-sum;
+  if(sum>30){
+    return sum;
+  }else{
+    return 0;
+  }
+}
+
+double applyKernel(int x_0,int y_0,int t_0,int k,double * kernel,ActionArray * orginal){
+  if(t_0<2){
+    return 0;
+  }
+  if(t_0>=orginal->frames-2){
+    return 0;
+  }
+  if(orginal->data[t_0][x_0][y_0]==0){
+	return 0;
+  }
+  double sum=0.0;
+  //double C= 1/ (2.0 * ((double) k) + 1.0);
+  double C=1/5.0;
   for(int i=1;i<k;i++){
      int t_i=t_0+i;
 	 if(t_i<orginal->frames){
-	   sum+=C*orginal->data[t_i][x_0][y_0];
+	   sum-=C*orginal->data[t_i][x_0][y_0];
 	 }
   }
-  sum-=orginal->data[t_0][x_0][y_0];
+  sum+=(1.0 - C)*orginal->data[t_0][x_0][y_0];
   for(int i=k;i>0;i--){
      int t_i=t_0-i;
 	 if(0<=t_i){
-	   sum+=C*orginal->data[t_i][x_0][y_0];
+	   sum-=C*orginal->data[t_i][x_0][y_0];
 	 }
   }
-  return sum;
+  if(sum>10){
+    return sum;
+  }else{
+    return 0;
+  }
 }
 
 ActionSummary::~ActionSummary(){

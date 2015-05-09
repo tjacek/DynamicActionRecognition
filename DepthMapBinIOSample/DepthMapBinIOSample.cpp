@@ -82,15 +82,42 @@ cv::Mat * depthMap2Mat(CDepthMap* cdepth,bool ucharType){
   return mat;
 }
 
+vector<cv::Mat> toArray(ActionArray * aa){
+  vector<cv::Mat> action;
+  for(int t=0;t<aa->frames;t++){
+	cv::Mat mat=cv::Mat::zeros(aa->rows,aa->cols,CV_8UC1);
+	for(int i=0;i<aa->rows;i++){
+      for(int j=0;j<aa->rows;j++){
+         float n=abs(aa->data[t][i][j]); 
+		 mat.at<uchar>(i,j)= (uchar) n;
+	  }
+	}
+	action.push_back(mat);
+  }
+  return action;
+}
+
 void showAction(char depthFileName[]){
   Action action=readAction( depthFileName);
   cout << action.size();
 //  differenceOfGaussian3D(&action,false);
-  vector<cv::Mat*> frames;
-  for(int i=0;i<action.size();i++){
-    cv::Mat * mat=depthMap2Mat(action.at(i),false);
-	frames.push_back(mat);
+  ActionArray * aa=actionDifference(&action,projectionXY);
+  vector<cv::Mat> frames=toArray(  aa);
+  cv::namedWindow( "Display window", cv::WINDOW_AUTOSIZE );
+  for(int i = 0;i<frames.size();i++){
+     cv::imshow("Display window",frames.at(i));
+       //Sleep(300);
+	 cv::waitKey(0);
   }
+} 
+
+void showDiffAction(char depthFileName[]){
+  Action action=readAction( depthFileName);
+  ActionArray * aa=actionDifference(&action,projectionXY);
+  ActionSummary * summary=new ActionSummary(aa);
+  vector<cv::Mat*> frames;
+  cv::Mat * mat=depthMap2Mat(&summary->variance,false);
+  frames.push_back(mat);
   cv::namedWindow( "Display window", cv::WINDOW_AUTOSIZE );
   for(int i = 0;i<frames.size();i++){
      cv::imshow("Display window",*frames.at(i));
@@ -113,13 +140,6 @@ void showHistogram(char depthFileName[]){
   //getSimpeShapeContext(params,  action);
 }
 
-void showTransform(){
-  char depthFileName[]="C:/Users/TP/Desktop/doktoranckie/Dataset/Full/a7/a07_s01_e01_sdepth.bin";
-    Action action=readAction( depthFileName);
-   //cv::Mat mat=projectionZY(action.at(0));
-   //showImage(&mat,"ZX");
-}
-
 void showClouds(){
   string prefix="C:/Users/TP/Desktop/doktoranckie/Dataset/Full/";
   string cats[]= 
@@ -127,7 +147,7 @@ void showClouds(){
    "a5/a05_s01_e01_sdepth.bin","a6/a06_s01_e01_sdepth.bin","a7/a07_s01_e01_sdepth.bin","a8/a08_s01_e01_sdepth.bin",
    "a9/a09_s01_e01_sdepth.bin","a10/a10_s01_e01_sdepth.bin","a11/a11_s01_e01_sdepth.bin","a12/a12_s01_e01_sdepth.bin",
    "a13/a13_s01_e01_sdepth.bin","a14/a14_s01_e01_sdepth.bin","a15/a15_s01_e01_sdepth.bin","a16/a16_s01_e01_sdepth.bin",
-   "a17/a17_s01_e01_sdepth.bin","a18/a18_s01_e01_sdepth.bin","a19/a19_s01_e01_sdepth.bin","a20/a20_s01_e01_sdepth.bin"};
+   "a17/a17_s01_e01_sdepth.bin","a18/a18_s01_e01_sdepth.bin","a19/a19_s01_e01_sdepth.bin","a20/a20_s05_e01_sdepth.bin"};
   for(int i=0;i<20;i++){
     string category=cats[i];
 	cout << category  <<"\n";
@@ -137,21 +157,22 @@ void showClouds(){
 //    differenceOfGaussian3D(&action,false);
 	//ActionSummarry summary( &action);
 
-    DynamicPointCloud pointCloud;
-	pointCloud.addTimeAction(&action);//.addTimeAction(&action);
-	pointCloud.normalize();
-    pointCloud.save("cloud"+intToString(i)+".txt");
+	PointCloud * pointCloud=actionVar( &action,projectionXY);
+
+    pointCloud->save("cloud"+intToString(i)+".txt");
   }
 
 }
 
 int main(int argc, char * argv[])
 {   
+	//showClouds();
 	//showTransform();
 	//showClouds();
 	//char depthFileName[]="C:/Users/TP/Desktop/doktoranckie/Dataset/Full/a7/a07_s01_e01_sdepth.bin";
 //	char testFileName[]="C:/Users/user/Desktop/kwolek/vibe/test.bin";
-
+	//showDiffAction(depthFileName);
+	//	showAction(depthFileName);
 	//showAction(depthFileName);
 	//savePointCloud(depthFileName);
 	//showAction(depthFileName);
@@ -172,7 +193,7 @@ int main(int argc, char * argv[])
 	   //params.thetaBins=8;
 	   //params.betaBins=4;
 	   char depthFileName[] = "C:/Users/TP/Desktop/doktoranckie/Dataset/Full";
-	   params.output="C:/Users/TP/Desktop/doktoranckie/varianceFull.arff";
+	   //params.output="C:/Users/TP/Desktop/doktoranckie/varianceFull.arff";
 	   createArffDataset( params,depthFileName);
 	/*}*/
 	
