@@ -122,6 +122,9 @@ ActionArray::ActionArray(Action * action){
 	data[i]=new double*[rows];
 	for(int j=0;j<rows;j++){
 	  data[i][j]=new double[cols];
+	  for(int k=0;k<cols;k++){
+		  data[i][j][k]=0;
+	  }
     }
   }
 }
@@ -140,7 +143,7 @@ void ActionArray::convol(double * kernel,ActionArray * orginal){
 	for(int j=0;j<rows;j++){
 	  for(int k=0;k<cols;k++){
 	    //data[i][j][k]=weightedSum(i,j,k, orginal, kernel);
-		data[i][j][k]=applyKernel2(j,k,i,2, kernel, orginal);
+		data[i][j][k]=applyKernel2(j,k,i,3, kernel, orginal);
 	  }
     }
   }
@@ -159,29 +162,79 @@ double applyKernel2(int x_0,int y_0,int t_0,int k,double * kernel,ActionArray * 
   if(x_0==orginal->rows-1 || y_0==orginal->cols-1){
 	  return 0;
   }
-  if(orginal->data[t_0][x_0][y_0]==0){
+  /*if(orginal->data[t_0][x_0][y_0]==0){
 	return 0;
   }
-  double sum=0.0;
-  double C= 1.0/ 8.0;
-  sum+=orginal->data[t_0+1][x_0+1][y_0+1];
-  sum+=orginal->data[t_0+1][x_0+1][y_0];
-  sum+=orginal->data[t_0+1][x_0+1][y_0-1];
-  
-  sum+=orginal->data[t_0+1][x_0][y_0+1];
-  sum+=orginal->data[t_0+1][x_0][y_0];
-  sum+=orginal->data[t_0+1][x_0][y_0-1];
-
-  sum+=orginal->data[t_0+1][x_0-1][y_0-1];
-  sum+=orginal->data[t_0+1][x_0-1][y_0-1];
-  sum+=orginal->data[t_0+1][x_0-1][y_0-1];
-  sum*=C;
-  sum=orginal->data[t_0][x_0][y_0]-sum;
-  if(sum>30){
-    return sum;
-  }else{
-    return 0;
+  if(orginal->data[t_0][x_0+1][y_0+1]!=0  & orginal->data[t_0+1][x_0+1][y_0]!=0 & orginal->data[t_0][x_0+1][y_0-1]!=0){
+	return 0;
   }
+
+  if(orginal->data[t_0][x_0][y_0+1]!=0  & orginal->data[t_0][x_0][y_0]!=0 & orginal->data[t_0][x_0][y_0-1]!=0){
+	return 0;
+  }
+
+  if(orginal->data[t_0][x_0-1][y_0+1]!=0  & orginal->data[t_0-1][x_0+1][y_0]!=0 & orginal->data[t_0][x_0-1][y_0-1]!=0){
+	return 0;
+  }*/
+  double sum=0.0;
+  double C= 0;
+  if(    orginal->data[t_0+1][x_0+1][y_0+1]!=0){
+    sum+=orginal->data[t_0+1][x_0+1][y_0+1];
+	C+=1.0;
+  }
+  if(    orginal->data[t_0+1][x_0+1][y_0]!=0){
+    sum+=orginal->data[t_0+1][x_0+1][y_0];
+		C+=1.0;
+
+  }
+  if(    orginal->data[t_0+1][x_0+1][y_0-1]!=0){
+    sum+=orginal->data[t_0+1][x_0+1][y_0-1];
+		C+=1.0;
+
+  }
+  if(    orginal->data[t_0+1][x_0][y_0+1]!=0){
+    sum+=orginal->data[t_0+1][x_0][y_0+1];
+		C+=1.0;
+
+  }
+  if(    orginal->data[t_0+1][x_0][y_0]!=0){
+    sum+=orginal->data[t_0+1][x_0][y_0];
+		C+=1.0;
+
+  }
+  if(    orginal->data[t_0+1][x_0][y_0-1]!=0){
+    sum+=orginal->data[t_0+1][x_0][y_0-1];
+		C+=1.0;
+
+  }
+
+  if(    orginal->data[t_0+1][x_0-1][y_0-1]!=0){
+    sum+=orginal->data[t_0+1][x_0-1][y_0-1];
+		C+=1.0;
+
+  }
+  if(    orginal->data[t_0+1][x_0-1][y_0-1]!=0){
+    sum+=orginal->data[t_0+1][x_0-1][y_0-1];
+		C+=1.0;
+
+  }
+  if(    orginal->data[t_0+1][x_0-1][y_0-1]!=0){
+    sum+=orginal->data[t_0+1][x_0-1][y_0-1];
+		C+=1.0;
+
+  }
+  if(C!=0.0){
+    sum/=C;
+    sum=orginal->data[t_0][x_0][y_0]-sum;
+	sum=abs(sum);
+	//return abs(sum);
+  //if(sum<500){
+    return sum;
+  //}else{
+    return 0;
+  //}
+  }
+  return 0;
 }
 
 double applyKernel(int x_0,int y_0,int t_0,int k,double * kernel,ActionArray * orginal){
@@ -195,22 +248,22 @@ double applyKernel(int x_0,int y_0,int t_0,int k,double * kernel,ActionArray * o
 	return 0;
   }
   double sum=0.0;
-  //double C= 1/ (2.0 * ((double) k) + 1.0);
-  double C=1/5.0;
+  double C= 1/ (2.0 * ((double) k));
+//  double C=1/5.0;
   for(int i=1;i<k;i++){
      int t_i=t_0+i;
 	 if(t_i<orginal->frames){
 	   sum-=C*orginal->data[t_i][x_0][y_0];
 	 }
   }
-  sum+=(1.0 - C)*orginal->data[t_0][x_0][y_0];
+  sum+=(1.0)*orginal->data[t_0][x_0][y_0];
   for(int i=k;i>0;i--){
      int t_i=t_0-i;
 	 if(0<=t_i){
 	   sum-=C*orginal->data[t_i][x_0][y_0];
 	 }
   }
-  if(sum>10){
+  if(100>sum){
     return sum;
   }else{
     return 0;
@@ -226,18 +279,26 @@ ActionSummary:: ActionSummary(ActionArray * action){
   variance.SetSize(action->rows,action->cols);
   mean.SetSize(action->rows,action->cols);
   int n=action->frames;
-  float n_f=n;
+  //n;
   for(int i=0;i<action->rows;i++){
 	  for(int j=0;j<action->cols;j++){
       float sum=0.0;
+	  float n_f= 1.0;
       for(int k=0;k<n;k++){
-		sum+=action->data[k][i][j];
+		if(action->data[k][i][j]!=0){
+    
+		  sum+=abs(action->data[k][i][j]);
+		 // cout << sum <<" \n";
+		  n_f+=1.0;
+		}
+		//cout << sum <<" \n";
       }
 	  sum/=n_f;
-	  if(sum>0){
+	  // cout << sum <<" \n";
+	  if(sum>10){
 	    mean.SetItem(i,j,sum);
 	  }else{
-		mean.SetItem(i,j,0);
+		//mean.SetItem(i,j,0);
 	  }
 	}
   }
@@ -245,14 +306,20 @@ ActionSummary:: ActionSummary(ActionArray * action){
   for(int i=0;i<action->rows;i++){
     for(int j=0;j<action->cols;j++){
       float sd=0;
+	  float n_f=1.0;
       for(int k=0;k<n;k++){
-		if(action->data[k][i][j]>0){
+		if(action->data[k][i][j]!=0){
+		   
 		   double diff =mean.GetItem(i,j) - action->data[k][i][j]; 
 		   sd+=diff*diff;
+		   n_f-=0;
 		  }
-      }
-	  sd/=(n_f-1.0);
+        }
+	  sd/=(n_f);
+	  sd=sqrt(sd);
+	  if(sd>10){
 	  variance.SetItem(i,j,sqrt(sd));
+	  }
 	}
   }
 }

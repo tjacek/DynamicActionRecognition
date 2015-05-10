@@ -66,8 +66,8 @@ double getDepth(int x,int y,int t,Action action){
   return cdepth->GetItem(x,y);
 }
 
-cv::Mat * depthMap2Mat(CDepthMap* cdepth,bool ucharType){
-  cv::Mat*  mat =new cv::Mat(cdepth->GetNRows(),cdepth->GetNCols(),CV_8UC1 );
+cv::Mat  depthMap2Mat(CDepthMap* cdepth,bool ucharType){
+ cv::Mat mat=cv::Mat::zeros(cdepth->GetNRows(),cdepth->GetNCols(),CV_8UC1 );
   for(int i=0;i<cdepth->GetNRows(); i++){
     for(int j=0;j<cdepth->GetNCols(); j++){
 	 float n=0;
@@ -76,7 +76,7 @@ cv::Mat * depthMap2Mat(CDepthMap* cdepth,bool ucharType){
 	 }else{
 	   n=abs(cdepth->GetItem(i,j)/4.0);
 	 }
-	  mat->at<uchar>(i,j)= (uchar) n;//cdepth->GetItem(i,j);
+	  mat.at<uchar>(i,j)= (uchar) n;//cdepth->GetItem(i,j);
     }
   }
   return mat;
@@ -116,8 +116,8 @@ void showDiffAction(char depthFileName[]){
   ActionArray * aa=actionDifference(&action,projectionXY);
   ActionSummary * summary=new ActionSummary(aa);
   vector<cv::Mat*> frames;
-  cv::Mat * mat=depthMap2Mat(&summary->variance,false);
-  frames.push_back(mat);
+  cv::Mat  mat=depthMap2Mat(&summary->mean,false);
+  frames.push_back(&mat);
   cv::namedWindow( "Display window", cv::WINDOW_AUTOSIZE );
   for(int i = 0;i<frames.size();i++){
      cv::imshow("Display window",*frames.at(i));
@@ -164,15 +164,28 @@ void showClouds(){
 
 }
 
+void showCategory(string category){
+  string prefix="C:/Users/TP/Desktop/doktoranckie/Dataset/Full/";
+  string dirName=prefix+category;
+  ImageList images=getImageList(dirName);
+  for(int i=0;i<images->size();i++){
+	cout << images->at(i) << "\n";
+	char *cstr = (char*)images->at(i).c_str();
+	Action action=readAction(cstr);
+	PointCloud * pointCloud=actionVar( &action,projectionXY);
+    pointCloud->save(category+intToString(i)+".txt");
+  }
+}
+
 int main(int argc, char * argv[])
 {   
+	//showCategory("a18");
 	//showClouds();
 	//showTransform();
 	//showClouds();
 	//char depthFileName[]="C:/Users/TP/Desktop/doktoranckie/Dataset/Full/a7/a07_s01_e01_sdepth.bin";
 //	char testFileName[]="C:/Users/user/Desktop/kwolek/vibe/test.bin";
 	//showDiffAction(depthFileName);
-	//	showAction(depthFileName);
 	//showAction(depthFileName);
 	//savePointCloud(depthFileName);
 	//showAction(depthFileName);
@@ -193,7 +206,7 @@ int main(int argc, char * argv[])
 	   //params.thetaBins=8;
 	   //params.betaBins=4;
 	   char depthFileName[] = "C:/Users/TP/Desktop/doktoranckie/Dataset/Full";
-	   //params.output="C:/Users/TP/Desktop/doktoranckie/varianceFull.arff";
+	   params.output="C:/Users/TP/Desktop/doktoranckie/varianceNoEdge.arff";
 	   createArffDataset( params,depthFileName);
 	/*}*/
 	

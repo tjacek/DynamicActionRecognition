@@ -78,7 +78,7 @@ FeatureVector DynamicExtractor::getFeatures(Action action){
 //**********
 
 VarianceExtractor::VarianceExtractor(DatasetParametrs params){
-  numberOfDims=params.rBins*params.betaBins*params.thetaBins;// *3;
+  numberOfDims=params.rBins*params.betaBins*params.thetaBins ;//*3;
   this->params=params;
 }
 

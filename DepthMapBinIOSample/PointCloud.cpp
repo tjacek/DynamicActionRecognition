@@ -3,11 +3,11 @@
 
 PointCloud::PointCloud(){}
 
-Point3D timePoint(int x,int y,int t){
+Point3D timePoint(int x,int y,int z){
   Point3D point;
   point.val[0] = x;//normalizedX * depthZ * xzFactor;
   point.val[1] = y;//normalizedY * depthZ * yzFactor;
-  point.val[2] = t;
+  point.val[2] = z;
   return point;
 }
 
@@ -16,7 +16,7 @@ void PointCloud::addDepthMap(CDepthMap * depthMap){
   int width=depthMap->GetNCols();
   for(int i=0;i<height;i++){
 	for(int j=0;j<width;j++){
-	  double z= depthMap->GetItem(i,j);
+	  int z= depthMap->GetItem(i,j);
 	  if(z!= emptyPoint && z>0){
 	    //cout << z <<"\n";
 		Point3D point=timePoint(i,j,z);
