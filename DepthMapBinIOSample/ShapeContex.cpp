@@ -54,11 +54,11 @@ void extremeHistogram(Histogram3D * histogram,DynamicPointCloud * cloud){
   }
 }
 
-void sampleHistogram(Histogram3D * histogram,DynamicPointCloud * cloud){
-  vector<Point3D> points= cloud->sample(100);
-  for(int i=0;i<points.size();i++){
-    Point3D point=points.at(i);
-	addPoints(point, cloud->points, histogram);
+void sampleHistogram(Histogram3D * histogram,PointCloud * cloud){
+  //vector<Point3D> points= cloud->sample(4000);
+  for(int i=0;i<cloud->points.size();i++){
+    Point3D point=cloud->points.at(i);
+	addPoints(point, cloud->points,histogram);
   }
 }
 

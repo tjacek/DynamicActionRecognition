@@ -101,7 +101,7 @@ void showAction(char depthFileName[]){
   Action action=readAction( depthFileName);
   cout << action.size();
 //  differenceOfGaussian3D(&action,false);
-  ActionArray * aa=actionDifference(&action,projectionXY);
+  ActionArray * aa=actionDifference(&action,projectionZX);
   vector<cv::Mat> frames=toArray(  aa);
   cv::namedWindow( "Display window", cv::WINDOW_AUTOSIZE );
   for(int i = 0;i<frames.size();i++){
@@ -113,7 +113,7 @@ void showAction(char depthFileName[]){
 
 void showDiffAction(char depthFileName[]){
   Action action=readAction( depthFileName);
-  ActionArray * aa=actionDifference(&action,projectionXY);
+  ActionArray * aa=actionDifference(&action,projectionZX);
   ActionSummary * summary=new ActionSummary(aa);
   vector<cv::Mat*> frames;
   cv::Mat  mat=depthMap2Mat(&summary->mean,false);
@@ -157,7 +157,7 @@ void showClouds(){
 //    differenceOfGaussian3D(&action,false);
 	//ActionSummarry summary( &action);
 
-	PointCloud * pointCloud=actionVar( &action,projectionXY);
+	PointCloud * pointCloud=actionVar( &action,projectionZX);
 
     pointCloud->save("cloud"+intToString(i)+".txt");
   }
@@ -179,11 +179,12 @@ void showCategory(string category){
 
 int main(int argc, char * argv[])
 {   
+	
 	//showCategory("a18");
 	//showClouds();
 	//showTransform();
 	//showClouds();
-	//char depthFileName[]="C:/Users/TP/Desktop/doktoranckie/Dataset/Full/a7/a07_s01_e01_sdepth.bin";
+	//char depthFileName[]="C:/Users/TP/Desktop/doktoranckie/Dataset/Full/a17/a17_s01_e01_sdepth.bin";
 //	char testFileName[]="C:/Users/user/Desktop/kwolek/vibe/test.bin";
 	//showDiffAction(depthFileName);
 	//showAction(depthFileName);
@@ -206,7 +207,7 @@ int main(int argc, char * argv[])
 	   //params.thetaBins=8;
 	   //params.betaBins=4;
 	   char depthFileName[] = "C:/Users/TP/Desktop/doktoranckie/Dataset/Full";
-	   params.output="C:/Users/TP/Desktop/doktoranckie/varianceNoEdge.arff";
+	   params.output="C:/Users/TP/Desktop/doktoranckie/final.arff";
 	   createArffDataset( params,depthFileName);
 	/*}*/
 	

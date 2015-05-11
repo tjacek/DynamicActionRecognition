@@ -17,7 +17,7 @@ void FeatureExtractor::saveTime(clock_t begin){
 }
 
 FeatureExtractorImpl::FeatureExtractorImpl(  DatasetParametrs params){
-  numberOfDims=params.rBins*params.betaBins*params.thetaBins*3;
+  numberOfDims=params.rBins*params.betaBins*params.thetaBins;//*3;
   this->params=params;
 }
 
@@ -78,7 +78,7 @@ FeatureVector DynamicExtractor::getFeatures(Action action){
 //**********
 
 VarianceExtractor::VarianceExtractor(DatasetParametrs params){
-  numberOfDims=params.rBins*params.betaBins*params.thetaBins ;//*3;
+  numberOfDims=params.rBins*params.betaBins*params.thetaBins *3;
   this->params=params;
 }
 
@@ -94,15 +94,17 @@ string VarianceExtractor:: featureName(int i){
 FeatureVector VarianceExtractor::getFeatures(Action action){
   FeatureVector fullVect;
   clock_t begin = clock();
-  
-  PointCloud * cloud=actionVar(&action,projectionXY);
-  Histogram3D * hist=getActionShapeContext(  params, cloud);
-  FeatureVector * part=hist->toVector();
+  PointCloud * cloud;
+  Histogram3D * hist;
+  FeatureVector * part;
+  cloud=actionVar(&action,projectionXY);
+  hist=getActionShapeContext(  params, cloud);
+  part=hist->toVector();
   fullVect.insert(fullVect.end(),part->begin(),part->end());
   delete cloud;
   delete hist;
   
-  /*cloud=actionVar(&action,projectionZX);
+  cloud=actionVar(&action,projectionZX);
   hist=getActionShapeContext(  params, cloud);
   part=hist->toVector();
   fullVect.insert(fullVect.end(),part->begin(),part->end());
@@ -114,7 +116,7 @@ FeatureVector VarianceExtractor::getFeatures(Action action){
   part=hist->toVector();
   fullVect.insert(fullVect.end(),part->begin(),part->end());
   delete cloud;
-  delete hist;*/
+  delete hist;
 
   saveTime(begin);
   return fullVect;

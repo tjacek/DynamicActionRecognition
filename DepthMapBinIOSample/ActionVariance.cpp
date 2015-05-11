@@ -9,7 +9,7 @@ PointCloud * actionVar(Action * action,Projection projection){
   PointCloud * cloud=new PointCloud();
   ActionArray * diff= actionDifference(action, projection);
   ActionSummary * summary=new ActionSummary(diff);
-  cloud->addDepthMap(&summary->variance);  
+  cloud->addDepthMap(&summary->mean);  
   cloud->normalize();
   delete diff;
   delete summary;
@@ -23,12 +23,14 @@ ActionArray * actionDifference(Action * action,Projection projection){
   difference->convol(kernel,orginal);
   delete orginal;
   return difference;
+  //return orginal;
 }
 
 ActionArray * transformAction(Action * action, Projection projection){
   ActionArray * actionArray=new ActionArray(action);
+  int z_min=getZMin( action);
   for(int t=0;t<action->size();t++){
-	CDepthMap * mat=projection(action->at(t));
+	CDepthMap * mat=projection(action->at(t),z_min);
 	for(int i=0;i<mat->GetNRows();i++){
 		for(int j=0;j<mat->GetNCols();j++){
            //cout << mat->GetNRows() <<" " << mat->GetNCols()<<"\n";
@@ -38,12 +40,13 @@ ActionArray * transformAction(Action * action, Projection projection){
 		  actionArray->data[t][i][j]=value;
 	  }
 	}
+	//cout << mat->GetNRows() <<" " << mat->GetNCols()<<"\n";
 	delete mat;
   }
   return actionArray;
 }
 
-CDepthMap * projectionXY(CDepthMap * dimage){
+CDepthMap * projectionXY(CDepthMap * dimage,int zmin){
   CDepthMap * nimage=new CDepthMap();
   nimage->SetSize(dimage->GetNCols(),dimage->GetNRows());
   for(int i=0;i<dimage->GetNRows();i++){
@@ -54,22 +57,25 @@ CDepthMap * projectionXY(CDepthMap * dimage){
   return nimage;
 }
 
-CDepthMap *  projectionZX(CDepthMap * dimage){
+CDepthMap *  projectionZX(CDepthMap * dimage,int zmin){
   CDepthMap *  zx=new CDepthMap();
   zx->SetSize(  dimage->GetNCols(), dimage->GetNRows() );
+  zero(zx);
   PointCloud pointCloud;
   pointCloud.addDepthMap(dimage);
   pair<Point3D, Point3D> extr=pointCloud.computeExtremes();
-  double z_min=extr.first.val[2];
-  double d_z=extr.second.val[2] - z_min;
+  //double z_min=extr.first.val[2];
+  //double d_z=extr.second.val[2] - z_min;
   for(int i=0;i<pointCloud.points.size();i++){
-	 int z_i=pointCloud.points.at(i).val[2] - z_min;
+	 int z_i=pointCloud.points.at(i).val[2] -zmin;// - z_min;
 	 double y_i=pointCloud.points.at(i).val[1];
 	 int x_i=pointCloud.points.at(i).val[0];
 	 if(0<x_i && x_i<dimage->GetNRows()){
 	  // zx.at<uchar>(x_i,z_i)=y_i;
 	   if(0<z_i && z_i<dimage->GetNCols()){
-		 zx->SetItem(x_i,z_i,y_i);
+	     zx->SetItem(x_i,z_i-1,y_i);
+         zx->SetItem(x_i,z_i,y_i);
+		 zx->SetItem(x_i,z_i+1,y_i);
 	   }
 	   //zx.at<uchar>(x_i,z_i-1)=y_i;
 	 }
@@ -85,21 +91,25 @@ void zero(CDepthMap * dmap){
   }
 }
 
-CDepthMap *projectionZY(CDepthMap * dimage){
+CDepthMap *projectionZY(CDepthMap * dimage,int zmin){
   CDepthMap *  zx=new CDepthMap();
   zx->SetSize( dimage->GetNCols(), dimage->GetNRows() );
+  zero(zx);
   PointCloud pointCloud;
   pointCloud.addDepthMap(dimage);
-  pair<Point3D, Point3D> extr=pointCloud.computeExtremes();
-  double z_min=extr.first.val[2];
-  double d_z=extr.second.val[2] - z_min;
+ // pair<Point3D, Point3D> extr=pointCloud.computeExtremes();
+ // double z_min=extr.first.val[2];
+  //double d_z=extr.second.val[2] - z_min;
+
   for(int i=0;i<pointCloud.points.size();i++){
-	 int z_i=pointCloud.points.at(i).val[2] - z_min;
+	 int z_i=pointCloud.points.at(i).val[2] -zmin;//- z_min;
 	 int y_i=pointCloud.points.at(i).val[1];
 	 double x_i=pointCloud.points.at(i).val[0];
-	 if(0<x_i && x_i<dimage->GetNRows()){
-	   if(0<z_i && z_i<dimage->GetNCols()){
-		 zx->SetItem(z_i,y_i,x_i);
+	 if(0<y_i && y_i<dimage->GetNCols()){
+	   if(0<z_i && z_i<dimage->GetNRows()-1){
+		  zx->SetItem(z_i-1,y_i,x_i);
+		  zx->SetItem(z_i,y_i,x_i);
+		  zx->SetItem(z_i+1,y_i,x_i);
 	   }
 	 }
 
@@ -278,6 +288,9 @@ ActionSummary::~ActionSummary(){
 ActionSummary:: ActionSummary(ActionArray * action){
   variance.SetSize(action->rows,action->cols);
   mean.SetSize(action->rows,action->cols);
+  zero(&variance);
+  zero(&mean);
+
   int n=action->frames;
   //n;
   for(int i=0;i<action->rows;i++){
@@ -322,4 +335,20 @@ ActionSummary:: ActionSummary(ActionArray * action){
 	  }
 	}
   }
+}
+
+int getZMin(Action * action){
+   double z=9999;
+  for(int i=0;i<action->size();i++){
+	CDepthMap * dmap=action->at(i);
+	for(int j=0;j<dmap->GetNRows();j++){
+	  for(int k=0;k<dmap->GetNCols();k++){
+		  double value=dmap->GetItem(j,k);
+		  if(value>0 && z>value){
+			z=value;
+		  }
+   	  }
+	}
+  }
+  return z;
 }
