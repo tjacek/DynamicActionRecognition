@@ -9,7 +9,7 @@ void buildFullDataset(DatasetParametrs params,Categories categories){
   map<string,int>::iterator it;
   for(it=categories.begin();it!=categories.end();it++){
     pair<string,int> p_i=*it;
-	cout << p_i.first<<"\n";
+	//cout << p_i.first<<"\n";
 	char * c=(char*)p_i.first.c_str();
 	Action action=readAction(c);
 	dataset.addExample(action);

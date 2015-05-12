@@ -140,6 +140,32 @@ void showHistogram(char depthFileName[]){
   //getSimpeShapeContext(params,  action);
 }
 
+void saveImg(){
+  char depthFileName[]="C:/Users/TP/Desktop/doktoranckie/Dataset/Full";
+  Categories categories=readFulldataset( depthFileName);
+  map<string,int>::iterator it;
+  int k=0;
+  int i=0;
+  for(it=categories.begin();it!=categories.end();it++){
+	pair<string,int> p_i=*it;
+	cout << p_i.first<<"\n";
+	if(k!=p_i.second){
+		k=p_i.second;
+		i=0;
+	}
+	char * c=(char*)p_i.first.c_str();
+	Action action=readAction(c);
+	ActionArray * diff= actionDifference(&action, projectionZY);
+    ActionSummary * summary=new ActionSummary(diff);
+	cv::Mat mat=depthMap2Mat(&summary->mean,false);
+	cv::imwrite("cZY"+intToString(p_i.second)+"_" +intToString(i) +".jpg", mat);
+	delete diff;
+	delete summary;
+	i++;
+  }
+}
+
+
 void showClouds(){
   string prefix="C:/Users/TP/Desktop/doktoranckie/Dataset/Full/";
   string cats[]= 
@@ -165,7 +191,7 @@ void showClouds(){
 }
 
 void showCategory(string category){
-  string prefix="C:/Users/TP/Desktop/doktoranckie/Dataset/Full/";
+  string prefix="C:/Users/TP/Desktop/doktoranckie/Dataset/Full";
   string dirName=prefix+category;
   ImageList images=getImageList(dirName);
   for(int i=0;i<images->size();i++){
@@ -177,9 +203,10 @@ void showCategory(string category){
   }
 }
 
+
 int main(int argc, char * argv[])
 {   
-	
+	saveImg( );
 	//showCategory("a18");
 	//showClouds();
 	//showTransform();
@@ -203,12 +230,12 @@ int main(int argc, char * argv[])
     }
 	if(argc==1){*/
 
-	   DatasetParametrs params;
+	   //DatasetParametrs params;
 	   //params.thetaBins=8;
 	   //params.betaBins=4;
-	   char depthFileName[] = "C:/Users/TP/Desktop/doktoranckie/Dataset/Full";
-	   params.output="C:/Users/TP/Desktop/doktoranckie/final.arff";
-	   createArffDataset( params,depthFileName);
+	   //char depthFileName[] = "C:/Users/TP/Desktop/doktoranckie/Dataset/Full";
+	   //params.output="C:/Users/TP/Desktop/doktoranckie/final.arff";
+	   //createArffDataset( params,depthFileName);
 	/*}*/
 	
 	system("pause");
