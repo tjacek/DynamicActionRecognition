@@ -54,6 +54,12 @@
     <ClCompile Include="ActionVariance.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Vibe.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Connected.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DepthMap.h">
@@ -90,6 +96,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ActionVariance.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vibe.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Connected.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
