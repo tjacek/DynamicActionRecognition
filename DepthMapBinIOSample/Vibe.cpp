@@ -12,7 +12,6 @@ class BackgroundModel{
 	void update(int x,int y,uchar point ,VibeParams * vibeParams);
 	void updateNeighbor(int x,int y,uchar point ,VibeParams * vibeParams);
 
-
   private:
     static int nearX[8] ;
     static int nearY[8] ;
@@ -40,6 +39,7 @@ void vibeAction(Action * action,VibeParams * params){
   }
   for(int i=0; i<action->size();i++){
 	vibeFrame(action->at(i),model,params);
+	removeIsolatedPoints(action->at(i));
 	connectedCommponents(action->at(i));
   }
 }
@@ -137,7 +137,7 @@ void BackgroundModel::update(int x,int y,uchar point ,VibeParams * vibeParams){
 VibeParams::VibeParams(){
     this->nbSamples = 20;                  
     this->reqMatches = 7;                   
-    this->radius = 1;                     
+    this->radius = 7;                     
     this->subsamplingFactor = 17;  
 }
 

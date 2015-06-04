@@ -23,9 +23,8 @@ double getDepth(int x,int y,int t,Action action){
 
 int main(int argc, char * argv[])
 {   
-	cout << "a";
-	//char depthFileName[]="C:/Users/TP/Desktop/kinect/dataset/julka/c5_02.bin";
-	//showVibe(depthFileName);
+	char depthFileName[]="C:/Users/TP/Desktop/kinect/dataset/julka/c5_02.bin";
+	showVibe(depthFileName);
 	//saveImg( );
 	//showCategory("a18");
 	//showClouds();
