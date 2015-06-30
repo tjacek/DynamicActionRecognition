@@ -181,6 +181,8 @@
     <ClCompile Include="DepthMapBinIOSample.cpp" />
     <ClCompile Include="Difference.cpp" />
     <ClCompile Include="Features.cpp" />
+    <ClCompile Include="FisherAction.cpp" />
+    <ClCompile Include="ImageDesc.cpp" />
     <ClCompile Include="io.cpp" />
     <ClCompile Include="pca.cpp" />
     <ClCompile Include="PointCloud.cpp" />
@@ -201,6 +203,8 @@
     <ClInclude Include="DepthMap.h" />
     <ClInclude Include="DepthMapBinFileIO.h" />
     <ClInclude Include="Difference.h" />
+    <ClInclude Include="FisherAction.h" />
+    <ClInclude Include="ImageDesc.h" />
     <ClInclude Include="io.h" />
     <ClInclude Include="pca.h" />
     <ClInclude Include="PointCloud.h" />

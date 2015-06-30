@@ -1,109 +1,109 @@
-﻿Build started 2015-06-03 18:21:15.
-     1>Project "C:\Users\TP\Desktop\doktoranckie\action\DynamicActionRecognition\DepthMapBinIOSample\DepthMapBinIOSample.vcxproj" on node 2 (Build target(s)).
+﻿Build started 2015-06-29 23:19:09.
+     1>Project "C:\Users\TP\Desktop\doktoranckie\dynamicAction\DynamicActionRecognition\DepthMapBinIOSample\DepthMapBinIOSample.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yc"stdafx.h" /Fp"Debug\DepthMapBinIOSample.pch" /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt stdafx.cpp
          stdafx.cpp
      1>c:\opencv2410\build\include\opencv2\flann\logger.h(66): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files (x86)\microsoft visual studio 11.0\vc\include\stdio.h(218) : see declaration of 'fopen'
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\stdafx.cpp(9): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\stdafx.cpp(9): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files (x86)\microsoft visual studio 11.0\vc\include\stdio.h(357) : see declaration of 'sprintf'
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\stdafx.cpp(17): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\stdafx.cpp(17): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files (x86)\microsoft visual studio 11.0\vc\include\stdio.h(357) : see declaration of 'sprintf'
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\DepthMapBinIOSample.pch" /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt ActionVariance.cpp Connected.cpp Dataset.cpp DepthMap.cpp DepthMapBinFileIO.cpp DepthMapBinIOSample.cpp Difference.cpp Features.cpp io.cpp pca.cpp PointCloud.cpp ShapeContex.cpp utils.cpp Vibe.cpp
          Vibe.cpp
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\vibe.cpp(41): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\vibe.cpp(51): warning C4244: 'argument' : conversion from 'float' to 'uchar', possible loss of data
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\vibe.cpp(55): warning C4244: 'argument' : conversion from 'float' to 'uchar', possible loss of data
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\vibe.cpp(58): warning C4244: 'argument' : conversion from 'float' to 'uchar', possible loss of data
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\vibe.cpp(101): warning C4244: 'initializing' : conversion from 'float' to 'uchar', possible loss of data
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\vibe.cpp(102): warning C4244: 'initializing' : conversion from 'float' to 'uchar', possible loss of data
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\vibe.cpp(40): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\vibe.cpp(51): warning C4244: 'argument' : conversion from 'float' to 'uchar', possible loss of data
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\vibe.cpp(55): warning C4244: 'argument' : conversion from 'float' to 'uchar', possible loss of data
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\vibe.cpp(58): warning C4244: 'argument' : conversion from 'float' to 'uchar', possible loss of data
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\vibe.cpp(101): warning C4244: 'initializing' : conversion from 'float' to 'uchar', possible loss of data
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\vibe.cpp(102): warning C4244: 'initializing' : conversion from 'float' to 'uchar', possible loss of data
          utils.cpp
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\utils.cpp(6): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\utils.cpp(6): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files (x86)\microsoft visual studio 11.0\vc\include\stdio.h(218) : see declaration of 'fopen'
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\utils.cpp(43): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\utils.cpp(59): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\utils.cpp(73): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\utils.cpp(89): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\utils.cpp(104): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\utils.cpp(179): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\utils.cpp(194): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\utils.cpp(206): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\utils.cpp(248): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\utils.cpp(43): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\utils.cpp(59): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\utils.cpp(73): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\utils.cpp(89): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\utils.cpp(104): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\utils.cpp(179): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\utils.cpp(194): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\utils.cpp(206): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\utils.cpp(248): warning C4018: '<' : signed/unsigned mismatch
          ShapeContex.cpp
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\shapecontex.cpp(51): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\shapecontex.cpp(59): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\shapecontex.cpp(69): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\shapecontex.cpp(77): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\shapecontex.cpp(98): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\shapecontex.cpp(119): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\shapecontex.cpp(120): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\shapecontex.cpp(121): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\shapecontex.cpp(202): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\shapecontex.cpp(210): warning C4244: 'return' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\shapecontex.cpp(51): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\shapecontex.cpp(59): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\shapecontex.cpp(69): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\shapecontex.cpp(77): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\shapecontex.cpp(98): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\shapecontex.cpp(119): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\shapecontex.cpp(120): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\shapecontex.cpp(121): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\shapecontex.cpp(202): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\shapecontex.cpp(210): warning C4244: 'return' : conversion from 'double' to 'int', possible loss of data
          PointCloud.cpp
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\pointcloud.cpp(19): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\pointcloud.cpp(64): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\pointcloud.cpp(71): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\pointcloud.cpp(84): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\pointcloud.cpp(98): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\pointcloud.cpp(118): warning C4018: '>' : signed/unsigned mismatch
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\pointcloud.cpp(132): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\pointcloud.cpp(140): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\pointcloud.cpp(152): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\pointcloud.cpp(193): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\pointcloud.cpp(217): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\pointcloud.cpp(227): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\pointcloud.cpp(245): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\pointcloud.cpp(19): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\pointcloud.cpp(64): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\pointcloud.cpp(71): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\pointcloud.cpp(84): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\pointcloud.cpp(98): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\pointcloud.cpp(118): warning C4018: '>' : signed/unsigned mismatch
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\pointcloud.cpp(132): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\pointcloud.cpp(140): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\pointcloud.cpp(152): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\pointcloud.cpp(193): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\pointcloud.cpp(217): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\pointcloud.cpp(227): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\pointcloud.cpp(245): warning C4018: '<' : signed/unsigned mismatch
          pca.cpp
          io.cpp
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\io.cpp(9): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\io.cpp(13): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\io.cpp(30): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\io.cpp(83): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\io.cpp(9): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\io.cpp(13): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\io.cpp(30): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\io.cpp(83): warning C4018: '<' : signed/unsigned mismatch
          Features.cpp
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\features.cpp(38): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\features.cpp(38): warning C4018: '<' : signed/unsigned mismatch
          Difference.cpp
          DepthMapBinIOSample.cpp
          DepthMapBinFileIO.cpp
          DepthMap.cpp
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\depthmap.cpp(6): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\depthmap.cpp(89): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\depthmap.cpp(90): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\depthmap.cpp(99): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\depthmap.cpp(100): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\depthmap.cpp(6): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\depthmap.cpp(89): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\depthmap.cpp(90): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\depthmap.cpp(99): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\depthmap.cpp(100): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
          Dataset.cpp
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\dataset.cpp(41): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\dataset.cpp(49): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\dataset.cpp(66): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\dataset.cpp(123): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\dataset.cpp(134): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\dataset.cpp(137): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\dataset.cpp(140): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\dataset.cpp(41): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\dataset.cpp(49): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\dataset.cpp(66): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\dataset.cpp(123): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\dataset.cpp(134): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\dataset.cpp(137): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\dataset.cpp(140): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files (x86)\microsoft visual studio 11.0\vc\include\stdio.h(357) : see declaration of 'sprintf'
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\dataset.cpp(193): warning C4244: 'initializing' : conversion from 'double' to 'short', possible loss of data
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\dataset.cpp(214): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\dataset.cpp(193): warning C4244: 'initializing' : conversion from 'double' to 'short', possible loss of data
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\dataset.cpp(214): warning C4018: '<' : signed/unsigned mismatch
          Connected.cpp
          ActionVariance.cpp
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\actionvariance.cpp(32): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\actionvariance.cpp(69): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\actionvariance.cpp(70): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\actionvariance.cpp(72): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\actionvariance.cpp(76): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\actionvariance.cpp(77): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\actionvariance.cpp(78): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\actionvariance.cpp(104): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\actionvariance.cpp(105): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\actionvariance.cpp(106): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\actionvariance.cpp(110): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\actionvariance.cpp(111): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\actionvariance.cpp(112): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\actionvariance.cpp(303): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\actionvariance.cpp(327): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\actionvariance.cpp(342): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\tp\desktop\doktoranckie\action\dynamicactionrecognition\depthmapbiniosample\actionvariance.cpp(353): warning C4244: 'return' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\actionvariance.cpp(32): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\actionvariance.cpp(69): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\actionvariance.cpp(70): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\actionvariance.cpp(72): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\actionvariance.cpp(76): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\actionvariance.cpp(77): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\actionvariance.cpp(78): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\actionvariance.cpp(104): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\actionvariance.cpp(105): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\actionvariance.cpp(106): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\actionvariance.cpp(110): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\actionvariance.cpp(111): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\actionvariance.cpp(112): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\actionvariance.cpp(303): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\actionvariance.cpp(327): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\actionvariance.cpp(342): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\tp\desktop\doktoranckie\dynamicaction\dynamicactionrecognition\depthmapbiniosample\actionvariance.cpp(353): warning C4244: 'return' : conversion from 'double' to 'int', possible loss of data
          Generating Code...
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\TP\Desktop\doktoranckie\action\DynamicActionRecognition\Debug\DepthMapBinIOSample.exe" /INCREMENTAL /NOLOGO /LIBPATH:C:\opencv2410\build\x64\vc11\bin /LIBPATH:C:\opencv2410\build\x64\vc11\lib opencv_calib3d2410d.lib opencv_contrib2410d.lib opencv_core2410d.lib opencv_features2d2410d.lib opencv_flann2410d.lib opencv_gpu2410d.lib opencv_highgui2410d.lib opencv_imgproc2410d.lib opencv_legacy2410d.lib opencv_ml2410d.lib opencv_nonfree2410d.lib opencv_objdetect2410d.lib opencv_ocl2410d.lib opencv_photo2410d.lib opencv_stitching2410d.lib opencv_superres2410d.lib opencv_ts2410d.lib opencv_video2410d.lib opencv_videostab2410d.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\TP\Desktop\doktoranckie\action\DynamicActionRecognition\Debug\DepthMapBinIOSample.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\TP\Desktop\doktoranckie\action\DynamicActionRecognition\Debug\DepthMapBinIOSample.lib" /MACHINE:X86 /SAFESEH Debug\ActionVariance.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\TP\Desktop\doktoranckie\dynamicAction\DynamicActionRecognition\Debug\DepthMapBinIOSample.exe" /INCREMENTAL /NOLOGO /LIBPATH:C:\opencv2410\build\x64\vc11\bin /LIBPATH:C:\opencv2410\build\x64\vc11\lib opencv_calib3d2410d.lib opencv_contrib2410d.lib opencv_core2410d.lib opencv_features2d2410d.lib opencv_flann2410d.lib opencv_gpu2410d.lib opencv_highgui2410d.lib opencv_imgproc2410d.lib opencv_legacy2410d.lib opencv_ml2410d.lib opencv_nonfree2410d.lib opencv_objdetect2410d.lib opencv_ocl2410d.lib opencv_photo2410d.lib opencv_stitching2410d.lib opencv_superres2410d.lib opencv_ts2410d.lib opencv_video2410d.lib opencv_videostab2410d.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\TP\Desktop\doktoranckie\dynamicAction\DynamicActionRecognition\Debug\DepthMapBinIOSample.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\TP\Desktop\doktoranckie\dynamicAction\DynamicActionRecognition\Debug\DepthMapBinIOSample.lib" /MACHINE:X86 /SAFESEH Debug\ActionVariance.obj
          Debug\Connected.obj
          Debug\Dataset.obj
          Debug\DepthMap.obj
@@ -120,8 +120,9 @@
          Debug\Vibe.obj
      1>ActionVariance.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
      1>opencv_core2410d.lib(opencv_core2410d.dll) : fatal error LNK1112: module machine type 'x64' conflicts with target machine type 'X86'
-     1>Done Building Project "C:\Users\TP\Desktop\doktoranckie\action\DynamicActionRecognition\DepthMapBinIOSample\DepthMapBinIOSample.vcxproj" (Build target(s)) -- FAILED.
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V110\Microsoft.CppCommon.targets(611,5): error MSB6006: "link.exe" exited with code 1112.
+     1>Done Building Project "C:\Users\TP\Desktop\doktoranckie\dynamicAction\DynamicActionRecognition\DepthMapBinIOSample\DepthMapBinIOSample.vcxproj" (Build target(s)) -- FAILED.
 
 Build FAILED.
 
-Time Elapsed 00:00:13.65
+Time Elapsed 00:00:26.45
