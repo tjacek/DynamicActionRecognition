@@ -50,22 +50,38 @@ void showEigenvectors(Mat W,Mat eigenvalues,int height ){
           Mat cgrayscale;
          applyColorMap(grayscale, cgrayscale, COLORMAP_BONE);
         // Display or save:
-        //if(argc == 2) {
             imshow(format("fisherface_%d", i), cgrayscale );
-       // } else {
-       //     imwrite(format("%s/fisherface_%d.png", output_folder.c_str(), i), norm_0_255(cgrayscale));
-       // }
+      
     }
 }
 
-vector<Mat> getTrainingData(vector<Mat> data){
+Mat project(Mat src,Ptr<cv::FaceRecognizer> model ){
+ Mat eigenvectors = model->getMat("eigenvectors");
+ Mat mean = model->getMat("mean");
+ Mat q = subspaceProject(eigenvectors, mean, src.reshape(1,1));
+ return q;
+}
+
+vector<Mat> projectAll(vector<Mat> src,Ptr<cv::FaceRecognizer> model){
+  vector<Mat> projections;
+  for(int i=0;i<src.size();i++){
+	  Mat newVector=project(src.at(i),model);
+	  projections.push_back(newVector);
+  }
+  return projections;
+}
+
+pair<vector<Mat>,vector<int>> getTrainingData(vector<Mat> data,vector<int> labels){
   vector<Mat> train;
+  vector<int> trainY;
   for(int i=0;i<data.size();i++){
 	  if(i % 2 ==0){
 		train.push_back(data.at(i));
+		trainY.push_back(labels.at(i));
 	  }
   }
-  return train;
+  pair<vector<Mat>,vector<int>> pair(train,trainY);
+  return pair;
 }
 
 void saveFisher(string output,vector<Mat> data,vector<int> labels){
@@ -88,19 +104,22 @@ void saveFisher(string output,vector<Mat> data,vector<int> labels){
 
 void fisherAction(string imagedir,string labelsdir){
   Categories categ=readCategories(labelsdir);
-  pair<vector<Mat>,vector<int>> pair=readInput(imagedir,categ);
-  vector<Mat> images= pair.first;
-  vector<int> labels= pair.second;
+  pair<vector<Mat>,vector<int>> p=readInput(imagedir,categ);
+  vector<Mat> images= p.first;
+  vector<int> labels= p.second;
+  pair<vector<Mat>,vector<int>> train=getTrainingData(images,labels);
+ 
   int height = images[0].rows;
   cout << "Computing Fisher vectors \n";
   Ptr<cv::FaceRecognizer> model = createFisherFaceRecognizer(); 
   cout << "Eigenvectors computed";
-  model->train(images, labels);
-  //Mat eigenvalues = model->getMat("eigenvalues");
-  //Mat W = model->getMat("eigenvectors");
-  vector<Mat> proj = model->get<vector<Mat> >("projections");
+  model->train(train.first, train.second);
   
-  cout <<proj.size() <<" " << proj.at(0).cols << " " << proj.at(0).rows;
-  saveFisher("fisher.csv",proj,labels);
-  //showEigenvectors( W, eigenvalues, height );
+  //project(images.at(0),model );
+  vector<Mat> proj = projectAll(images,model);
+  //model->get<vector<Mat> >("projections");
+  
+  //cout <<proj.size() <<" " << proj.at(0).cols << " " << proj.at(0).rows;
+  saveFisher("fisherZY.csv",proj,labels);
+
 }

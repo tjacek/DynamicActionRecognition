@@ -8,6 +8,7 @@
 #include "Difference.h"
 #include "utils.h"
 #include "ActionVariance.h"
+#include "fisherAction.h"
 
 
 
@@ -23,8 +24,11 @@ double getDepth(int x,int y,int t,Action action){
 
 int main(int argc, char * argv[])
 {   
+		string s("C:/Users/TP/Desktop/doktorancki2/Images/zy");
+   string s2("C:/Users/TP/Desktop/doktorancki2/Images/labelsZY.csv");
+    fisherAction(s,s2);
 	char depthFileName[]="C:/Users/TP/Desktop/kinect/dataset/julka/c5_02.bin";
-	showVibe(depthFileName);
+	//showVibe(depthFileName);
 	//saveImg( );
 	//showCategory("a18");
 	//showClouds();
