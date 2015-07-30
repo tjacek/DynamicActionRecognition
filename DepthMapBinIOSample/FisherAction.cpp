@@ -19,40 +19,41 @@ pair<vector<Mat>,vector<int>> readInput(string dirname,Categories categ){
   return pair;
 }
 
+void clean(Mat dist,uchar k){
+  for(int i=0;i<dist.rows;i++){
+	for(int j=0;j<dist.cols;j++){
+      if(dist.at<uchar>(i,j)==k){
+		  //cout << dist.at<uchar>(i,j);
+		  dist.at<uchar>(i,j)=0;
+	  }
+    }
+  }
+}
+
 static Mat norm_0_255(InputArray _src) {
     Mat src = _src.getMat();
     // Create and return normalized image:
     Mat dst;
-    switch(src.channels()) {
-    case 1:
-        cv::normalize(_src, dst, 0, 255, NORM_MINMAX, CV_8UC1);
-        break;
-    case 3:
-        cv::normalize(_src, dst, 0, 255, NORM_MINMAX, CV_8UC3);
-        break;
-    default:
-        src.copyTo(dst);
-        break;
-    }
+	if(src.channels()==1){
+      cv::normalize(_src, dst, 0, 255, NORM_MINMAX, CV_8UC1);
+      uchar mode=dst.at<uchar>(0,0);
+	  clean(dst,mode);	
+	}
     return dst;
 }
 
-void showEigenvectors(Mat W,Mat eigenvalues,int height ){
+void showEigenvectors(  Ptr<cv::FaceRecognizer> model){
+  Mat eigen = model->getMat("eigenvectors");
 
-	for (int i = 0; i < min(16, W.cols); i++) {
-        string msg = format("Eigenvalue #%d = %.5f", i, eigenvalues.at<double>(i));
-        cout << msg << endl;
-        // get eigenvector #i
-        Mat ev = W.col(i).clone();
-        // Reshape to original size & normalize to [0...255] for imshow.
-        Mat grayscale = norm_0_255(ev.reshape(1, height));
-        // Show the image & apply a Bone colormap for better sensing.
-          Mat cgrayscale;
-         applyColorMap(grayscale, cgrayscale, COLORMAP_BONE);
-        // Display or save:
-            imshow(format("fisherface_%d", i), cgrayscale );
-      
-    }
+  for (int i = 0; i < eigen.cols; i++) {          
+	
+    Mat eigenaction = eigen.col(i).clone();
+	cout <<"\n" << eigenaction.cols << " " << eigenaction.rows<<" \n";
+	eigenaction=norm_0_255(eigenaction.reshape(0,320));
+	cout <<"\n" << eigenaction.cols << " " << eigenaction.rows<<" \n";
+	imshow(format("fisheraction_%d", i), eigenaction );
+	waitKey(0); 
+  }
 }
 
 Mat project(Mat src,Ptr<cv::FaceRecognizer> model ){
@@ -89,11 +90,6 @@ void saveFisher(string output,vector<Mat> data,vector<int> labels){
   myfile.open (output);
   for(int i=0;i<data.size();i++){
 	Mat mat=data.at(i);
-	//for(int j=0;j<mat.size().width;j++){
-	//	cout <<"\n"<< j <<" ";
-	//	cout << mat;
-	//	myfile << mat << ",";
-	//}
 	cout << i <<"";
 	myfile << mat << ",";
 	myfile<<labels.at(i);
@@ -109,17 +105,13 @@ void fisherAction(string imagedir,string labelsdir){
   vector<int> labels= p.second;
   pair<vector<Mat>,vector<int>> train=getTrainingData(images,labels);
  
-  int height = images[0].rows;
   cout << "Computing Fisher vectors \n";
   Ptr<cv::FaceRecognizer> model = createFisherFaceRecognizer(); 
-  cout << "Eigenvectors computed";
   model->train(train.first, train.second);
+  cout << "Eigenvectors computed";
+  showEigenvectors(model);
+  //vector<Mat> proj = projectAll(images,model);
   
-  //project(images.at(0),model );
-  vector<Mat> proj = projectAll(images,model);
-  //model->get<vector<Mat> >("projections");
-  
-  //cout <<proj.size() <<" " << proj.at(0).cols << " " << proj.at(0).rows;
-  saveFisher("fisherZY.csv",proj,labels);
+  //saveFisher("fisherZY.csv",proj,labels);
 
 }
