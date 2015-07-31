@@ -32,20 +32,21 @@ void clean(Mat dist,uchar k){
 
 static Mat norm_0_255(InputArray _src) {
     Mat src = _src.getMat();
-    // Create and return normalized image:
-    Mat dst;
+    Mat dst,dst2;
 	if(src.channels()==1){
       cv::normalize(_src, dst, 0, 255, NORM_MINMAX, CV_8UC1);
       uchar mode=dst.at<uchar>(0,0);
-	  clean(dst,mode);	
+	  clean(dst,mode);
+	  threshold( dst, dst2, 120, 255,3 );
 	}
-    return dst;
+    return dst2;
 }
 
 void showEigenvectors(  Ptr<cv::FaceRecognizer> model){
   Mat eigen = model->getMat("eigenvectors");
-
-  for (int i = 0; i < eigen.cols; i++) {          
+  
+  int size=min(25,eigen.cols);
+  for (int i = 0; i < size; i++) {          
 	
     Mat eigenaction = eigen.col(i).clone();
 	cout <<"\n" << eigenaction.cols << " " << eigenaction.rows<<" \n";
@@ -98,20 +99,27 @@ void saveFisher(string output,vector<Mat> data,vector<int> labels){
   myfile.close();
 }
 
-void fisherAction(string imagedir,string labelsdir){
+void fisherAction(string imagedir,string labelsdir,Reduction reduction,Operation op){
   Categories categ=readCategories(labelsdir);
   pair<vector<Mat>,vector<int>> p=readInput(imagedir,categ);
   vector<Mat> images= p.first;
   vector<int> labels= p.second;
   pair<vector<Mat>,vector<int>> train=getTrainingData(images,labels);
  
-  cout << "Computing Fisher vectors \n";
-  Ptr<cv::FaceRecognizer> model = createFisherFaceRecognizer(); 
+  Ptr<cv::FaceRecognizer> model;
+  if(reduction==fisherReduction){
+     cout << "Computing Fisher vectors \n";
+     model = createFisherFaceRecognizer(); 
+  }else{
+     cout << "Computing PCA vectors \n";
+     model = createEigenFaceRecognizer();//createFisherFaceRecognizer(); 
+  }
   model->train(train.first, train.second);
   cout << "Eigenvectors computed";
-  showEigenvectors(model);
-  //vector<Mat> proj = projectAll(images,model);
-  
-  //saveFisher("fisherZY.csv",proj,labels);
-
+  if(op==showOp){
+    showEigenvectors(model);
+  }else{
+    vector<Mat> proj = projectAll(images,model);
+    saveFisher("fisherZY.csv",proj,labels);
+  }
 }
