@@ -1,6 +1,29 @@
 #include "StdAfx.h"
 #include "FisherAction.h"
 
+void fisherValidation(FisherValidationParams* params,Reduction reduction){
+	Categories trainCat=readCategories(params->trainLabels);
+	cout <<"abc";
+	pair<vector<Mat>,vector<int>> train=readInput(params->trainImages,trainCat);
+	Ptr<cv::FaceRecognizer> model;
+    if(reduction==fisherReduction){
+      cout << "Computing Fisher vectors \n";
+      model = createFisherFaceRecognizer(); 
+    }else{
+      cout << "Computing PCA vectors \n";
+      model = createEigenFaceRecognizer();
+    }
+	model->train(train.first, train.second);
+
+	vector<Mat> projTrain = projectAll(train.first,model);
+	saveFisher(params->trainOutput,projTrain,train.second);
+
+	Categories testCat=readCategories(params->testLabels);
+	pair<vector<Mat>,vector<int>> test=readInput(params->testImages,testCat);
+	vector<Mat> projTest = projectAll(test.first,model);
+	saveFisher(params->testOutput,projTest,test.second);
+}
+
 pair<vector<Mat>,vector<int>> readInput(string dirname,Categories categ){
   ImageList imageNames=getImageList(dirname);
   vector<Mat> images;
@@ -99,7 +122,7 @@ void saveFisher(string output,vector<Mat> data,vector<int> labels){
   myfile.close();
 }
 
-void fisherAction(string imagedir,string labelsdir,Reduction reduction,Operation op){
+void fisherAction(string imagedir,string labelsdir,string output,Reduction reduction,Operation op){
   Categories categ=readCategories(labelsdir);
   pair<vector<Mat>,vector<int>> p=readInput(imagedir,categ);
   vector<Mat> images= p.first;
@@ -120,6 +143,15 @@ void fisherAction(string imagedir,string labelsdir,Reduction reduction,Operation
     showEigenvectors(model);
   }else{
     vector<Mat> proj = projectAll(images,model);
-    saveFisher("fisherZY.csv",proj,labels);
+    saveFisher(output,proj,labels);
   }
+}
+
+FisherValidationParams::FisherValidationParams(){
+  this->trainImages="C:/Users/TP/Desktop/doktoranckie/images/train/xy";
+  this->trainLabels="C:/Users/TP/Desktop/doktoranckie/images/train/labelsXY.csv";
+  this->trainOutput="C:/Users/TP/Desktop/doktoranckie/trainxy.out";
+  this->testImages="C:/Users/TP/Desktop/doktoranckie/images/test/xy";
+  this->testLabels="C:/Users/TP/Desktop/doktoranckie/images/test/labelsXY.csv";
+  this->testOutput="C:/Users/TP/Desktop/doktoranckie/testxy.out";
 }
